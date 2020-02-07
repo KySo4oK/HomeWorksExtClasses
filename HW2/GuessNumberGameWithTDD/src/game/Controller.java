@@ -8,10 +8,15 @@ public class Controller {
     public String compareNumbers(int firstNumber, int secondNumber) {
         numberOfAttempts++;
         if (firstNumber < secondNumber) {
+            resultsOfAttempts.add("greater than " + firstNumber + " ");
             return "greater";
         } else if(firstNumber > secondNumber) {
+            resultsOfAttempts.add("lesser than " + firstNumber + " ");
             return "lesser";
-        } else return "equal";
+        } else {
+            resultsOfAttempts.add("equal " + firstNumber);
+            return "equal";
+        }
     }
 
     public int getRandomNumberBetween_100_0() {

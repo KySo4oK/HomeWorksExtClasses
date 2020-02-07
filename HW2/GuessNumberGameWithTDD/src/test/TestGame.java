@@ -52,13 +52,13 @@ public class TestGame {
     @Test
     public void testStatistic_0_and_1(){
         testComparing_0_and_1();
-        Assert.assertEquals("greater than 0", controller.getStatistic());
+        Assert.assertEquals("greater than 0 ", controller.getStatistic());
     }
 
     @Test
     public void testStatistic_101_and_0(){
         testComparing_101_and_0();
-        Assert.assertEquals("lesser than 0", controller.getStatistic());
+        Assert.assertEquals("lesser than 101 ", controller.getStatistic());
     }
 
     private void testComparing_101_and_0() {
