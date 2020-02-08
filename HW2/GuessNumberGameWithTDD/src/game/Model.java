@@ -1,9 +1,12 @@
 package game;
 
+import sun.awt.SunHints;
+
 public class Model {
     private int max;
     private int min;
     private int orderValue;
+    private int valueOfAttempts;
 
     public int getMax() {
         return max;
@@ -27,7 +30,7 @@ public class Model {
     }
 
     public void setRandomNumber() {
-        int random = (int) Math.random() * (max - min - 2) + 1;
+        int random = (int) (Math.random() * (max - min - 2) + 1);
         setOrderValue(random);
     }
 
@@ -37,5 +40,21 @@ public class Model {
 
     public int getOrderValue() {
         return orderValue;
+    }
+
+    public void changeRange(int attemptValue) {
+        if (attemptValue > orderValue) {
+            max = attemptValue;
+        } else {
+            min = attemptValue;
+        }
+    }
+
+    public int getValueOfAttempts() {
+        return valueOfAttempts;
+    }
+
+    public void addAttempt() {
+        valueOfAttempts++;
     }
 }

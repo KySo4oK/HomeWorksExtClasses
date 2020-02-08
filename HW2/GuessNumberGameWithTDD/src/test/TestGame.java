@@ -26,12 +26,17 @@ public class TestGame {
 
     @Ignore
     @Test
-    public void testSetRandomNumber(){
-        for(int i= 0; i < 10000; i++) {
+    public void testSetRandomNumber() {
+        for (int i = 0; i < 10000; i++) {
             model.setRandomNumber();
-            if((model.getOrderValue() > 99) || (model.getOrderValue() < 1)){
+            if ((model.getOrderValue() > 99) || (model.getOrderValue() < 1)) {
                 Assert.fail();
             }
         }
+    }
+
+    @Test
+    public void testCheckValue() {
+        Assert.assertTrue(controller.checkValue(model.getOrderValue()));
     }
 }
