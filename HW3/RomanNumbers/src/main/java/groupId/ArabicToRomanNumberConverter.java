@@ -8,6 +8,11 @@ public class ArabicToRomanNumberConverter {
 
     public ArabicToRomanNumberConverter() {
         map = new ArrayList<>();
+        map.add(new AbstractMap.SimpleEntry<>(1000, "M"));
+        map.add(new AbstractMap.SimpleEntry<>(500, "D"));
+        map.add(new AbstractMap.SimpleEntry<>(100, "C"));
+        map.add(new AbstractMap.SimpleEntry<>(50, "L"));
+        map.add(new AbstractMap.SimpleEntry<>(10, "X"));
         map.add(new AbstractMap.SimpleEntry<>(5, "V"));
         map.add(new AbstractMap.SimpleEntry<>(1, "I"));
     }
