@@ -7,6 +7,8 @@ public class ArabicToRomanNumberConverter {
             return getDefaultString();
         if (arabicNumber == 2)
             return "II";
+        else if (arabicNumber == 3)
+            return "III";
         else return "I";
     }
 
