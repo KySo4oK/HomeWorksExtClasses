@@ -16,10 +16,31 @@ public class ArabicToRomanNumberConverter {
         boolean noNumber = arabicNumber == 0;
         if (noNumber)
             return getDefaultString();
-        return getRepeatingRomanNumber(arabicNumber);
+        String romanNumber = getRoughRomanNumber(arabicNumber);
+        int lengthOfRoughRomanNumber = romanNumber.length();
+        for (int i = 3; i < lengthOfRoughRomanNumber; i++) {
+            if (romanNumber.charAt(i - 3) == romanNumber.charAt(i - 2) &&
+                    romanNumber.charAt(i - 2) == romanNumber.charAt(i - 1) &&
+                    romanNumber.charAt(i - 1) == romanNumber.charAt(i)) {
+                romanNumber = romanNumber.substring(0, i - 2) +
+                        getNext(romanNumber.substring(i - 3, i - 2)) +
+                        romanNumber.substring(i+1, lengthOfRoughRomanNumber);
+            }
+        }
+        return romanNumber;
     }
 
-    private String getRepeatingRomanNumber(int arabicNumber) {
+    private String getNext(String partOfRoman) {
+        for (int i = 0; i < map.size(); i++) {
+            AbstractMap.SimpleEntry digit = map.get(i);
+            if (digit.getValue().equals(partOfRoman)) {
+                return map.get(i - 1).getValue();
+            }
+        }
+        return "";
+    }
+
+    private String getRoughRomanNumber(int arabicNumber) {
         String romanNumber = "";
 
         for (AbstractMap.SimpleEntry<Integer, String> digit : map) {

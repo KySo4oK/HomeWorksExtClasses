@@ -50,4 +50,11 @@ public class WhenConvertArabicNumberToRoman {
         String romanNumber = convertToRoman(8);
         Assert.assertEquals("VIII", romanNumber);
     }
+
+    @Test
+    public void Convert_4_To_IV(){
+        String romanNumber = convertToRoman(4);
+        Assert.assertEquals("IV", romanNumber);
+    }
+
 }
