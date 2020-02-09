@@ -48,7 +48,7 @@ public class ArabicToRomanNumberConverter {
 
     private boolean checkForNotNearEqualsPartOfRomanNumber(String romanNumber, int index) {
         return (romanNumber.charAt(index - 2) == romanNumber.charAt(index) &&
-                romanNumber.substring(index - 1, index - 2).equals(romanNumber.substring(index - 2, index - 1)));
+                romanNumber.substring(index - 2, index - 1).equals(getNext(romanNumber.substring(index - 1, index))));
     }
 
     private String getRemovedNearRepeating(String romanNumber) {
