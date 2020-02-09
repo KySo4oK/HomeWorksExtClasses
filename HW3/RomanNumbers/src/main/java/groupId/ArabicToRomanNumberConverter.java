@@ -27,7 +27,31 @@ public class ArabicToRomanNumberConverter {
         String romanNumber = getRoughRomanNumber(arabicNumber);
         romanNumber = getRemovedNearRepeating(romanNumber);
         romanNumber = getRemovedThroughOneRepeating(romanNumber);
+        romanNumber = getRemovedThroughTwoRepeating(romanNumber);
         return romanNumber;
+    }
+
+    private String getRemovedThroughTwoRepeating(String romanNumber) {
+        for (int i = 4; i < romanNumber.length(); i++) {
+            if (checkForThroughTwoEqualsPartOfRomanNumber(romanNumber, i)) {
+                System.out.println(romanNumber);
+                romanNumber = getRemovedThroughTwoEqualsPartOfRomanNumber(romanNumber, i);
+                i = 4;
+            }
+        }
+        return romanNumber;
+    }
+
+    private String getRemovedThroughTwoEqualsPartOfRomanNumber(String romanNumber, int index) {
+        return romanNumber.substring(0, index - 3) +
+                romanNumber.substring(index - 1, index + 1) +
+                getNext(romanNumber.substring(index - 2, index - 1));
+    }
+
+    private boolean checkForThroughTwoEqualsPartOfRomanNumber(String romanNumber, int index) {
+        return (romanNumber.charAt(index - 3) == romanNumber.charAt(index) &&
+                map.indexOf(romanNumber.substring(index - 1, index)) >
+                        map.indexOf(romanNumber.substring(index - 3, index - 2)));
     }
 
     private String getRemovedThroughOneRepeating(String romanNumber) {
