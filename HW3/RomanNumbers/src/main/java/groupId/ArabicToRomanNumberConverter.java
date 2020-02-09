@@ -5,11 +5,12 @@ public class ArabicToRomanNumberConverter {
         boolean noNumber = arabicNumber == 0;
         if (noNumber)
             return getDefaultString();
-        if (arabicNumber == 2)
-            return "II";
-        else if (arabicNumber == 3)
-            return "III";
-        else return "I";
+        String romanNumber = "";
+        while (arabicNumber >= 1) {
+            romanNumber += "I";
+            arabicNumber--;
+        }
+        return romanNumber;
     }
 
     private String getDefaultString() {
