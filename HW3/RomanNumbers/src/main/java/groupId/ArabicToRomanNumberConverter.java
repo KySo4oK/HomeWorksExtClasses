@@ -26,27 +26,30 @@ public class ArabicToRomanNumberConverter {
     private String changeToRoughAndRemoveAllRepeating(int arabicNumber) {
         String romanNumber = getRoughRomanNumber(arabicNumber);
         romanNumber = getRemovedNearRepeating(romanNumber);
-        romanNumber = getRemovedNotNearRepeating(romanNumber);
+        romanNumber = getRemovedThroughOneRepeating(romanNumber);
         return romanNumber;
     }
 
-    private String getRemovedNotNearRepeating(String romanNumber) {
+    private String getRemovedThroughOneRepeating(String romanNumber) {
         for (int i = 2; i < romanNumber.length(); i++) {
-            if (checkForNotNearEqualsPartOfRomanNumber(romanNumber, i)) {
-                romanNumber = getRemovedNotNearEqualsPartOfRomanNumber(romanNumber, i);
-                i = i - 1;
+            if (checkForThroughOneEqualsPartOfRomanNumber(romanNumber, i)) {
+                System.out.println(romanNumber);
+                romanNumber = getRemovedThroughOneEqualsPartOfRomanNumber(romanNumber, i);
+                i = 2;
             }
         }
         return romanNumber;
     }
 
-    private String getRemovedNotNearEqualsPartOfRomanNumber(String romanNumber, int index) {
+    private String getRemovedThroughOneEqualsPartOfRomanNumber(String romanNumber, int index) {
+        int lengthOfRomanNumber = romanNumber.length();
         return romanNumber.substring(0, index - 2) +
                 romanNumber.substring(index - 1, index) +
-                getNext(romanNumber.substring(index - 2, index - 1));
+                getNext(romanNumber.substring(index - 2, index - 1)) +
+                romanNumber.substring(index + 1, lengthOfRomanNumber);
     }
 
-    private boolean checkForNotNearEqualsPartOfRomanNumber(String romanNumber, int index) {
+    private boolean checkForThroughOneEqualsPartOfRomanNumber(String romanNumber, int index) {
         return (romanNumber.charAt(index - 2) == romanNumber.charAt(index) &&
                 romanNumber.substring(index - 2, index - 1).equals(getNext(romanNumber.substring(index - 1, index))));
     }
@@ -55,7 +58,7 @@ public class ArabicToRomanNumberConverter {
         for (int i = 3; i < romanNumber.length(); i++) {
             if (checkForEqualsPartOfRomanNumber(romanNumber, i)) {
                 romanNumber = getRemovedNearEqualsPartOfRomanNumber(romanNumber, i);
-                i = i - 2;
+                i = 3;
             }
         }
         return romanNumber;
