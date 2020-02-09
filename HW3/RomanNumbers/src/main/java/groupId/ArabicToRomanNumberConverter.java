@@ -20,8 +20,17 @@ public class ArabicToRomanNumberConverter {
     public String Convert(int arabicNumber) {
         if (arabicNumber == 0)
             return getDefaultString();
+        return changeToRoughAndRemoveAllRepeating(arabicNumber);
+    }
+
+    private String changeToRoughAndRemoveAllRepeating(int arabicNumber) {
         String romanNumber = getRoughRomanNumber(arabicNumber);
-        romanNumber = removeNearRepeating(romanNumber);
+        romanNumber = getRemovedNearRepeating(romanNumber);
+        romanNumber = getRemovedNotNearRepeating(romanNumber);
+        return romanNumber;
+    }
+
+    private String getRemovedNotNearRepeating(String romanNumber) {
         for (int i = 2; i < romanNumber.length(); i++) {
             if (checkForNotNearEqualsPartOfRomanNumber(romanNumber, i)) {
                 romanNumber = getRemovedNotNearEqualsPartOfRomanNumber(romanNumber, i);
@@ -42,7 +51,7 @@ public class ArabicToRomanNumberConverter {
                 romanNumber.substring(index - 1, index - 2).equals(romanNumber.substring(index - 2, index - 1)));
     }
 
-    private String removeNearRepeating(String romanNumber) {
+    private String getRemovedNearRepeating(String romanNumber) {
         for (int i = 3; i < romanNumber.length(); i++) {
             if (checkForEqualsPartOfRomanNumber(romanNumber, i)) {
                 romanNumber = getRemovedNearEqualsPartOfRomanNumber(romanNumber, i);
