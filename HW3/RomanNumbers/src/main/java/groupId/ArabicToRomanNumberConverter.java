@@ -18,13 +18,34 @@ public class ArabicToRomanNumberConverter {
     }
 
     public String Convert(int arabicNumber) {
-        boolean noNumber = arabicNumber == 0;
-        if (noNumber)
+        if (arabicNumber == 0)
             return getDefaultString();
         String romanNumber = getRoughRomanNumber(arabicNumber);
+        romanNumber = removeNearRepeating(romanNumber);
+        for (int i = 2; i < romanNumber.length(); i++) {
+            if (checkForNotNearEqualsPartOfRomanNumber(romanNumber, i)) {
+                romanNumber = getRemovedNotNearEqualsPartOfRomanNumber(romanNumber, i);
+                i = i - 1;
+            }
+        }
+        return romanNumber;
+    }
+
+    private String getRemovedNotNearEqualsPartOfRomanNumber(String romanNumber, int index) {
+        return romanNumber.substring(0, index - 2) +
+                romanNumber.substring(index - 1, index) +
+                getNext(romanNumber.substring(index - 2, index - 1));
+    }
+
+    private boolean checkForNotNearEqualsPartOfRomanNumber(String romanNumber, int index) {
+        return (romanNumber.charAt(index - 2) == romanNumber.charAt(index) &&
+                romanNumber.substring(index - 1, index - 2).equals(romanNumber.substring(index - 2, index - 1)));
+    }
+
+    private String removeNearRepeating(String romanNumber) {
         for (int i = 3; i < romanNumber.length(); i++) {
             if (checkForEqualsPartOfRomanNumber(romanNumber, i)) {
-                romanNumber = getChangedRomanNumber(romanNumber, i);
+                romanNumber = getRemovedNearEqualsPartOfRomanNumber(romanNumber, i);
                 i = i - 2;
             }
         }
@@ -37,7 +58,7 @@ public class ArabicToRomanNumberConverter {
                 romanNumber.charAt(index - 1) == romanNumber.charAt(index));
     }
 
-    private String getChangedRomanNumber(String romanNumber, int index) {
+    private String getRemovedNearEqualsPartOfRomanNumber(String romanNumber, int index) {
         int lengthOfRoughRomanNumber = romanNumber.length();
         return romanNumber.substring(0, index - 2) +
                 getNext(romanNumber.substring(index - 3, index - 2)) +
