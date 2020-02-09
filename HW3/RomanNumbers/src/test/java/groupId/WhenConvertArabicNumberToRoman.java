@@ -46,20 +46,62 @@ public class WhenConvertArabicNumberToRoman {
     }
 
     @Test
-    public void Convert_8_To_VIII(){
+    public void Convert_8_To_VIII() {
         String romanNumber = convertToRoman(8);
         Assert.assertEquals("VIII", romanNumber);
     }
 
     @Test
-    public void Convert_4_To_IV(){
+    public void Convert_4_To_IV() {
         String romanNumber = convertToRoman(4);
         Assert.assertEquals("IV", romanNumber);
     }
 
     @Test
-    public void Convert_9_To_IX(){
+    public void Convert_9_To_IX() {
         String romanNumber = convertToRoman(9);
         Assert.assertEquals("IX", romanNumber);
+    }
+
+    @Test
+    public void Convert_10_To_X() {
+        String romanNumber = convertToRoman(10);
+        Assert.assertEquals("X", romanNumber);
+    }
+
+    @Test
+    public void Convert_11_To_XI() {
+        String romanNumber = convertToRoman(11);
+        Assert.assertEquals("XI", romanNumber);
+    }
+
+    @Test
+    public void Convert_14_To_XIV() {
+        String romanNumber = convertToRoman(14);
+        Assert.assertEquals("XIV", romanNumber);
+    }
+
+    @Test
+    public void Convert_15_To_XV() {
+        String romanNumber = convertToRoman(15);
+        Assert.assertEquals("XV", romanNumber);
+    }
+
+    @Test
+    public void Convert_19_To_XIX() {
+        String romanNumber = convertToRoman(19);
+        Assert.assertEquals("XIX", romanNumber);
+    }
+
+    @Test
+    public void Convert_100_To_C() {
+        String romanNumber = convertToRoman(100);
+        Assert.assertEquals("C", romanNumber);
+    }
+
+    @Test
+    public void Convert_99_To_IC() {
+        String romanNumber = convertToRoman(99);
+        Assert.assertEquals("IC", romanNumber);
     }
 }
