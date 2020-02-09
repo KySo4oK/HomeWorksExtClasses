@@ -17,17 +17,27 @@ public class ArabicToRomanNumberConverter {
         if (noNumber)
             return getDefaultString();
         String romanNumber = getRoughRomanNumber(arabicNumber);
-        int lengthOfRoughRomanNumber = romanNumber.length();
-        for (int i = 3; i < lengthOfRoughRomanNumber; i++) {
-            if (romanNumber.charAt(i - 3) == romanNumber.charAt(i - 2) &&
-                    romanNumber.charAt(i - 2) == romanNumber.charAt(i - 1) &&
-                    romanNumber.charAt(i - 1) == romanNumber.charAt(i)) {
-                romanNumber = romanNumber.substring(0, i - 2) +
-                        getNext(romanNumber.substring(i - 3, i - 2)) +
-                        romanNumber.substring(i+1, lengthOfRoughRomanNumber);
+        for (int i = 3; i < romanNumber.length(); i++) {
+            if (checkForEqualsPartOfRomanNumber(romanNumber, i)) {
+                romanNumber = getChangedRomanNumber(romanNumber, i);
+                i = i - 2;
             }
         }
         return romanNumber;
+    }
+
+    private boolean checkForEqualsPartOfRomanNumber(String romanNumber, int index) {
+        return (romanNumber.charAt(index - 3) == romanNumber.charAt(index - 2) &&
+                romanNumber.charAt(index - 2) == romanNumber.charAt(index - 1) &&
+                romanNumber.charAt(index - 1) == romanNumber.charAt(index));
+    }
+
+    private String getChangedRomanNumber(String romanNumber, int index) {
+        int lengthOfRoughRomanNumber = romanNumber.length();
+        return romanNumber.substring(0, index - 2) +
+                getNext(romanNumber.substring(index - 3, index - 2)) +
+                romanNumber.substring(index + 1, lengthOfRoughRomanNumber);
+
     }
 
     private String getNext(String partOfRoman) {

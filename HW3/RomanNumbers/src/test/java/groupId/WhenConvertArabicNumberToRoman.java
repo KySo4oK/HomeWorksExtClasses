@@ -56,5 +56,4 @@ public class WhenConvertArabicNumberToRoman {
         String romanNumber = convertToRoman(4);
         Assert.assertEquals("IV", romanNumber);
     }
-
 }
