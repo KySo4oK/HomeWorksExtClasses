@@ -18,7 +18,7 @@ public class Controller {
 
     public void processUser() {
         Scanner scanner = new Scanner(System.in);
-        model.setLastName(utilityController.inputStringValueWithScanner(scanner, RegexController.LAST_NAME));
-        model.setNickName(utilityController.inputStringValueWithScanner(scanner, RegexController.NICKNAME));
+        model.setLastName(utilityController.inputStringValueWithScanner(scanner, Regex.LAST_NAME));
+        model.setNickName(utilityController.inputStringValueWithScanner(scanner, Regex.NICKNAME));
     }
 }
