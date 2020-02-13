@@ -14,7 +14,7 @@ public class View {
     public static final ResourceBundle resourceBundle =
             ResourceBundle.getBundle(BUNDLE_NAME,
                     //new Locale("ua", "UA"));
-    new Locale("en"));
+                    new Locale("en"));
 
     /**
      * Method, which print message
@@ -25,12 +25,22 @@ public class View {
         System.out.println(message);
     }
 
+    /**
+     * Method, which input message for input data
+     *
+     * @param nameOfData - type, which user must input data
+     */
     public void printInputMessage(String nameOfData) {
         printMessage(concatenateStrings(
                 resourceBundle.getString(INPUT_STRING_DATA),
                 resourceBundle.getString(nameOfData)));
     }
 
+    /**
+     * Method, which input message about wrong input
+     *
+     * @param nameOfData - type, which user must input data
+     */
     public void printWrongInputMessage(String nameOfData) {
         printMessage(concatenateStrings(
                 resourceBundle.getString(WRONG_INPUT_STRING_DATA),
@@ -38,6 +48,12 @@ public class View {
                 resourceBundle.getString(nameOfData)));
     }
 
+    /**
+     * Method, which change array of String to one String using StringBuilder
+     *
+     * @param messages - array of String, which will be append to each other
+     * @return result of appending
+     */
     public String concatenateStrings(String... messages) {
         StringBuilder result = new StringBuilder();
         for (String message : messages) {

@@ -22,6 +22,9 @@ public class InputController {
         this.utilityController = new UtilityController(this.model, this.view, this.scanner);
     }
 
+    /**
+     * Method, which work with console, actually check input data and set in model
+     */
     public void inputInstructions() {
         String regexForLastName = (String.valueOf(View.resourceBundle.getLocale()).equals("ua"))
                 ? LAST_NAME_UA_REGEX : LAST_NAME_EN_REGEX;
