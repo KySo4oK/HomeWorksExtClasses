@@ -1,6 +1,7 @@
 package company.controller;
 
 import company.model.Model;
+import company.view.ConstantContainer;
 import company.view.View;
 
 import java.util.Scanner;
@@ -34,7 +35,7 @@ public class UtilityController {
         String result;
         while (!(scanner.hasNextLine() &&
                 (result = scanner.nextLine()).matches(regex))) {
-            view.printMessage(view.WRONG_INPUT_STRING_DATA);
+            view.printMessage(ConstantContainer.WRONG_INPUT_STRING_DATA);
             getInstruction();
         }
         return result;
@@ -45,7 +46,7 @@ public class UtilityController {
      */
 
     private void getInstruction() {
-        view.printMessage(view.INPUT_STRING_DATA + getNameOfData());
+        view.printMessage(ConstantContainer.INPUT_STRING_DATA + getNameOfData());
     }
 
     /**
@@ -56,7 +57,7 @@ public class UtilityController {
 
     private String getNameOfData() {
         if (model.getLastName() == null)
-            return view.LAST_NAME;
-        return view.NICKNAME;
+            return ConstantContainer.LAST_NAME;
+        return ConstantContainer.NICKNAME;
     }
 }
