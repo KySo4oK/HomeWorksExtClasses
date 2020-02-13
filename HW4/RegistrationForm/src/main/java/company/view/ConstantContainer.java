@@ -4,8 +4,8 @@ public interface ConstantContainer {
     /**
      * Constants for printing
      */
-    String INPUT_STRING_DATA = "Input your - ";
-    String LAST_NAME = "last name";
-    String NICKNAME = " nickname";
-    String WRONG_INPUT_STRING_DATA = "wrong input data, please try again";
+    String INPUT_STRING_DATA = "input.string.data";
+    String LAST_NAME = "input.last.name";
+    String NICKNAME = "input.nickname";
+    String WRONG_INPUT_STRING_DATA = "input.wrong.data";
 }
