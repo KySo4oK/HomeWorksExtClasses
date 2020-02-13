@@ -1,5 +1,6 @@
 package company.view;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -13,8 +14,8 @@ public class View {
     public static final String BUNDLE_NAME = "messages";
     public static final ResourceBundle resourceBundle =
             ResourceBundle.getBundle(BUNDLE_NAME,
-                    //new Locale("ua", "UA"));
-                    new Locale("en"));
+                    new Locale("ua", "UA"));
+                    //new Locale("en"));
 
     /**
      * Method, which print message
@@ -30,10 +31,10 @@ public class View {
      *
      * @param nameOfData - type, which user must input data
      */
-    public void printInputMessage(String nameOfData) {
+    public void printInputMessage(String nameOfData) throws UnsupportedEncodingException {
         printMessage(concatenateStrings(
-                resourceBundle.getString(INPUT_STRING_DATA),
-                resourceBundle.getString(nameOfData)));
+                getStringFromResourceBundle(INPUT_STRING_DATA),
+                getStringFromResourceBundle(nameOfData)));
     }
 
     /**
@@ -41,11 +42,15 @@ public class View {
      *
      * @param nameOfData - type, which user must input data
      */
-    public void printWrongInputMessage(String nameOfData) {
+    public void printWrongInputMessage(String nameOfData) throws UnsupportedEncodingException {
         printMessage(concatenateStrings(
-                resourceBundle.getString(WRONG_INPUT_STRING_DATA),
-                resourceBundle.getString(INPUT_STRING_DATA),
-                resourceBundle.getString(nameOfData)));
+                getStringFromResourceBundle(WRONG_INPUT_STRING_DATA),
+                getStringFromResourceBundle(INPUT_STRING_DATA),
+                getStringFromResourceBundle(nameOfData)));
+    }
+
+    public String getStringFromResourceBundle(String message) throws UnsupportedEncodingException {
+        return new String(resourceBundle.getString(message).getBytes("ISO-8859-1"),"UTF-8");
     }
 
     /**

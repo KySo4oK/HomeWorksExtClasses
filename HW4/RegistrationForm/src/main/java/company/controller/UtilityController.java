@@ -3,6 +3,7 @@ package company.controller;
 import company.model.Model;
 import company.view.View;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 
@@ -33,7 +34,7 @@ public class UtilityController {
      * @param nameOfData - type of which we want input
      * @return - result of work with console, actually contains the last line + checking with regex
      */
-    public String inputStringValueWithScanner(String nameOfData, String regex) {
+    public String inputStringValueWithScanner(String nameOfData, String regex) throws UnsupportedEncodingException {
         view.printInputMessage(nameOfData);
         String result;
         while (!(scanner.hasNextLine() &&

@@ -3,6 +3,7 @@ package company.controller;
 import company.model.Model;
 import company.view.View;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 /**
@@ -28,7 +29,7 @@ public class Controller {
      * Method which "run" our app
      */
 
-    public void processUser() {
+    public void processUser() throws UnsupportedEncodingException {
         Scanner scanner = new Scanner(System.in);
         InputController inputController = new InputController(view, scanner, model);
         inputController.inputInstructions();

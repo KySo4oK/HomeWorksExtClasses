@@ -3,6 +3,7 @@ package company.controller;
 import company.model.Model;
 import company.view.View;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
 import static company.controller.Regex.*;
@@ -25,7 +26,7 @@ public class InputController {
     /**
      * Method, which work with console, actually check input data and set in model
      */
-    public void inputInstructions() {
+    public void inputInstructions() throws UnsupportedEncodingException {
         String regexForLastName = (String.valueOf(View.resourceBundle.getLocale()).equals("ua"))
                 ? LAST_NAME_UA_REGEX : LAST_NAME_EN_REGEX;
         model.setLastName(utilityController.inputStringValueWithScanner(LAST_NAME, regexForLastName));
