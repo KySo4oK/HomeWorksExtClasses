@@ -1,6 +1,12 @@
 package company.model;
 
+/**
+ * Entity, which represent our data of app in mvc
+ */
 public class Model {
+    /**
+     * Data of user
+     */
     private String lastName;
     private String nickName;
 
