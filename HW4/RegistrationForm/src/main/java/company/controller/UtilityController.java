@@ -30,7 +30,7 @@ public class UtilityController {
     }
 
     /**
-     * @param regex - regex, which help us check accessibility for this line from Scanner
+     * @param regex      - regex, which help us check accessibility for this line from Scanner
      * @param nameOfData - type of which we want input
      * @return - result of work with console, actually contains the last line + checking with regex
      */

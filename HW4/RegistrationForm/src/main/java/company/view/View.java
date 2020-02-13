@@ -15,7 +15,7 @@ public class View {
     public static final ResourceBundle resourceBundle =
             ResourceBundle.getBundle(BUNDLE_NAME,
                     new Locale("ua", "UA"));
-                    //new Locale("en"));
+    //new Locale("en"));
 
     /**
      * Method, which print message
@@ -49,8 +49,15 @@ public class View {
                 getStringFromResourceBundle(nameOfData)));
     }
 
+    /**
+     * Method, which get string from ResourceBundle and change charset
+     *
+     * @param message - name of data, which be load from .properties
+     * @return new String, actually String from .properties with changing charset
+     * @throws UnsupportedEncodingException cause app has problem with charset's and I make decision to change charset
+     */
     public String getStringFromResourceBundle(String message) throws UnsupportedEncodingException {
-        return new String(resourceBundle.getString(message).getBytes("ISO-8859-1"),"UTF-8");
+        return new String(resourceBundle.getString(message).getBytes("ISO-8859-1"), "UTF-8");
     }
 
     /**
