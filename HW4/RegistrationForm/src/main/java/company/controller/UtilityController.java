@@ -1,12 +1,10 @@
 package company.controller;
 
 import company.model.Model;
-import company.view.ConstantContainer;
 import company.view.View;
 
 import java.util.Scanner;
 
-import static company.view.ConstantContainer.*;
 
 /**
  * Entity for input value from scanner and set them to Model
@@ -15,51 +13,33 @@ import static company.view.ConstantContainer.*;
 public class UtilityController {
     private Model model;
     private View view;
+    private Scanner scanner;
 
     /**
      * Common constructor for creating UtilityController with model and view
      *
-     * @param model - object that we'll be using for connecting with Model entity, actually for setters
-     * @param view  - object that we'll be using for connecting with View entity, actually for getting literals for menu
+     * @param model   - object that we'll be using for connecting with Model entity, actually for setters
+     * @param view    - object that we'll be using for connecting with View entity, actually for getting literals for menu
+     * @param scanner - Scanner which we open in Controller.class
      */
-    public UtilityController(Model model, View view) {
+    public UtilityController(Model model, View view, Scanner scanner) {
         this.model = model;
         this.view = view;
+        this.scanner = scanner;
     }
 
     /**
-     * @param scanner - Scanner which we open in Controller.class
-     * @param regex   - regex, which help us check accessibility for this line from Scanner
+     * @param regex - regex, which help us check accessibility for this line from Scanner
+     * @param nameOfData - type of which we want input
      * @return - result of work with console, actually contains the last line + checking with regex
      */
-    public String inputStringValueWithScanner(Scanner scanner, String regex) {
-        getInstruction();
+    public String inputStringValueWithScanner(String nameOfData, String regex) {
+        view.printInputMessage(nameOfData);
         String result;
         while (!(scanner.hasNextLine() &&
                 (result = scanner.nextLine()).matches(regex))) {
-            view.printMessage(WRONG_INPUT_STRING_DATA);
-            getInstruction();
+            view.printWrongInputMessage(nameOfData);
         }
         return result;
-    }
-
-    /**
-     * Method, which print(make View print) instruction for next input
-     */
-
-    private void getInstruction() {
-        view.printMessage(INPUT_STRING_DATA + getNameOfData());
-    }
-
-    /**
-     * Method for getting name of data, which will be input
-     *
-     * @return name of data, which will be input
-     */
-
-    private String getNameOfData() {
-        if (model.getLastName() == null)
-            return LAST_NAME;
-        return NICKNAME;
     }
 }
