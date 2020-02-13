@@ -5,8 +5,7 @@ import company.view.View;
 
 import java.util.Scanner;
 
-import static company.controller.Regex.LAST_NAME_EN;
-import static company.controller.Regex.NICKNAME;
+import static company.controller.Regex.*;
 
 public class InputController {
     private UtilityController utilityController;
@@ -22,7 +21,7 @@ public class InputController {
     }
 
     public void inputInstructions() {
-        model.setLastName(utilityController.inputStringValueWithScanner(scanner, LAST_NAME_EN));
-        model.setNickName(utilityController.inputStringValueWithScanner(scanner, NICKNAME));
+        model.setLastName(utilityController.inputStringValueWithScanner(scanner, LAST_NAME_EN_REGEX));
+        model.setNickName(utilityController.inputStringValueWithScanner(scanner, NICKNAME_REGEX));
     }
 }

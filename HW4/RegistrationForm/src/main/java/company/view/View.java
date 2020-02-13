@@ -12,4 +12,12 @@ public class View {
     public void printMessage(String message) {
         System.out.println(message);
     }
+
+    public String concatenateStrings(String... messages) {
+        StringBuilder result = new StringBuilder();
+        for (String message : messages) {
+            result.append(message);
+        }
+        return new String(result);
+    }
 }

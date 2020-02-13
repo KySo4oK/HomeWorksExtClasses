@@ -6,6 +6,8 @@ import company.view.View;
 
 import java.util.Scanner;
 
+import static company.view.ConstantContainer.*;
+
 /**
  * Entity for input value from scanner and set them to Model
  */
@@ -35,7 +37,7 @@ public class UtilityController {
         String result;
         while (!(scanner.hasNextLine() &&
                 (result = scanner.nextLine()).matches(regex))) {
-            view.printMessage(ConstantContainer.WRONG_INPUT_STRING_DATA);
+            view.printMessage(WRONG_INPUT_STRING_DATA);
             getInstruction();
         }
         return result;
@@ -46,7 +48,7 @@ public class UtilityController {
      */
 
     private void getInstruction() {
-        view.printMessage(ConstantContainer.INPUT_STRING_DATA + getNameOfData());
+        view.printMessage(INPUT_STRING_DATA + getNameOfData());
     }
 
     /**
@@ -57,7 +59,7 @@ public class UtilityController {
 
     private String getNameOfData() {
         if (model.getLastName() == null)
-            return ConstantContainer.LAST_NAME;
-        return ConstantContainer.NICKNAME;
+            return LAST_NAME;
+        return NICKNAME;
     }
 }
