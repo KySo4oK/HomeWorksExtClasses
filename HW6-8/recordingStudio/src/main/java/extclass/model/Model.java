@@ -1,7 +1,10 @@
 package extclass.model;
 
+import java.util.ArrayList;
+
 public class Model {
     private Sound[] sounds;
+
     public Model(int quantity) {
         sounds = new Sound[quantity];
         for (int i = 0; i < quantity / 2; i++) {
@@ -18,10 +21,14 @@ public class Model {
     }
 
 
-
-
-    public Sound[] getSoundsByRangeOfLength() {
-        return null;
+    public ArrayList<Sound> getSoundsByRangeOfLength(int min, int max) {
+        ArrayList<Sound> soundsByRange = new ArrayList<>();
+        for (int i = 0; i < sounds.length; i++) {
+            if ((sounds[i].getLength() >= min) && (sounds[i].getLength() <= max)) {
+                soundsByRange.add(sounds[i]);
+            }
+        }
+        return soundsByRange;
     }
 
     public int getLength() {
