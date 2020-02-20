@@ -9,6 +9,17 @@ public class Sound {
     }
 
     private int length;
+
+    @Override
+    public String toString() {
+        return "Sound{" +
+                "length=" + length +
+                ", writer='" + writer + '\'' +
+                ", name='" + name + '\'' +
+                ", genre=" + genre +
+                '}';
+    }
+
     private String writer;
     private String name;
 

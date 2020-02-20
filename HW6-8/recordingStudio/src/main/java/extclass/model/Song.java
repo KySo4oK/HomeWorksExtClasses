@@ -8,6 +8,13 @@ public class Song extends Sound {
         this.singer = singer;
     }
 
+    @Override
+    public String toString() {
+        return "Song{" +
+                "singer='" + singer + '\'' +
+                "} " + super.toString();
+    }
+
     public String getSinger() {
         return singer;
     }

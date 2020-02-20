@@ -39,7 +39,7 @@ public class UtilityController {
 
     private void addNewSoundToCollection() {
         while (true) {
-            view.printAddSongMenu();
+            view.printAddSoundMenu(model.getSounds());
             int scanValue = scanner.nextInt();
             switch (scanValue) {
                 default:
