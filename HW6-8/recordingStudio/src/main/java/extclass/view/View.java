@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class View {
     public void printMainMenu() {
+        printMessage(TextConstant.PRINT_INDEX_OF_OPERATIONS);
         printMessage(TextConstant.RECORD);
         printMessage(TextConstant.SORT);
         printMessage(TextConstant.FIND);
@@ -39,5 +40,13 @@ public class View {
 
     public void printLength(int length) {
         printMessage(TextConstant.LENGTH + length);
+    }
+
+    public String concatenateStrings(String... messages) {
+        StringBuilder result = new StringBuilder();
+        for (String message : messages) {
+            result.append(message);
+        }
+        return new String(result);
     }
 }

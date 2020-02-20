@@ -12,4 +12,5 @@ public interface TextConstant {
     String MIN = "min";
     String MAX = "max";
     String FIND_LENGTH = "find.length";
+    String PRINT_INDEX_OF_OPERATIONS = "input.index";
 }

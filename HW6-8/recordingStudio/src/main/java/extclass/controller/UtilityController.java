@@ -29,28 +29,39 @@ public class UtilityController {
                 switch (scanValue) {
                     case 1:
                     case 6:
-                        view.printSoundNamesWithIndex(result);
-                        view.printExitMessage();
+                        exit();
                         return result;
                     case 2:
-                        model.sortByGenre();
+                        sortAndPrint();
+                        break;
                     case 3:
                         findByLengthRange();
+                        break;
                     case 4:
                         addNewSoundToCollection();
+                        break;
                     case 5:
                         view.printLength(model.getLength());
+                        break;
                     default: {
                         view.printWrongInputMessage();
                         break;
                     }
-
                 }
             } else {
                 scanner.nextLine();
-                view.printWrongInputMessage();
             }
         }
+    }
+
+    private void sortAndPrint() {
+        model.sortByGenre();
+        view.printSoundNamesWithIndex(model.getSounds());
+    }
+
+    private void exit() {
+        view.printSoundNamesWithIndex(result);
+        view.printExitMessage();
     }
 
     private void addNewSoundToCollection() {
