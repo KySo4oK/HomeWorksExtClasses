@@ -23,16 +23,29 @@ public class UtilityController {
     public ArrayList<Sound> inputSoundValue() {
         while (true) {
             view.printMainMenu();
-            int scanValue = scanner.nextInt();
-            switch (scanValue) {
-                default:
-                    return result; // record collection or just exit
-                case 2:
-                    model.sortByGenre();
-                case 3:
-                    findByLengthRange();
-                case 4:
-                    addNewSoundToCollection();
+            if(scanner.hasNextInt()) {
+                int scanValue = scanner.nextInt();
+                switch (scanValue) {
+                    case 1:
+                    case 5:
+                        view.printSoundNamesWithIndex(result);
+                        view.printExitMessage();
+                        return result;
+                    case 2:
+                        model.sortByGenre();
+                    case 3:
+                        findByLengthRange();
+                    case 4:
+                        addNewSoundToCollection();
+                    default: {
+                        view.printWrongInputMessage();
+                        break;
+                    }
+
+                }
+            } else {
+                scanner.nextLine();
+                view.printWrongInputMessage();
             }
         }
     }
@@ -41,16 +54,25 @@ public class UtilityController {
         while (true) {
             view.printAddSoundMenu(model.getSounds());
             int scanValue = scanner.nextInt();
-            switch (scanValue) {
-                default:
-                    model.addSongByID(scanValue - 1);
-                case 1:
-                    return;
+            if (scanValue > model.getSounds().size()) {
+                view.printWrongInputMessage();
+                view.printAddSoundMenu(model.getSounds());
+            } else if (scanValue == 0) {
+                return;
+            } else {
+                model.addSongByID(scanValue - 1);
             }
         }
     }
 
     private void findByLengthRange() {
+        inputMinLength();
+        inputMaxLength();
+    }
 
+    private void inputMaxLength() {
+    }
+
+    private void inputMinLength() {
     }
 }

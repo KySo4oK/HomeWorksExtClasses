@@ -6,6 +6,11 @@ import java.util.ArrayList;
 
 public class View {
     public void printMainMenu() {
+        printMessage(TextConstant.RECORD);
+        printMessage(TextConstant.SORT);
+        printMessage(TextConstant.FIND);
+        printMessage(TextConstant.ADD);
+        printMessage(TextConstant.EXIT);
     }
 
     public void printWrongInputMessage() {
@@ -17,13 +22,17 @@ public class View {
         printMessage(TextConstant.SELECT_ID_OF_SONG);
     }
 
-    private void printSoundNamesWithIndex(ArrayList<Sound> sounds) {
-        for(int i = 0; i < sounds.size(); i++){
+    public void printSoundNamesWithIndex(ArrayList<Sound> sounds) {
+        for (int i = 0; i < sounds.size(); i++) {
             printMessage(sounds.get(i).toString());
         }
     }
 
-    public void printMessage(String message){
+    public void printMessage(String message) {
         System.out.println(message);
+    }
+
+    public void printExitMessage() {
+        printMessage(TextConstant.EXIT);
     }
 }

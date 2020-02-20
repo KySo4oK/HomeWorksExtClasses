@@ -1,6 +1,7 @@
 package extclass.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 
 public class Model {
@@ -36,6 +37,7 @@ public class Model {
                     Genre.values()[i % 4],
                     "Singer" + i));
         }
+        this.collection = new ArrayList<>();
     }
 
 
