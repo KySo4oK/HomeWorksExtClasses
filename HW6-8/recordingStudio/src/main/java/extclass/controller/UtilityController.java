@@ -49,6 +49,7 @@ public class UtilityController {
                     }
                 }
             } else {
+                view.printWrongInputMessage();
                 scanner.nextLine();
             }
         }
@@ -75,7 +76,7 @@ public class UtilityController {
                 } else if (scanValue == 0) {
                     return;
                 } else {
-                    model.addSongByID(scanValue - 1);
+                    result.add(model.getSounds().get(scanValue -1));
                 }
             } else {
                 view.printWrongInputMessage();
