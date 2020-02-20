@@ -1,8 +1,10 @@
 package extclass.controller;
 
 import extclass.model.Model;
+import extclass.model.Sound;
 import extclass.view.View;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UtilityController {
@@ -14,5 +16,15 @@ public class UtilityController {
         this.model = model;
         this.view = view;
         this.scanner = scanner;
+    }
+
+    public ArrayList<Sound> inputSoundValue() {
+        view.printMainMenu();
+        ArrayList<Sound> result = new ArrayList<>();
+        while (!(scanner.hasNextLine() &&
+                (scanner.nextInt() != 5))) {
+            view.printWrongInputMessage();
+        }
+        return result;
     }
 }

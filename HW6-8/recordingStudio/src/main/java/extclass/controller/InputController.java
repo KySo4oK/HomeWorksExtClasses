@@ -19,6 +19,6 @@ public class InputController {
     }
 
     public void inputNote() {
-
+        model.setCollection(utilityController.inputSoundValue());
     }
 }

@@ -1,11 +1,27 @@
 package extclass.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class Model {
     private ArrayList<Sound> sounds;
+    private ArrayList<Sound> collection;
+
+    public ArrayList<Sound> getSounds() {
+        return sounds;
+    }
+
+    public void setSounds(ArrayList<Sound> sounds) {
+        this.sounds = sounds;
+    }
+
+    public ArrayList<Sound> getCollection() {
+        return collection;
+    }
+
+    public void setCollection(ArrayList<Sound> collection) {
+        this.collection = collection;
+    }
 
     public Model(int quantity) {
         sounds = new ArrayList<>();
