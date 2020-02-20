@@ -11,4 +11,5 @@ public interface TextConstant {
     String LENGTH = "length";
     String MIN = "min";
     String MAX = "max";
+    String FIND_LENGTH = "find.length";
 }

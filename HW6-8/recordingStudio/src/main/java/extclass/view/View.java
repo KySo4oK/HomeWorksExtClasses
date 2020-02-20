@@ -10,6 +10,7 @@ public class View {
         printMessage(TextConstant.SORT);
         printMessage(TextConstant.FIND);
         printMessage(TextConstant.ADD);
+        printMessage(TextConstant.FIND_LENGTH);
         printMessage(TextConstant.EXIT);
     }
 
