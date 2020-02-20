@@ -67,25 +67,30 @@ public class UtilityController {
     private void addNewSoundToCollection() {
         while (true) {
             view.printAddSoundMenu(model.getSounds());
-            int scanValue = scanner.nextInt();
-            if (scanValue > model.getSounds().size()) {
-                view.printWrongInputMessage();
-                view.printAddSoundMenu(model.getSounds());
-            } else if (scanValue == 0) {
-                return;
+            if(scanner.hasNextInt()) {
+                int scanValue = scanner.nextInt();
+                if (scanValue > model.getSounds().size()) {
+                    view.printWrongInputMessage();
+                    view.printAddSoundMenu(model.getSounds());
+                } else if (scanValue == 0) {
+                    return;
+                } else {
+                    model.addSongByID(scanValue - 1);
+                }
             } else {
-                model.addSongByID(scanValue - 1);
+                view.printWrongInputMessage();
+                scanner.nextLine();
             }
         }
     }
 
     private void findByLengthRange() {
-        model.getSoundsByRangeOfLength(inputMinLength(), inputMaxLength());
-
+        view.printSoundNamesWithIndex(model.getSoundsByRangeOfLength(
+                inputMinLength(), inputMaxLength()));
     }
 
     private int inputMaxLength() {
-        return inputLimitOfRange(TextConstant.MIN);
+        return inputLimitOfRange(TextConstant.MAX);
     }
 
     private int inputLimitOfRange(String limit) {
@@ -101,6 +106,6 @@ public class UtilityController {
     }
 
     private int inputMinLength() {
-        return inputLimitOfRange(TextConstant.MAX);
+        return inputLimitOfRange(TextConstant.MIN);
     }
 }
