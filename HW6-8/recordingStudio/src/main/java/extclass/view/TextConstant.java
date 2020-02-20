@@ -8,4 +8,7 @@ public interface TextConstant {
     String SORT = "sort.sounds";
     String FIND = "find.by.range";
     String ADD = "add.sound";
+    String LENGTH = "length";
+    String MIN = "min";
+    String MAX = "max";
 }

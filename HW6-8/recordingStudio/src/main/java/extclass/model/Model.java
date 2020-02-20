@@ -53,8 +53,8 @@ public class Model {
 
     public int getLength() {
         int length = 0;
-        for (int i = 0; i < sounds.size(); i++) {
-            length += sounds.get(i).getLength();
+        for (int i = 0; i < collection.size(); i++) {
+            length += collection.get(i).getLength();
         }
         return length;
     }

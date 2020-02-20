@@ -35,4 +35,8 @@ public class View {
     public void printExitMessage() {
         printMessage(TextConstant.EXIT);
     }
+
+    public void printLength(int length) {
+        printMessage(TextConstant.LENGTH + length);
+    }
 }

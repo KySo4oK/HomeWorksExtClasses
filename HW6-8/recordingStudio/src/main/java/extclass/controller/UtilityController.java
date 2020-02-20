@@ -2,6 +2,7 @@ package extclass.controller;
 
 import extclass.model.Model;
 import extclass.model.Sound;
+import extclass.view.TextConstant;
 import extclass.view.View;
 
 import java.util.ArrayList;
@@ -23,11 +24,11 @@ public class UtilityController {
     public ArrayList<Sound> inputSoundValue() {
         while (true) {
             view.printMainMenu();
-            if(scanner.hasNextInt()) {
+            if (scanner.hasNextInt()) {
                 int scanValue = scanner.nextInt();
                 switch (scanValue) {
                     case 1:
-                    case 5:
+                    case 6:
                         view.printSoundNamesWithIndex(result);
                         view.printExitMessage();
                         return result;
@@ -37,6 +38,8 @@ public class UtilityController {
                         findByLengthRange();
                     case 4:
                         addNewSoundToCollection();
+                    case 5:
+                        view.printLength(model.getLength());
                     default: {
                         view.printWrongInputMessage();
                         break;
@@ -66,13 +69,27 @@ public class UtilityController {
     }
 
     private void findByLengthRange() {
-        inputMinLength();
-        inputMaxLength();
+        model.getSoundsByRangeOfLength(inputMinLength(), inputMaxLength());
+
     }
 
-    private void inputMaxLength() {
+    private int inputMaxLength() {
+        return inputLimitOfRange(TextConstant.MIN);
     }
 
-    private void inputMinLength() {
+    private int inputLimitOfRange(String limit) {
+        while (true) {
+            view.printMessage(limit);
+            if (scanner.hasNextInt()) {
+                return scanner.nextInt();
+            } else {
+                scanner.nextLine();
+                view.printWrongInputMessage();
+            }
+        }
+    }
+
+    private int inputMinLength() {
+        return inputLimitOfRange(TextConstant.MAX);
     }
 }
