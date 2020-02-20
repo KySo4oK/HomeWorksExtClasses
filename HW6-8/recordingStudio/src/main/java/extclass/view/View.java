@@ -6,4 +6,7 @@ public class View {
 
     public void printWrongInputMessage() {
     }
+
+    public void printAddSongMenu() {
+    }
 }

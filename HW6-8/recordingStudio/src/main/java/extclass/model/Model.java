@@ -60,4 +60,8 @@ public class Model {
     public void sortByGenre() {
         sounds.sort(Comparator.comparing(Sound::getGenre));
     }
+
+    public void addSongByID(int index) {
+        collection.add(sounds.get(index));
+    }
 }
