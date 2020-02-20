@@ -1,6 +1,13 @@
 package extclass.model;
 
 public class Sound {
+    public Sound(int length, String writer, String name, Genre genre) {
+        this.length = length;
+        this.writer = writer;
+        this.name = name;
+        this.genre = genre;
+    }
+
     private int length;
     private String writer;
     private String name;
