@@ -68,15 +68,14 @@ public class UtilityController {
     private void addNewSoundToCollection() {
         while (true) {
             view.printAddSoundMenu(model.getSounds());
-            if(scanner.hasNextInt()) {
+            if (scanner.hasNextInt()) {
                 int scanValue = scanner.nextInt();
                 if (scanValue > model.getSounds().size()) {
                     view.printWrongInputMessage();
-                    view.printAddSoundMenu(model.getSounds());
                 } else if (scanValue == 0) {
                     return;
                 } else {
-                    result.add(model.getSounds().get(scanValue -1));
+                    result.add(model.getSounds().get(scanValue - 1));
                 }
             } else {
                 view.printWrongInputMessage();
@@ -96,7 +95,7 @@ public class UtilityController {
 
     private int inputLimitOfRange(String limit) {
         while (true) {
-            view.printMessage(limit);
+            view.printMessageFromProperties(limit);
             if (scanner.hasNextInt()) {
                 return scanner.nextInt();
             } else {
