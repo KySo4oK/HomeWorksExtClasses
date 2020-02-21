@@ -41,6 +41,7 @@ public class UtilityController {
                         addNewSoundToCollection();
                         break;
                     case 5:
+                        model.setCollection(result);
                         view.printLength(model.getLength());
                         break;
                     default: {
