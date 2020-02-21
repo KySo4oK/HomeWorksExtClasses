@@ -3,25 +3,33 @@ package extclass.view;
 import extclass.model.Sound;
 
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class View {
+    public static final String BUNDLE_NAME = "messages";
+    public static final ResourceBundle resourceBundle =
+            ResourceBundle.getBundle(BUNDLE_NAME,
+                    //new Locale("ua", "UA"));
+                    new Locale("en"));
+
     public void printMainMenu() {
-        printMessage(TextConstant.PRINT_INDEX_OF_OPERATIONS);
-        printMessage(TextConstant.RECORD);
-        printMessage(TextConstant.SORT);
-        printMessage(TextConstant.FIND);
-        printMessage(TextConstant.ADD);
-        printMessage(TextConstant.FIND_LENGTH);
-        printMessage(TextConstant.EXIT);
+        printMessage(resourceBundle.getString(TextConstant.PRINT_INDEX_OF_OPERATIONS));
+        printMessage(resourceBundle.getString(TextConstant.RECORD));
+        printMessage(resourceBundle.getString(TextConstant.SORT));
+        printMessage(resourceBundle.getString(TextConstant.FIND));
+        printMessage(resourceBundle.getString(TextConstant.ADD));
+        printMessage(resourceBundle.getString(TextConstant.FIND_LENGTH));
+        printMessage(resourceBundle.getString(TextConstant.EXIT));
     }
 
     public void printWrongInputMessage() {
-        printMessage(TextConstant.WRONG_INPUT);
+        printMessage(resourceBundle.getString(TextConstant.WRONG_INPUT));
     }
 
     public void printAddSoundMenu(ArrayList<Sound> sounds) {
         printSoundNamesWithIndex(sounds);
-        printMessage(TextConstant.SELECT_ID_OF_SONG);
+        printMessage(resourceBundle.getString(TextConstant.SELECT_ID_OF_SONG));
     }
 
     public void printSoundNamesWithIndex(ArrayList<Sound> sounds) {
@@ -35,11 +43,11 @@ public class View {
     }
 
     public void printExitMessage() {
-        printMessage(TextConstant.EXIT);
+        printMessage(resourceBundle.getString(TextConstant.EXIT));
     }
 
     public void printLength(int length) {
-        printMessage(TextConstant.LENGTH + length);
+        printMessage(resourceBundle.getString(TextConstant.LENGTH) + length);
     }
 
     public String concatenateStrings(String... messages) {
