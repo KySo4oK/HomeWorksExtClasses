@@ -94,6 +94,11 @@ public class UtilityController {
         return inputLimitOfRange(TextConstant.MAX);
     }
 
+    /**
+     * method which return one of limits
+     * @param limit - min or max
+     * @return one of range limit
+     */
     private int inputLimitOfRange(String limit) {
         while (true) {
             view.printMessage(limit);
