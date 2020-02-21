@@ -10,8 +10,8 @@ public class View {
     public static final String BUNDLE_NAME = "messages";
     public static final ResourceBundle resourceBundle =
             ResourceBundle.getBundle(BUNDLE_NAME,
-                    //new Locale("ua", "UA"));
-                    new Locale("en"));
+                    new Locale("ua", "UA"));
+                    //new Locale("en"));
 
     public void printMainMenu() {
         printMessage(resourceBundle.getString(TextConstant.PRINT_INDEX_OF_OPERATIONS));
