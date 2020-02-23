@@ -10,15 +10,17 @@ import java.util.Scanner;
  */
 public class Controller {
     private View view;
+    private Model model;
 
     public Controller(Model model, View view) {
         this.view = view;
+        this.model = model;
     }
 
     public void processUser() {
         Scanner sc = new Scanner(System.in);
         InputNoteNoteBook inputNoteNoteBook =
-                new InputNoteNoteBook(view, sc);
+                new InputNoteNoteBook(view, model, sc);
         inputNoteNoteBook.inputNote();
     }
 }

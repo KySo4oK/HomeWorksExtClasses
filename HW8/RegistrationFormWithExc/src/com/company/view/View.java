@@ -3,8 +3,7 @@ package com.company.view;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import static com.company.view.TextConstant.INPUT_STRING_DATA;
-import static com.company.view.TextConstant.WRONG_INPUT_DATA;
+import static com.company.view.TextConstant.*;
 
 /**
  * Created by student on 26.09.2017.
@@ -55,10 +54,14 @@ public class View {
 
 
     public String getRegexName() {
-        return bundle.getString(TextConstant.NAME_REGEX);
+        return bundle.getString(NAME_REGEX);
     }
 
     public String getRegexLogin() {
-        return bundle.getString(TextConstant.LOGIN_REGEX);
+        return bundle.getString(LOGIN_REGEX);
+    }
+
+    public void printNotUniqueLoginMessage() {
+        printMessage(bundle.getString(NOT_UNIQUE_LOGIN));
     }
 }

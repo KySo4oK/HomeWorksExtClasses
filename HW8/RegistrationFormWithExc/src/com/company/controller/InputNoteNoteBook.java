@@ -1,5 +1,8 @@
 package com.company.controller;
 
+import com.company.model.Model;
+import com.company.model.NotUniqueLoginException;
+import com.company.view.TextConstant;
 import com.company.view.View;
 
 import java.util.Scanner;
@@ -16,21 +19,37 @@ public class InputNoteNoteBook {
 
     private String firstName;
     private String login;
+    private Model model;
+    private UtilityController utilityController;
 
-    InputNoteNoteBook(View view, Scanner sc) {
+    InputNoteNoteBook(View view, Model model, Scanner sc) {
         this.view = view;
         this.sc = sc;
+        this.model = model;
+        this.utilityController = new UtilityController(sc,view);
     }
 
     void inputNote() {
-        UtilityController utilityController =
-                new UtilityController(sc, view);
+        inputFirstName();
+        inputLogin();
+        try {
+            model.setNewUser(login,firstName);
+        } catch (NotUniqueLoginException e) {
+            e.printStackTrace();
+            view.printNotUniqueLoginMessage();
+            inputLogin();
+        }
+    }
 
-        this.firstName =
-                utilityController.inputStringValueWithScanner
-                        (FIRST_NAME, view.getRegexName());
+    private void inputLogin() {
         this.login =
                 utilityController.inputStringValueWithScanner
                         (LOGIN_DATA, view.getRegexLogin());
+    }
+
+    private void inputFirstName() {
+        this.firstName =
+                utilityController.inputStringValueWithScanner
+                        (FIRST_NAME, view.getRegexName());
     }
 }

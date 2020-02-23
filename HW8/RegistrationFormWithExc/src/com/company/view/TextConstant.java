@@ -10,4 +10,5 @@ public interface TextConstant {
     String LOGIN_DATA = "input.login.data";
     String NAME_REGEX = "input.regex.name";
     String LOGIN_REGEX = "input.regex.login";
+    String NOT_UNIQUE_LOGIN = "input.wrong.login";
 }
