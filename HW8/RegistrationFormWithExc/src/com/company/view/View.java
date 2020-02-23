@@ -54,4 +54,11 @@ public class View {
     }
 
 
+    public String getRegexName() {
+        return bundle.getString(TextConstant.NAME_REGEX);
+    }
+
+    public String getRegexLogin() {
+        return bundle.getString(TextConstant.LOGIN_REGEX);
+    }
 }

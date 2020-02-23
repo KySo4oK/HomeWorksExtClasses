@@ -4,8 +4,6 @@ import com.company.view.View;
 
 import java.util.Scanner;
 
-import static com.company.controller.RegexContainer.*;
-import static com.company.controller.RegexContainer.REGEX_LOGIN;
 import static com.company.view.TextConstant.*;
 import static com.company.view.TextConstant.LOGIN_DATA;
 
@@ -24,17 +22,15 @@ public class InputNoteNoteBook {
         this.sc = sc;
     }
 
-       void inputNote() {
+    void inputNote() {
         UtilityController utilityController =
                 new UtilityController(sc, view);
-        String str = (String.valueOf(View.bundle.getLocale()).equals("ua"))
-                ? REGEX_NAME_UKR : REGEX_NAME_LAT;
 
         this.firstName =
                 utilityController.inputStringValueWithScanner
-                        (FIRST_NAME, str);
+                        (FIRST_NAME, view.getRegexName());
         this.login =
                 utilityController.inputStringValueWithScanner
-                        (LOGIN_DATA, REGEX_LOGIN);
+                        (LOGIN_DATA, view.getRegexLogin());
     }
 }
