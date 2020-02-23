@@ -24,7 +24,7 @@ public class View {
      *
      * @param message
      */
-    public void printMessage(String message){
+    private void printMessage(String message){
         System.out.println(message);
     }
     /**
@@ -32,7 +32,7 @@ public class View {
      * @param message
      * @return
      */
-    public String concatenationString(String... message){
+    private String concatenationString(String... message){
             StringBuilder concatString = new StringBuilder();
             for(String v : message) {
                 concatString = concatString.append(v);

@@ -19,12 +19,12 @@ public class InputNoteNoteBook {
     private String firstName;
     private String login;
 
-    public InputNoteNoteBook(View view, Scanner sc) {
+    InputNoteNoteBook(View view, Scanner sc) {
         this.view = view;
         this.sc = sc;
     }
 
-       public void inputNote() {
+       void inputNote() {
         UtilityController utilityController =
                 new UtilityController(sc, view);
         String str = (String.valueOf(View.bundle.getLocale()).equals("ua"))
