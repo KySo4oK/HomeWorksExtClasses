@@ -5,11 +5,12 @@ package com.company.model;
  */
 public class Model {
     private DataBase dataBase;
+
     public Model(DataBase dataBase) {
         this.dataBase = dataBase;
     }
 
     public void setNewUser(String login, String firstName) throws NotUniqueLoginException {
-        dataBase.writeNewUser(login,firstName);
+        dataBase.writeNewUser(login, firstName);
     }
 }

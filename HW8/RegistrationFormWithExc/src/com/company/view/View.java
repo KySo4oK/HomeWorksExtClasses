@@ -16,27 +16,27 @@ public class View {
             ResourceBundle.getBundle(
                     MESSAGES_BUNDLE_NAME,
                     new Locale("ua", "UA"));  // Ukrainian
-                    //new Locale("en"));        // English
+    //new Locale("en"));        // English
 
     //Utilities methods
+
     /**
-     *
      * @param message
      */
-    private void printMessage(String message){
+    private void printMessage(String message) {
         System.out.println(message);
     }
+
     /**
-     *
      * @param message
      * @return
      */
-    private String concatenationString(String... message){
-            StringBuilder concatString = new StringBuilder();
-            for(String v : message) {
-                concatString = concatString.append(v);
-            }
-            return new String(concatString);
+    private String concatenationString(String... message) {
+        StringBuilder concatString = new StringBuilder();
+        for (String v : message) {
+            concatString = concatString.append(v);
+        }
+        return new String(concatString);
     }
 
     public void printStringInput(String message) {

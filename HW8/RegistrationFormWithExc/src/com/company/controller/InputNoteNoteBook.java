@@ -26,14 +26,14 @@ public class InputNoteNoteBook {
         this.view = view;
         this.sc = sc;
         this.model = model;
-        this.utilityController = new UtilityController(sc,view);
+        this.utilityController = new UtilityController(sc, view);
     }
 
     void inputNote() {
         inputFirstName();
         inputLogin();
         try {
-            model.setNewUser(login,firstName);
+            model.setNewUser(login, firstName);
         } catch (NotUniqueLoginException e) {
             e.printStackTrace();
             view.printNotUniqueLoginMessage();
