@@ -15,7 +15,6 @@ import static com.company.view.TextConstant.LOGIN_DATA;
  */
 public class InputNoteNoteBook {
     private View view;
-    private Scanner sc;
 
     private String firstName;
     private String login;
@@ -24,7 +23,6 @@ public class InputNoteNoteBook {
 
     InputNoteNoteBook(View view, Model model, Scanner sc) {
         this.view = view;
-        this.sc = sc;
         this.model = model;
         this.utilityController = new UtilityController(sc, view);
     }
@@ -37,7 +35,7 @@ public class InputNoteNoteBook {
         } catch (NotUniqueLoginException e) {
             e.printStackTrace();
             view.printNotUniqueLoginMessage();
-            inputLogin();
+            inputNote();
         }
     }
 
