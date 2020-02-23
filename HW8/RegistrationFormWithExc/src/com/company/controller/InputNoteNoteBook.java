@@ -30,12 +30,16 @@ public class InputNoteNoteBook {
     void inputNote() {
         inputFirstName();
         inputLogin();
+        setUser();
+    }
+
+    private void setUser() {
         try {
             model.setNewUser(login, firstName);
         } catch (NotUniqueLoginException e) {
             e.printStackTrace();
             view.printNotUniqueLoginMessage();
-            inputNote();
+            inputLogin();
         }
     }
 
