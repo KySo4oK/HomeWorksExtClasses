@@ -1,7 +1,6 @@
 package extclass.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 
 public class Model {
@@ -43,9 +42,9 @@ public class Model {
 
     public ArrayList<Sound> getSoundsByRangeOfLength(int min, int max) {
         ArrayList<Sound> soundsByRange = new ArrayList<>();
-        for (int i = 0; i < sounds.size(); i++) {
-            if ((sounds.get(i).getLength() >= min) && (sounds.get(i).getLength() <= max)) {
-                soundsByRange.add(sounds.get(i));
+        for (Sound sound : sounds) {
+            if ((sound.getLength() >= min) && (sound.getLength() <= max)) {
+                soundsByRange.add(sound);
             }
         }
         return soundsByRange;
@@ -53,8 +52,8 @@ public class Model {
 
     public int getLength() {
         int length = 0;
-        for (int i = 0; i < collection.size(); i++) {
-            length += collection.get(i).getLength();
+        for (Sound sound : collection) {
+            length += sound.getLength();
         }
         return length;
     }

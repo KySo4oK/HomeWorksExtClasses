@@ -10,8 +10,8 @@ import java.util.*;
 
 
 public class View {
-    public static final String BUNDLE_NAME = "messages";
-    public static final ResourceBundle resourceBundle =
+    private static final String BUNDLE_NAME = "messages";
+    private static final ResourceBundle resourceBundle =
             ResourceBundle.getBundle(BUNDLE_NAME,
                     // new Locale("ua", "UA"));
                     new Locale("en"));
@@ -41,7 +41,7 @@ public class View {
         }
     }
 
-    public void printMessage(String message) {
+    private void printMessage(String message) {
         System.out.println(message);
     }
 

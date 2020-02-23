@@ -8,20 +8,20 @@ import extclass.view.View;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class UtilityController {
+class UtilityController {
     private Model model;
     private View view;
     private Scanner scanner;
     private ArrayList<Sound> result;
 
-    public UtilityController(Model model, View view, Scanner scanner) {
+    UtilityController(Model model, View view, Scanner scanner) {
         this.model = model;
         this.view = view;
         this.scanner = scanner;
         this.result = new ArrayList<>();
     }
 
-    public ArrayList<Sound> inputSoundValue() {
+    ArrayList<Sound> inputSoundValue() {
         while (true) {
             view.printMainMenu();
             if (scanner.hasNextInt()) {

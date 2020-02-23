@@ -1,7 +1,7 @@
 package extclass.model;
 
 public class Sound {
-    public Sound(int length, String writer, String name, Genre genre) {
+    Sound(int length, String writer, String name, Genre genre) {
         this.length = length;
         this.writer = writer;
         this.name = name;
@@ -23,7 +23,7 @@ public class Sound {
     private String writer;
     private String name;
 
-    public Genre getGenre() {
+    Genre getGenre() {
         return genre;
     }
 
@@ -33,7 +33,7 @@ public class Sound {
 
     private Genre genre;
 
-    public int getLength() {
+    int getLength() {
         return length;
     }
 
