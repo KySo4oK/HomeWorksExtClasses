@@ -1,9 +1,12 @@
 package extclasses;
 
-import java.util.IntSummaryStatistics;
-import java.util.OptionalDouble;
+import com.sun.istack.internal.NotNull;
+
+import java.awt.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
  * Hello world!
@@ -24,11 +27,17 @@ public class App {
                 IntStream
                         .of(ints)
                         .summaryStatistics();
-        return (double) (intSummaryStatistics.getSum()/intSummaryStatistics.getCount());
+        return (double) (intSummaryStatistics.getSum() / intSummaryStatistics.getCount());
     }
 
     public int[] getMinValueWithIndex(int[] ints) {
-       return null;
+        return IntStream
+                .of(ints)
+                .boxed()
+                .collect(Collectors.toList())
+                .stream()
+                .collect(Collectors.toMap(e -> (Integer) e, e -> Arrays.asList(ints).indexOf(e)))
+
     }
 
     public long countEqualsZero(int[] ints) {
