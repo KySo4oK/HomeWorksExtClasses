@@ -39,7 +39,7 @@ public class AppTest {
     public void testGetMinValueWithIndex() {
         App app = new App();
         Map.Entry<Integer, Integer> result = app.getMinValueWithIndex(new int[]{3, 4, 5});
-        assertTrue((result.getKey() == 0) && (result.getValue() == 3));
+        assertTrue((result.getKey() == 3) && (result.getValue() == 0));
     }
 
     @Test
