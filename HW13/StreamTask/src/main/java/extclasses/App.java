@@ -30,14 +30,15 @@ public class App {
         return (double) (intSummaryStatistics.getSum() / intSummaryStatistics.getCount());
     }
 
-    public int[] getMinValueWithIndex(int[] ints) {
-        return IntStream
-                .of(ints)
-                .boxed()
-                .collect(Collectors.toList())
-                .stream()
-                .collect(Collectors.toMap(e -> (Integer) e, e -> Arrays.asList(ints).indexOf(e)))
-
+    public Map.Entry<Integer,Integer> getMinValueWithIndex(int[] ints) {
+        return Collections.min(
+                IntStream
+                        .of(ints)
+                        .boxed()
+                        .collect(Collectors.toList())
+                        .stream()
+                        .collect(Collectors.toMap(e -> Arrays.asList(ints).indexOf(e),e -> (Integer) e))
+                        .entrySet(), Comparator.comparing(Map.Entry::getValue));
     }
 
     public long countEqualsZero(int[] ints) {

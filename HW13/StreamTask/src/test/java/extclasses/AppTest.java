@@ -7,6 +7,8 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.Map;
+
 /**
  * Unit test for simple App.
  */
@@ -33,12 +35,11 @@ public class AppTest {
         assertEquals(result, 4.0);
     }
 
-    @Ignore
     @Test
     public void testGetMinValueWithIndex() {
         App app = new App();
-        int[] result = app.getMinValueWithIndex(new int[]{3, 4, 5});
-        assertTrue((result[0] == 0) && (result[1] == 3));
+        Map.Entry<Integer, Integer> result = app.getMinValueWithIndex(new int[]{3, 4, 5});
+        assertTrue((result.getKey() == 0) && (result.getValue() == 3));
     }
 
     @Test
@@ -58,11 +59,11 @@ public class AppTest {
     @Test
     public void testMultiplyWithNumber() {
         App app = new App();
-        int[] ints = {0,0,3,4,4,4,5,6,7};
+        int[] ints = {0, 0, 3, 4, 4, 4, 5, 6, 7};
         int number = 123;
         int[] result = app.multiplyWithNumber(ints, number);
         for (int i = 0; i < result.length; i++) {
-            if (result[i] != ints[i]*number) {
+            if (result[i] != ints[i] * number) {
                 Assert.fail();
             }
         }
