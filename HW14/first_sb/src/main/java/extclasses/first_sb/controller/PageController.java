@@ -6,23 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
 public class PageController {
-
-
+    @Autowired
     private Service service;
 
-    @Autowired
-    PageController(Service service) {
-        this.service = service;
-    }
 
     @PostMapping("/")
-    public String changeLocale(MyLocale myLocale) {
+    public @ResponseBody String changeLocale(MyLocale myLocale) {
         service.changeLocale(myLocale.getLang());
-        return "index.html";
+        return "done!";
     }
 
     @GetMapping("/")

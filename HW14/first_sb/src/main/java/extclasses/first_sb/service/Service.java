@@ -1,10 +1,12 @@
 package extclasses.first_sb.service;
 
-import java.util.Enumeration;
+import org.springframework.stereotype.Component;
+
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 @org.springframework.stereotype.Service
+@Component
 public class Service {
     private static final String BUNDLE_NAME = "messages";
     private static final String ENG = "en";
@@ -17,11 +19,12 @@ public class Service {
                     ResourceBundle.getBundle(BUNDLE_NAME, new Locale(ENG));
         } else {
             resourceBundle =
-                    ResourceBundle.getBundle(BUNDLE_NAME, new Locale("UA","ua"));
+                    ResourceBundle.getBundle(BUNDLE_NAME, new Locale("UA", "ua"));
         }
+        printWithI18n();
     }
 
-    public void printWithI18n(){
-        resourceBundle.getString(MAIN_MESSAGE);
+    public void printWithI18n() {
+        System.out.println(resourceBundle.getString(MAIN_MESSAGE));
     }
 }
