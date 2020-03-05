@@ -1,4 +1,4 @@
-package extclasses.first_sb.controller;
+package extclasses.first_sb.entity;
 
 public class MyLocale {
     private String lang;
