@@ -18,7 +18,7 @@ public class PageController {
     @PostMapping("/")
     public @ResponseBody String changeLocale(MyLocale myLocale) {
         service.changeLocale(myLocale.getLang());
-        return "done!";
+        return service.getMessageFromProperties();
     }
 
     @GetMapping("/")

@@ -21,10 +21,9 @@ public class Service {
             resourceBundle =
                     ResourceBundle.getBundle(BUNDLE_NAME, new Locale("UA", "ua"));
         }
-        printWithI18n();
     }
 
-    public void printWithI18n() {
-        System.out.println(resourceBundle.getString(MAIN_MESSAGE));
+    public String getMessageFromProperties() {
+        return resourceBundle.getString(MAIN_MESSAGE);
     }
 }
