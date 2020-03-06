@@ -11,13 +11,11 @@ public class Service {
     private static final String BUNDLE_NAME = "messages";
     private static final String ENG = "en";
     private static final String MAIN_MESSAGE = "main.message";
-    private static ResourceBundle resourceBundle;
+    private static ResourceBundle resourceBundle =
+            ResourceBundle.getBundle(BUNDLE_NAME, new Locale(ENG));
 
     public void changeLocale(String lang) {
-        if (lang.equals(ENG)) {
-            resourceBundle =
-                    ResourceBundle.getBundle(BUNDLE_NAME, new Locale(ENG));
-        } else {
+        if (!lang.equals(ENG)) {
             resourceBundle =
                     ResourceBundle.getBundle(BUNDLE_NAME, new Locale("UA", "ua"));
         }
