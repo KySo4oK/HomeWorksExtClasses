@@ -9,7 +9,16 @@ import java.util.ResourceBundle;
 @Component
 public class Service {
     private static final String BUNDLE_NAME = "messages";
-    private static final String ENG = "en";
+
+    public static ResourceBundle getResourceBundle() {
+        return resourceBundle;
+    }
+
+    public static void setResourceBundle(ResourceBundle resourceBundle) {
+        Service.resourceBundle = resourceBundle;
+    }
+
+    public static final String ENG = "en";
     private static final String MAIN_MESSAGE = "main.message";
     private static ResourceBundle resourceBundle =
             ResourceBundle.getBundle(BUNDLE_NAME, new Locale(ENG));
