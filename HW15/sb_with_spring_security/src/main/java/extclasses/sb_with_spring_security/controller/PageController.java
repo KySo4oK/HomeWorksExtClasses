@@ -22,8 +22,8 @@ public class PageController {
     }
 
 
-    @GetMapping("/")
+    @GetMapping("/admin")
     public String sendMainPage() {
-        return "loginPage.html";
+        return "login.html";
     }
 }
