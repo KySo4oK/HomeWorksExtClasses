@@ -18,7 +18,8 @@ public class PageController {
     @PostMapping("/")
     public @ResponseBody
     String getUserFromWebPAge(UserDTO userDTO) {
-        return loginService.getRoleOfUser(userDTO).toString();
+        loginService.newUser();
+        return "sdfsd";
     }
 
 
