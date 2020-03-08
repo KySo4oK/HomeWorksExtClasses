@@ -2,16 +2,19 @@ package extclass.view;
 
 import extclass.model.Sound;
 
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.*;
+
 
 public class View {
-    public static final String BUNDLE_NAME = "messages";
-    public static final ResourceBundle resourceBundle =
+    private static final String BUNDLE_NAME = "messages";
+    private static final ResourceBundle resourceBundle =
             ResourceBundle.getBundle(BUNDLE_NAME,
-                    new Locale("ua", "UA"));
-                    //new Locale("en"));
+                    // new Locale("ua", "UA"));
+                    new Locale("en"));
 
     public void printMainMenu() {
         printMessage(resourceBundle.getString(TextConstant.PRINT_INDEX_OF_OPERATIONS));
@@ -29,16 +32,16 @@ public class View {
 
     public void printAddSoundMenu(ArrayList<Sound> sounds) {
         printSoundNamesWithIndex(sounds);
-        printMessage(resourceBundle.getString(TextConstant.SELECT_ID_OF_SONG));
+        printMessageFromProperties(TextConstant.SELECT_ID_OF_SONG);
     }
 
     public void printSoundNamesWithIndex(ArrayList<Sound> sounds) {
         for (int i = 0; i < sounds.size(); i++) {
-            printMessage(sounds.get(i).toString());
+            printMessage((i + 1) + ". " + sounds.get(i).toString());
         }
     }
 
-    public void printMessage(String message) {
+    private void printMessage(String message) {
         System.out.println(message);
     }
 
@@ -50,11 +53,7 @@ public class View {
         printMessage(resourceBundle.getString(TextConstant.LENGTH) + length);
     }
 
-    public String concatenateStrings(String... messages) {
-        StringBuilder result = new StringBuilder();
-        for (String message : messages) {
-            result.append(message);
-        }
-        return new String(result);
+    public void printMessageFromProperties(String message) {
+        printMessage(resourceBundle.getString(message));
     }
 }
