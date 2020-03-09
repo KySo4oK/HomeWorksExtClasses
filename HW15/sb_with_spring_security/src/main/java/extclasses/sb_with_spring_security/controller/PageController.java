@@ -4,13 +4,13 @@ import extclasses.sb_with_spring_security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
 public class PageController {
     @Autowired
-    private UserService loginService;
-
+    UserService userService;
 
     @GetMapping("/")
     public String getMainPage(){
@@ -19,12 +19,13 @@ public class PageController {
 
     @GetMapping("/user")
     public String getUserPage(){
-        return "user.html";
+        System.out.println("gg");
+        return "redirect:/user.html";
     }
 
     @GetMapping("/admin")
-    public String getAdminPage(){
-        return "admin.html";
+    public @ResponseBody String getAdminPage(){
+        return userService.getStringOfUsers();
     }
 
 }
