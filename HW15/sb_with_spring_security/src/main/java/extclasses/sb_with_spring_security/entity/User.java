@@ -5,11 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Set;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
-@Builder
+
+@Data
 @Entity(name = "usr")
 public class User {
     @Id
@@ -17,8 +14,6 @@ public class User {
     private Long id;
     private String username;
     private String password;
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.LAZY)
-    @CollectionTable(name = "user_roles",joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
+    private Role role;
 }

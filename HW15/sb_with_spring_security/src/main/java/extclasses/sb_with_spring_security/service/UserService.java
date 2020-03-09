@@ -6,19 +6,26 @@ import extclasses.sb_with_spring_security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
+import javax.annotation.PostConstruct;
 
 @Component
-public class LoginService {
+public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @PostConstruct
     public void newUser() {
         User user = new User();
-        user.setId((long) 1);
-        user.setPassword("123");
-        user.setUsername("123");
-        user.setRoles(Collections.singleton(Role.USER));
+        user.setRole(Role.USER);
+        user.setPassword("user");
+        user.setUsername("user");
+        userRepository.save(user);
+        user = new User();
+        user.setRole(Role.ADMIN);
+        user.setPassword("admin");
+        user.setUsername("admin");
         userRepository.save(user);
     }
+
+
 }

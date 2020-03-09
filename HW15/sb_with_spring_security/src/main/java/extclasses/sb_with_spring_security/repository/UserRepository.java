@@ -4,5 +4,5 @@ import extclasses.sb_with_spring_security.entity.User;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
-    User findUserByEmailAndPassword(String email, String password);
+    User findUserByUsername(String username);
 }
