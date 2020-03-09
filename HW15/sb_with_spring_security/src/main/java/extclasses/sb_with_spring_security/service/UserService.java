@@ -31,7 +31,8 @@ public class UserService {
         List<User> users = userRepository.findAll();
         StringBuilder usersStr = new StringBuilder();
         for (User user : users) {
-            usersStr.append(user.toString());
+            usersStr.append(user.getUsername());
+            usersStr.append(" , ");
         }
         return usersStr.toString();
     }
