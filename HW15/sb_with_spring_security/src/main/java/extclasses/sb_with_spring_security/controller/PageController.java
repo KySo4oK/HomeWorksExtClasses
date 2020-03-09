@@ -19,7 +19,6 @@ public class PageController {
 
     @GetMapping("/user")
     public String getUserPage(){
-        System.out.println("gg");
         return "redirect:/user.html";
     }
 
