@@ -13,17 +13,18 @@ public class PageController {
     UserService userService;
 
     @GetMapping("/")
-    public String getMainPage(){
+    public String getMainPage() {
         return "main.html";
     }
 
     @GetMapping("/user")
-    public String getUserPage(){
+    public String getUserPage() {
         return "redirect:/user.html";
     }
 
     @GetMapping("/admin")
-    public @ResponseBody String getAdminPage(){
+    public @ResponseBody
+    String getAdminPage() {
         return userService.getStringOfUsers();
     }
 
