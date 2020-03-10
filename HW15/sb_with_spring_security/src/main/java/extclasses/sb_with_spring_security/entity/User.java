@@ -1,5 +1,6 @@
 package extclasses.sb_with_spring_security.entity;
 
+import extclasses.sb_with_spring_security.dto.UserDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,4 +18,11 @@ public class User {
     private String password;
     private boolean active;
     private String roles;
+
+    public User(UserDTO userDTO) {
+        this.username = userDTO.getUsername();
+        this.password = userDTO.getPassword();
+        this.active = true;
+        this.roles = "ROLE_USER";
+    }
 }

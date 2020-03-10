@@ -4,6 +4,7 @@ import extclasses.sb_with_spring_security.dto.UserDTO;
 import extclasses.sb_with_spring_security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -19,7 +20,7 @@ public class PageController {
 
     @GetMapping("/user")
     public String getUserPage() {
-        return "redirect:/user.html";
+        return "user.html";
     }
 
     @GetMapping("/admin")
@@ -33,9 +34,9 @@ public class PageController {
         return "reg.html";
     }
 
-    @PostMapping("/reg")
-    public String getNewUser(UserDTO userDTO){
-        System.out.println(userDTO.toString());
+    @GetMapping("/regg")
+    public String getNewUser(@ModelAttribute UserDTO userDTO){
+        userService.setNewUser(userDTO);
         return "redirect:/";
     }
 

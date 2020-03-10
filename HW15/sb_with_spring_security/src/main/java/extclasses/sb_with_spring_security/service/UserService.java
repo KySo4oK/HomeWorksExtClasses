@@ -1,5 +1,6 @@
 package extclasses.sb_with_spring_security.service;
 
+import extclasses.sb_with_spring_security.dto.UserDTO;
 import extclasses.sb_with_spring_security.entity.User;
 import extclasses.sb_with_spring_security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,10 @@ public class UserService {
             usersStr.append(" , ");
         }
         return usersStr.toString();
+    }
+
+    public void setNewUser(UserDTO userDTO) {
+        User user = new User(userDTO);
+        userRepository.save(user);
     }
 }
