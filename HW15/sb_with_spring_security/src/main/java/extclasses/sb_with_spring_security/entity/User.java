@@ -1,24 +1,28 @@
 package extclasses.sb_with_spring_security.entity;
 
-import lombok.*;
+import extclasses.sb_with_spring_security.dto.UserDTO;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
 
-@AllArgsConstructor
+
+@Data
 @NoArgsConstructor
-@Setter
-@Getter
-@Builder
-@Entity(name = "usr")
+@Entity(name = "user_ss")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private int id;
     private String username;
     private String password;
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.LAZY)
-    @CollectionTable(name = "user_roles",joinColumns = @JoinColumn(name = "user_id"))
-    @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
+    private boolean active;
+    private String roles;
+
+    public User(UserDTO userDTO) {
+        this.username = userDTO.getUsername();
+        this.password = userDTO.getPassword();
+        this.active = true;
+        this.roles = "ROLE_USER";
+    }
 }
