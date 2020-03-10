@@ -1,10 +1,9 @@
 package extclasses.sb_with_spring_security.controller;
 
-import extclasses.sb_with_spring_security.Greeting;
+import extclasses.sb_with_spring_security.dto.UserDTO;
 import extclasses.sb_with_spring_security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -31,14 +30,13 @@ public class PageController {
 
     @GetMapping("/reg")
     public String getRegPage() {
-        return "reg";
+        return "reg.html";
     }
 
-    @RequestMapping(value="/reg", method=RequestMethod.POST)
-    public String greetingSubmit(@ModelAttribute Greeting greeting, Model model) {
-        model.addAttribute("greeting", greeting);
-        System.out.println(",");
-        return "result";
+    @PostMapping("/reg")
+    public String getNewUser(UserDTO userDTO){
+        System.out.println(userDTO.toString());
+        return "redirect:/";
     }
 
 }
