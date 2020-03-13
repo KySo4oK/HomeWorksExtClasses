@@ -34,10 +34,10 @@ public class PageController {
         return "reg.html";
     }
 
-    @GetMapping("/regg")
-    public String getNewUser(@ModelAttribute UserDTO userDTO){
-        userService.setNewUser(userDTO);
-        return "redirect:/";
-    }
+//    @PostMapping("/regg")
+//    public String getNewUser(@ModelAttribute UserDTO userDTO){
+//        userService.setNewUser(userDTO);
+//        return "redirect:/";
+//    }
 
 }
