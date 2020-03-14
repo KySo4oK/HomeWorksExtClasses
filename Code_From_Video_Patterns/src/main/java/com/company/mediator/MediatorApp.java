@@ -53,7 +53,7 @@ abstract class User {
 
     abstract void getMessage(String message);
 
-    public String getName(){
+    public String getName() {
         return this.name;
     }
 }
@@ -113,19 +113,19 @@ class TextChat implements Chat {
 
     @Override
     public void sendMessage(String message, User user) {
-        if(user instanceof Admin) {
+        if (user instanceof Admin) {
             for (User u : users) {
                 u.getMessage(message);
             }
         }
-        if(user instanceof SimpleUser){
+        if (user instanceof SimpleUser) {
             for (User u : users) {
-                if (u!=user && u.isEnable()) {
+                if (u != user && u.isEnable()) {
                     u.getMessage(message);
                 }
             }
-            if(admin.isEnable())
-            admin.getMessage(user.getName() + " : " + message);
+            if (admin.isEnable())
+                admin.getMessage(user.getName() + " : " + message);
 
         }
     }
