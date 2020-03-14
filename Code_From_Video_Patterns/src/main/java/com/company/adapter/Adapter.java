@@ -1,4 +1,4 @@
-package com.company;
+package com.company.adapter;
 
 public class Adapter {
 

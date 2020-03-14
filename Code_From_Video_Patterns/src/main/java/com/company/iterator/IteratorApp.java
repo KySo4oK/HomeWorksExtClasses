@@ -1,4 +1,4 @@
-package com.company;
+package com.company.iterator;
 
 public class IteratorApp {
     public static void main(String[] args) {

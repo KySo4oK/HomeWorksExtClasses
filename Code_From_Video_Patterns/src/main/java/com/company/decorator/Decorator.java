@@ -1,4 +1,4 @@
-package com.company;
+package com.company.decorator;
 
 public class Decorator {
     public static void main(String[] args) {
