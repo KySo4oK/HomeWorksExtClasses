@@ -1,15 +1,21 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Getting Started: Handing Form Submission</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="/static/css/signin.css" rel="stylesheet">
 </head>
-<body>
-<form action="/regg" method="get" enctype="application/x-www-form-urlencoded">
-    <input type="text" value="username" id="username" name="username">
-    <input type="text" value="phone" id="phone" name="phone">
-    <input type="email" value="email" id="email" name="email">
-    <input type="password" value="password" id="password" name="password">
-    <input type="submit" value="submit">
-</form>
+<body class="text-center">
+<div align="center" style="width: 40%;">
+    <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
+    <form class="form-signin" action="/regg" method="get" enctype="application/x-www-form-urlencoded">
+        <input type="text" class="form-control" placeholder="username" id="username" name="username">
+        <input type="text" class="form-control" placeholder="phone" id="phone" name="phone">
+        <input type="email" class="form-control" placeholder="email" id="email" name="email">
+        <input type="password" class="form-control" placeholder="password" id="password" name="password">
+        <input type="submit" class="form-control" value="submit">
+    </form>
+</div>
 </body>
 </html>
