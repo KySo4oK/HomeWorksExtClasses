@@ -5,21 +5,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Data
 @NoArgsConstructor
-@Entity(name = "user_ss")
+@Entity(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long userId;
     private String username;
     private String password;
     private boolean active;
     private String roles;
     private String email;
     private String phone;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<Book> books;
 
     public User(UserDTO userDTO) {
         this.username = userDTO.getUsername();
