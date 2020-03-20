@@ -18,9 +18,11 @@ public class Book {
     private boolean available;
     @OneToOne(optional = false, mappedBy = "book")
     private Shelf shelf;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+    private Set<Order> orders;
     private Date startDate;
     private Date endDate;
 }

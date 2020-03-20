@@ -23,6 +23,8 @@ public class User {
     private String phone;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Book> books;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<Order> orders;
 
     public User(UserDTO userDTO) {
         this.username = userDTO.getUsername();
