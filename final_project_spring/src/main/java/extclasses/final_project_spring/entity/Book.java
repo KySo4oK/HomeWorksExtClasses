@@ -15,6 +15,7 @@ public class Book {
     private long bookId;
     private String name;
     private String authors;
+    private String tags;
     private boolean available;
     @OneToOne(optional = false, mappedBy = "book")
     private Shelf shelf;
