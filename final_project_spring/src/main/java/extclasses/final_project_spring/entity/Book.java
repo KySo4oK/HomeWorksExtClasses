@@ -1,5 +1,6 @@
 package extclasses.final_project_spring.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,13 +15,14 @@ import java.util.Set;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long bookId;
+    private Long bookId;
     private String name;
     private String authors;
     private String tags;
     private boolean available;
     @OneToOne(optional = false, mappedBy = "book", cascade = CascadeType.ALL)
     @ToString.Exclude
+    @JsonManagedReference
     private Shelf shelf;
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "user_id", nullable = true)
