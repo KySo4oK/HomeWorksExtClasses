@@ -63,22 +63,36 @@
             partOfName: null,
             authors: ["a1","a2"],
         },
-        mounted() {
-            axios
-                .get('http://localhost:7777/allbooks')
-                .then(response => (this.books = response.data));
-            axios
-                .get('http://localhost:7777/alltags')
-                .then(response => (this.tags = response.data));
-            axios
-                .get('http://localhost:7777/allauthors')
-                .then(response => (this.authors = response.data));
+        async mounted() {
+            await this.getBooks();
+            await this.getAuthors();
+            await this.getTags()
         },
         methods: {
-            changeList: function(){
-                axios
-                .get('http://localhost:7777/allbooks/' + this.addedTags + '/' + addedAuthors + '/' + partOfName)
-                .then(response => (this.books = response.data));
+            async changeList(){
+                let filter = {
+                    tags: this.addedTags,
+                    authors : this.addedAuthors,
+                    name: this.partOfName,
+                };
+                let res = await axios.post('/filter', filter);
+                if(!res) return;
+                this.books = res.data;
+            },
+            async getTags(){
+                let res = await axios.get('/tags');
+                if(!res) return;
+                this.books = res.data;
+            },
+            async getBooks(){
+                let res = await axios.get('/books');
+                if(!res) return;
+                this.books = res.data;
+            },
+            async getAuthors(){
+                let res = await axios.get('/authors');
+                if(!res) return;
+                this.authors = res.data;
             }
         }
     });

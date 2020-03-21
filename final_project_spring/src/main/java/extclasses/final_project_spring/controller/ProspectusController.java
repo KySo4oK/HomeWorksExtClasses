@@ -19,7 +19,7 @@ public class ProspectusController {
         return "prospectus.html";
     }
 
-    @GetMapping(value = "/allbooks", produces = "application/json")
+    @GetMapping(value = "/books", produces = "application/json")
     public @ResponseBody
     Set<Book>
     getAllAvailableBooks() {
