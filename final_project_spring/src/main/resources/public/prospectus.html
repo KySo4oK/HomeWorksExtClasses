@@ -1,31 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          crossorigin="anonymous">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
 <div id="app">
-    <div v-for="book in books">
-    <div class="col col-expand">
-        <h1 v-text="book.name"></h1>
+    <div class="col-md-6 col-md-6 col-md-offset-0 description">
+        <div v-for="book in books">
+            <div class="row">
+                <div class="col col-expand">
+                    <h1 v-text="book.name"></h1>
+                    <h1 v-text="book.authors"></h1>
+                    <h1 v-text="book.tags"></h1>
+                </div>
+            </div>
+        </div>
     </div>
+    <div class="form-group">
+        <div class="col-md-6 boxes">
+            <div v-for="tag in tags">
+                <div>
+                    <input type="checkbox"
+                           v-bind:value="tag"
+                           v-model="addedTags">
+                    <h6>{{tag}}</h6>
+                </div>
+            </div>
+            <span>{{addedTags}}</span>
+        </div>
+        <div>
+            <input type="text" v-model="partOfName">
+        </div>
+        <span>{{partOfName}}</span>
+        <div class="col-md-6 boxes">
+            <div v-for="author in authors">
+                <div>
+                    <input type="checkbox"
+                           v-bind:value="author"
+                           v-model="addedAuthors">
+                    <h6>{{author}}</h6>
+                </div>
+            </div>
+            <span>{{addedAuthors}}</span>
+        </div>
+        <button v-on:click="changeList">load</button>
     </div>
 </div>
 <script type="text/javascript">
     let app = new Vue({
         el: '#app',
         data: {
-            books : [],
+            books: [],
+            tags: ["tag1","tag2"],
+            addedTags: [],
+            addedAuthors: [],
+            partOfName: null,
+            authors: ["a1","a2"],
         },
         mounted() {
             axios
                 .get('http://localhost:7777/allbooks')
                 .then(response => (this.books = response.data));
+            axios
+                .get('http://localhost:7777/alltags')
+                .then(response => (this.tags = response.data));
+            axios
+                .get('http://localhost:7777/allauthors')
+                .then(response => (this.authors = response.data));
+        },
+        methods: {
+            changeList: function(){
+                axios
+                .get('http://localhost:7777/allbooks/' + this.addedTags + '/' + addedAuthors + '/' + partOfName)
+                .then(response => (this.books = response.data));
+            }
         }
     });
+
+
 </script>
 </body>
 </html>
