@@ -12,8 +12,7 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
-    public String getAllAvailableBooks() {
-        Set<Book> bookSet = bookRepository.findAllByUserIsNull();
-        return "g";
+    public Set<Book> getAllAvailableBooks() {
+        return bookRepository.findAllByUserIsNull();
     }
 }

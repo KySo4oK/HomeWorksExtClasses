@@ -21,7 +21,7 @@
         mounted() {
             axios
                 .get('http://localhost:7777/allbooks')
-                .then(response => (this.info = response));
+                .then(response => (this.info = response.data));
         }
     });
 </script>
