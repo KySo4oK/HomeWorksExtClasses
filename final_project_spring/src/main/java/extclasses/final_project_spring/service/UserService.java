@@ -6,6 +6,7 @@ import extclasses.final_project_spring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Component
@@ -16,14 +17,12 @@ public class UserService {
 //    @PostConstruct
 //    public void newUser() {
 //        User user = new User();
-//        user.setRole(Role.USER);
-//        user.setPassword("user");
-//        user.setUsername("user");
-//        userRepository.save(user);
-//        user = new User();
-//        user.setRole(Role.ADMIN);
+//        user.setRoles("ROLE_ADMIN");
 //        user.setPassword("admin");
 //        user.setUsername("admin");
+//        user.setActive(true);
+//        user.setEmail("admin@ukr.net");
+//        user.setPhone("+380966190691");
 //        userRepository.save(user);
 //    }
 

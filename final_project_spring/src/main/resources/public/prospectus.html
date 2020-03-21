@@ -8,20 +8,23 @@
 </head>
 <body>
 <div id="app">
-    {{ info }}
+    <div v-for="book in books">
+    <div class="col col-expand">
+        <h1 v-text="book.name"></h1>
+    </div>
+    </div>
+    <div>{{books}}</div>
 </div>
 <script type="text/javascript">
     let app = new Vue({
         el: '#app',
-        data() {
-            return {
-                info: null
-            };
+        data: {
+            books : [],
         },
         mounted() {
             axios
                 .get('http://localhost:7777/allbooks')
-                .then(response => (this.info = response.data));
+                .then(response => (this.books = response.data));
         }
     });
 </script>
