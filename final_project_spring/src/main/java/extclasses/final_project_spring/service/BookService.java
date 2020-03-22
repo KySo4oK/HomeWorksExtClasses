@@ -1,11 +1,15 @@
 package extclasses.final_project_spring.service;
 
+import extclasses.final_project_spring.entity.Author;
 import extclasses.final_project_spring.entity.Book;
+import extclasses.final_project_spring.entity.Shelf;
+import extclasses.final_project_spring.entity.Tag;
 import extclasses.final_project_spring.repository.BookRepository;
 import extclasses.final_project_spring.repository.ShelfRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.Set;
 
 @Component
@@ -19,9 +23,13 @@ public class BookService {
 //    public void newData() {
 //        Shelf[] shelves = new Shelf[3];
 //        Book[] books = new Book[shelves.length];
+//        Tag[] tags = new Tag[shelves.length];
+//        Author[] authors = new Author[shelves.length];
 //        for (int i = 0; i < shelves.length; i++) {
 //            books[i] = new Book();
 //            shelves[i] = new Shelf();
+//            tags[i] = new Tag();
+//            authors[i] = new Author();
 //        }
 //        for (int i = 0; i < shelves.length; i++) {
 //            Book book = books[i];
