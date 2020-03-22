@@ -30,17 +30,15 @@
     let app = new Vue({
         el: '#app',
         data: {
-            name: "",
-            authors: "",
-            tags: "",
+            book: {
+                name: "",
+                authors: "",
+                tags: "",
+            }
         },
         methods: {
             async addBook() {
-                let res = await axios.post('/add', {
-                    name: this.name,
-                    authors: this.authors,
-                    tags: this.tags,
-                })
+                let res = await axios.post('/add', this.book);
             },
             // async parseAuthors(){
             //     return await this.authors.split(',');
