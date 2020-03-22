@@ -1,5 +1,6 @@
 package extclasses.final_project_spring.service;
 
+import extclasses.final_project_spring.dto.BookDTO;
 import extclasses.final_project_spring.entity.Author;
 import extclasses.final_project_spring.entity.Book;
 import extclasses.final_project_spring.entity.Shelf;
@@ -18,6 +19,10 @@ public class BookService {
     private BookRepository bookRepository;
     @Autowired
     private ShelfRepository shelfRepository;
+    @Autowired
+    private TagService tagService;
+    @Autowired
+    private AuthorService authorService;
 
 //    @PostConstruct
 //    public void newData() {
@@ -70,5 +75,12 @@ public class BookService {
 
     public Set<Book> getAllAvailableBooks() {
         return bookRepository.findAllByUserIsNull();
+    }
+
+    public boolean saveBookNewBookFromClient(BookDTO bookDTO) {
+        Set<Tag> tags = tagService.createTagsByString(bookDTO.getTags());
+        Set<Author> authors = authorService.createAuthorsByString(bookDTO.getAuthors());
+        Book book = new Book();
+        return false;
     }
 }

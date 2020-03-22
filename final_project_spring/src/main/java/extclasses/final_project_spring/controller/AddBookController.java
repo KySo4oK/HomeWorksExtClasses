@@ -19,7 +19,7 @@ public class AddBookController {
 
     @PostMapping("/add")
     public String addBook(BookDTO bookDTO) {
-        System.out.println(bookDTO.toString());
-        return " ";
+        boolean result = bookService.saveBookNewBookFromClient(bookDTO);
+        return "";
     }
 }
