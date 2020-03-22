@@ -2,7 +2,6 @@ package extclasses.final_project_spring.controller;
 
 import extclasses.final_project_spring.dto.BookDTO;
 import extclasses.final_project_spring.entity.Author;
-import extclasses.final_project_spring.entity.Book;
 import extclasses.final_project_spring.entity.Tag;
 import extclasses.final_project_spring.service.AuthorService;
 import extclasses.final_project_spring.service.BookService;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -42,14 +40,21 @@ public class ProspectusController {
 
     @GetMapping(value = "/tags", produces = "application/json")
     public @ResponseBody
-    List<Tag>
+    Set<String>
     getAllTags() {
-        return tagService.getAllTags();
+        return tagService.getAllTags()
+                .stream()
+                .map(Tag::getName)
+                .collect(Collectors.toSet());
     }
+
     @GetMapping(value = "/authors", produces = "application/json")
     public @ResponseBody
-    List<Author>
+    Set<String>
     getAllAuthors() {
-        return authorService.getAllAuthors();
+        return authorService.getAllAuthors()
+                .stream()
+                .map(Author::getName)
+                .collect(Collectors.toSet());
     }
 }
