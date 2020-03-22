@@ -3,13 +3,17 @@ package extclasses.final_project_spring.dto;
 import extclasses.final_project_spring.entity.Author;
 import extclasses.final_project_spring.entity.Book;
 import extclasses.final_project_spring.entity.Tag;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.util.stream.Collectors;
 
 @Data
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class BookDTO {
     private String name;
     private String tags;

@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AddBookController {
     @Autowired
     private BookService bookService;
+
     @GetMapping("/add")
-    public String getAddBookPage(){
+    public String getAddBookPage() {
         return "add.html";
     }
+
     @PostMapping("/add")
-    public String addBook(BookDTO bookDTO){
+    public String addBook(BookDTO bookDTO) {
         System.out.println(bookDTO.toString());
         return " ";
     }
