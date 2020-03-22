@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class AddBookController {
@@ -18,8 +19,10 @@ public class AddBookController {
     }
 
     @PostMapping("/add")
-    public String addBook(BookDTO bookDTO) {
-        boolean result = bookService.saveBookNewBookFromClient(bookDTO);
-        return "";
+    public @ResponseBody
+    String addBook(BookDTO bookDTO) {
+        if (bookService.saveBookNewBookFromClient(bookDTO)) {
+            return "successful";
+        } else return "error";
     }
 }

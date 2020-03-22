@@ -10,7 +10,6 @@ import extclasses.final_project_spring.repository.ShelfRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.Set;
 
 @Component
@@ -78,9 +77,16 @@ public class BookService {
     }
 
     public boolean saveBookNewBookFromClient(BookDTO bookDTO) {
+        if (bookRepository.findByName(bookDTO.getName()).isEmpty()) return false;
         Set<Tag> tags = tagService.createTagsByString(bookDTO.getTags());
         Set<Author> authors = authorService.createAuthorsByString(bookDTO.getAuthors());
+        Shelf shelf = shelfRepository.findByBookIsNull().orElse(new Shelf());
         Book book = new Book();
-        return false;
+        book.setName(bookDTO.getName());
+        book.setShelf(shelf);
+        book.setAuthors(authors);
+        book.setTags(tags);
+        bookRepository.save(book);
+        return true;
     }
 }
