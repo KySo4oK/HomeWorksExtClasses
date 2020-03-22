@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+<body>
+<div id="app">
+    <div>
+        <input type="text" v-model="name">
+    </div>
+    <div>
+        <input type="text" v-model="authors">
+    </div>
+    <div>
+        <input type="text" v-model="tags">
+    </div>
+    <button v-on:click="addBook">load</button>
+</div>
+
+<script type="text/javascript">
+    let app = new Vue({
+        el: '#app',
+        data: {
+            name: "",
+            authors: "",
+            tags: "",
+        },
+        methods: {
+            async addBook() {
+                let res = await axios.post('/add', {
+                    name: this.name,
+                    authors: this.authors,
+                    tags: this.tags,
+                })
+            },
+            // async parseAuthors(){
+            //     return await this.authors.split(',');
+            // },
+            // async parseTags(){
+            //     return this.tags.split(',');
+            // }
+        }
+    });
+
+
+</script>
+</body>
+</html>

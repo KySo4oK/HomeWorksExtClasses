@@ -14,17 +14,17 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-//    @PostConstruct
-//    public void newUser() {
-//        User user = new User();
-//        user.setRoles("ROLE_ADMIN");
-//        user.setPassword("admin");
-//        user.setUsername("admin");
-//        user.setActive(true);
-//        user.setEmail("admin@ukr.net");
-//        user.setPhone("+380966190691");
-//        userRepository.save(user);
-//    }
+    @PostConstruct
+    public void newUser() {
+        User user = new User();
+        user.setRoles("ROLE_ADMIN");
+        user.setPassword("admin");
+        user.setUsername("admin");
+        user.setActive(true);
+        user.setEmail("admin@ukr.net");
+        user.setPhone("+380966190691");
+        userRepository.save(user);
+    }
 
 
     public String getStringOfUsers() {
