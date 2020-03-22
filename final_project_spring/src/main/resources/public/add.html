@@ -15,13 +15,16 @@
 <body>
 <div id="app">
     <div>
-        <input type="text" v-model="name">
+        <input id="book_name" type="text" v-model="book.name">
+        <label for="book_name">Book name</label>
     </div>
     <div>
-        <input type="text" v-model="authors">
+        <input id="book_authors" type="text" v-model="book.authors">
+        <label for="book_authors">Book authors</label>
     </div>
     <div>
-        <input type="text" v-model="tags">
+        <input id="book_tags" type="text" v-model="book.tags">
+        <label for="book_tags">Book Tags</label>
     </div>
     <button v-on:click="addBook">load</button>
 </div>
