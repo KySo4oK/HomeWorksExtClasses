@@ -1,9 +1,12 @@
 package extclasses.final_project_spring.controller;
 
+import extclasses.final_project_spring.dto.UserDTO;
 import extclasses.final_project_spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
@@ -33,10 +36,10 @@ public class PageController {
         return "reg.html";
     }
 
-//    @PostMapping("/regg")
-//    public String getNewUser(@ModelAttribute UserDTO userDTO){
-//        userService.setNewUser(userDTO);
-//        return "redirect:/";
-//    }
+    @PostMapping("/reg")
+    public String getNewUser(UserDTO userDTO) {
+        userService.setNewUser(userDTO);
+        return "redirect:/";
+    }
 
 }
