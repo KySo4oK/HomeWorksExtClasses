@@ -40,9 +40,13 @@ public class BookService {
 //        }
 //        Book book = books[0];
 //        Shelf shelf = shelves[0];
-//        book.setAuthors("J. R. R. Tolkien");
+//        Author author = authors[0];
+//        Tag tag = tags
+//        author.setName("J. R. R. Tolkien");
+//        book.getAuthors().add(author);
 //        book.setAvailable(true);
 //        book.setName("The Lord of the Rings");
+//
 //        book.setTags("fantasy");
 //        bookRepository.save(book);
 //        shelfRepository.save(shelf);

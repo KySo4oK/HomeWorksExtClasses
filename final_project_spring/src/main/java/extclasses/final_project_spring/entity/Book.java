@@ -26,7 +26,7 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
-    private Set<Author> authors;
+    private Set<Author> authors = new HashSet<>();
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
@@ -45,7 +45,7 @@ public class Book {
     @JoinColumn(name = "user_id", nullable = true)
     private User user;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
-    private Set<Order> orders;
+    private Set<Order> orders = new HashSet<>();
     private Date startDate;
     private Date endDate;
 }
