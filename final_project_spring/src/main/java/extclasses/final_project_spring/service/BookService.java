@@ -77,7 +77,7 @@ public class BookService {
     }
 
     public boolean saveBookNewBookFromClient(BookDTO bookDTO) {
-        if (bookRepository.findByName(bookDTO.getName()).isEmpty()) return false;
+        if (bookRepository.findByName(bookDTO.getName()).isPresent()) return false;
         Set<Tag> tags = tagService.createTagsByString(bookDTO.getTags());
         Set<Author> authors = authorService.createAuthorsByString(bookDTO.getAuthors());
         Shelf shelf = shelfRepository.findByBookIsNull().orElse(new Shelf());
