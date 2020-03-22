@@ -1,0 +1,29 @@
+package extclasses.final_project_spring.dto;
+
+import extclasses.final_project_spring.entity.Author;
+import extclasses.final_project_spring.entity.Book;
+import extclasses.final_project_spring.entity.Tag;
+import lombok.Data;
+import lombok.ToString;
+
+import java.util.stream.Collectors;
+
+@Data
+@ToString
+public class BookDTO {
+    private String name;
+    private String tags;
+    private String authors;
+
+    public BookDTO(Book book) {
+        this.name = book.getName();
+        this.tags = book.getTags()
+                .stream()
+                .map(Tag::getName)
+                .collect(Collectors.joining(","));
+        this.authors = book.getAuthors()
+                .stream()
+                .map(Author::getName)
+                .collect(Collectors.joining(","));
+    }
+}

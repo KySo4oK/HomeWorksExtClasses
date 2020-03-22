@@ -1,5 +1,6 @@
 package extclasses.final_project_spring.controller;
 
+import extclasses.final_project_spring.dto.BookDTO;
 import extclasses.final_project_spring.entity.Author;
 import extclasses.final_project_spring.entity.Book;
 import extclasses.final_project_spring.entity.Tag;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class ProspectusController {
@@ -30,9 +32,12 @@ public class ProspectusController {
 
     @GetMapping(value = "/books", produces = "application/json")
     public @ResponseBody
-    Set<Book>
+    Set<BookDTO>
     getAllAvailableBooks() {
-        return bookService.getAllAvailableBooks();
+        return bookService.getAllAvailableBooks()
+                .stream()
+                .map(BookDTO::new)
+                .collect(Collectors.toSet());
     }
 
     @GetMapping(value = "/tags", produces = "application/json")

@@ -51,17 +51,20 @@
         </div>
         <button v-on:click="changeList">load</button>
     </div>
+    <span>{{books}}</span>
+    <span>{{authors}}</span>
+    <span>{{tags}}</span>
 </div>
 <script type="text/javascript">
     let app = new Vue({
         el: '#app',
         data: {
             books: [],
-            tags: ["tag1","tag2"],
+            tags: ["tag1", "tag2"],
             addedTags: [],
             addedAuthors: [],
             partOfName: null,
-            authors: ["a1","a2"],
+            authors: ["a1", "a2"],
         },
         async mounted() {
             await this.getBooks();
@@ -69,30 +72,30 @@
             await this.getTags()
         },
         methods: {
-            async changeList(){
+            async changeList() {
                 let filter = {
                     tags: this.addedTags,
-                    authors : this.addedAuthors,
+                    authors: this.addedAuthors,
                     name: this.partOfName,
                 };
                 let res = await axios.post('/filter', filter);
-                if(!res) return;
+                if (!res) return;
                 this.books = res.data;
             },
-            async getTags(){
+            async getTags() {
                 let res = await axios.get('/tags');
-                if(!res) return;
-                this.books = res.data;
+                if (!res) return;
+                this.books = res;
             },
-            async getBooks(){
+            async getBooks() {
                 let res = await axios.get('/books');
-                if(!res) return;
-                this.books = res.data;
+                if (!res) return;
+                this.books = res;
             },
-            async getAuthors(){
+            async getAuthors() {
                 let res = await axios.get('/authors');
-                if(!res) return;
-                this.authors = res.data;
+                if (!res) return;
+                this.authors = res;
             }
         }
     });
