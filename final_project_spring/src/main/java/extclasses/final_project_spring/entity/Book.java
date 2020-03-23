@@ -30,7 +30,7 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private Set<Tag> tags = new HashSet<>();
-    private boolean available;
+    private boolean available = true;
     @OneToOne(optional = false, mappedBy = "book", cascade = CascadeType.ALL)
     @ToString.Exclude
     @JsonManagedReference
