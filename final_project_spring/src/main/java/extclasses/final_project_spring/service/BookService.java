@@ -1,6 +1,7 @@
 package extclasses.final_project_spring.service;
 
 import extclasses.final_project_spring.dto.BookDTO;
+import extclasses.final_project_spring.dto.FilterDTO;
 import extclasses.final_project_spring.entity.Author;
 import extclasses.final_project_spring.entity.Book;
 import extclasses.final_project_spring.entity.Shelf;
@@ -10,6 +11,7 @@ import extclasses.final_project_spring.repository.ShelfRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.Set;
 
 @Component
@@ -90,5 +92,9 @@ public class BookService {
         shelf.setBook(book);
         shelfRepository.save(shelf);
         return true;
+    }
+
+    public Set<Book> getPortionOfAvailableBooksByFilter(FilterDTO filterDTO) {
+        return null;//TODO
     }
 }

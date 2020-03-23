@@ -1,6 +1,7 @@
 package extclasses.final_project_spring.controller;
 
 import extclasses.final_project_spring.dto.BookDTO;
+import extclasses.final_project_spring.dto.FilterDTO;
 import extclasses.final_project_spring.entity.Author;
 import extclasses.final_project_spring.entity.Tag;
 import extclasses.final_project_spring.service.AuthorService;
@@ -9,8 +10,11 @@ import extclasses.final_project_spring.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.File;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,8 +35,9 @@ public class ProspectusController {
     @GetMapping(value = "/books", produces = "application/json")
     public @ResponseBody
     Set<BookDTO>
-    getAllAvailableBooks() {
-        return bookService.getPortionOfAvailableBooks()
+    getAvailableBooks() {
+        return bookService
+                .getPortionOfAvailableBooks()
                 .stream()
                 .map(BookDTO::new)
                 .collect(Collectors.toSet());
@@ -42,7 +47,8 @@ public class ProspectusController {
     public @ResponseBody
     Set<String>
     getAllTags() {
-        return tagService.getAllTags()
+        return tagService
+                .getAllTags()
                 .stream()
                 .map(Tag::getName)
                 .collect(Collectors.toSet());
@@ -52,9 +58,20 @@ public class ProspectusController {
     public @ResponseBody
     Set<String>
     getAllAuthors() {
-        return authorService.getAllAuthors()
+        return authorService
+                .getAllAuthors()
                 .stream()
                 .map(Author::getName)
+                .collect(Collectors.toSet());
+    }
+
+    @PostMapping("/filter")
+    public @ResponseBody
+    Set<BookDTO> getBooksByFilter(@RequestBody FilterDTO filterDTO) {
+        return bookService
+                .getPortionOfAvailableBooksByFilter(filterDTO)
+                .stream()
+                .map(BookDTO::new)
                 .collect(Collectors.toSet());
     }
 }
