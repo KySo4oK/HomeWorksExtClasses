@@ -40,8 +40,6 @@ public class Book {
     private User user;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
     private Set<Order> orders = new HashSet<>();
-    private Date startDate;
-    private Date endDate;
 
     public void addAuthor(Author author) {
         this.authors.add(author);
