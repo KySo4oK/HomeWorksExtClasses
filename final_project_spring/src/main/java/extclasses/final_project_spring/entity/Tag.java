@@ -16,4 +16,8 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long tagId;
     private String name;
+
+    public Tag(String name) {
+        this.name = name;
+    }
 }
