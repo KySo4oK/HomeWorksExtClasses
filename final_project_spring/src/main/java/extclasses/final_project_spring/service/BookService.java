@@ -87,6 +87,8 @@ public class BookService {
         book.setAuthors(authors);
         book.setTags(tags);
         bookRepository.save(book);
+        shelf.setBook(book);
+        shelfRepository.save(shelf);
         return true;
     }
 }
