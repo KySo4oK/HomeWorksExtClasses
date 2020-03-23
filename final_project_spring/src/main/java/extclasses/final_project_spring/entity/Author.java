@@ -21,4 +21,12 @@ public class Author {
     public Author(String name) {
         this.name = name;
     }
+
+    public void addBook(Book book){
+        book.addAuthor(this);
+    }
+
+    public void removeBook(Book book) {
+        this.books.remove(book);
+    }
 }

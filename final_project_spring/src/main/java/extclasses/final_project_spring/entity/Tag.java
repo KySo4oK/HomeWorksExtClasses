@@ -21,4 +21,12 @@ public class Tag {
     public Tag(String name) {
         this.name = name;
     }
+
+    public void addBook(Book book) {
+        books.add(book);
+    }
+
+    public void removeBook(Book book) {
+        books.remove(book);
+    }
 }

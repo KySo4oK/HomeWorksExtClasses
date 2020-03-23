@@ -48,4 +48,34 @@ public class Book {
     private Set<Order> orders = new HashSet<>();
     private Date startDate;
     private Date endDate;
+
+    public void addAuthor(Author author) {
+        this.authors.add(author);
+        author.addBook(this);
+    }
+
+    public void removeAuthor(Author author) {
+        this.authors.remove(author);
+        author.removeBook(this);
+    }
+
+    public void addTag(Tag tag) {
+        this.tags.add(tag);
+        tag.addBook(this);
+    }
+
+    public void removeTag(Tag tag) {
+        this.tags.remove(tag);
+        tag.removeBook(this);
+    }
+
+    public void addOrder(Order order) {
+        this.orders.add(order);
+        order.setBook(this);
+    }
+
+    public void removeOrder(Order order) {
+        this.orders.remove(order);
+        order.setBook(null);
+    }
 }

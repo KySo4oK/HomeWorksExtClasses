@@ -16,5 +16,4 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "book_id", nullable = true)
     private Book book;
-
 }
