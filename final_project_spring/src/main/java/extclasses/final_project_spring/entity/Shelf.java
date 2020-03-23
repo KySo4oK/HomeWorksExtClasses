@@ -16,7 +16,7 @@ public class Shelf {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long shelfId;
     @OneToOne(optional = false)
-    @JoinColumn(name = "book_id", unique = true, nullable = true, updatable = false)
+    @JoinColumn(name = "book_id", unique = true)
     @ToString.Exclude
     @JsonBackReference
     private Book book;
