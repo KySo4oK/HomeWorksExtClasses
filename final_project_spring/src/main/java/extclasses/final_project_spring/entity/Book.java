@@ -18,19 +18,13 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long bookId;
     private String name;
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
     private Set<Author> authors = new HashSet<>();
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_tag",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
@@ -51,22 +45,18 @@ public class Book {
 
     public void addAuthor(Author author) {
         this.authors.add(author);
-        author.addBook(this);
     }
 
     public void removeAuthor(Author author) {
         this.authors.remove(author);
-        author.removeBook(this);
     }
 
     public void addTag(Tag tag) {
         this.tags.add(tag);
-        tag.addBook(this);
     }
 
     public void removeTag(Tag tag) {
         this.tags.remove(tag);
-        tag.removeBook(this);
     }
 
     public void addOrder(Order order) {

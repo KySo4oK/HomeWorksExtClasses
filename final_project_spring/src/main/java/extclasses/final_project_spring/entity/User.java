@@ -4,8 +4,10 @@ import extclasses.final_project_spring.dto.UserDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 
 @Data
@@ -21,10 +23,6 @@ public class User {
     private String roles;
     private String email;
     private String phone;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<Book> books;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<Order> orders;
 
     public User(UserDTO userDTO) {
         this.username = userDTO.getUsername();

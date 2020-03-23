@@ -3,9 +3,10 @@ package extclasses.final_project_spring.entity;
 import lombok.Data;
 import lombok.ToString;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Data
 @ToString
@@ -15,18 +16,4 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long authorId;
     private String name;
-    @ManyToMany(mappedBy = "authors")
-    private Set<Book> books = new HashSet<>();
-
-    public Author(String name) {
-        this.name = name;
-    }
-
-    public void addBook(Book book){
-        book.addAuthor(this);
-    }
-
-    public void removeBook(Book book) {
-        this.books.remove(book);
-    }
 }
