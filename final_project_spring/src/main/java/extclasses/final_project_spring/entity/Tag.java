@@ -17,7 +17,7 @@ import javax.persistence.Id;
 @Entity(name = "tag")
 public class Tag {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tagId;
     private String name;
 

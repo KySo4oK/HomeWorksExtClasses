@@ -17,7 +17,7 @@ import javax.persistence.Id;
 @Entity(name = "author")
 public class Author {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long authorId;
     private String name;
 

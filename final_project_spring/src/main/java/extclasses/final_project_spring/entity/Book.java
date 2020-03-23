@@ -15,7 +15,7 @@ import java.util.Set;
 @Entity(name = "book")
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookId;
     private String name;
     @ManyToMany(cascade = CascadeType.ALL)

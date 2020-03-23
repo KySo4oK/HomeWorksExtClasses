@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity(name = "shelf")
 public class Shelf {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long shelfId;
     @OneToOne(optional = false)
     @JoinColumn(name = "book_id", unique = true)
