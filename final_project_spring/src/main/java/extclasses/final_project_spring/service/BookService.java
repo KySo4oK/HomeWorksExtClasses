@@ -72,8 +72,8 @@ public class BookService {
 //        shelfRepository.save(shelf);
 //    }
 
-    public Set<Book> getAllAvailableBooks() {
-        return bookRepository.findAllByUserIsNull();
+    public Set<Book> getPortionOfAvailableBooks() {
+        return bookRepository.findFirst10ByAvailableIsTrue();
     }
 
     public boolean saveBookNewBookFromClient(BookDTO bookDTO) {

@@ -32,7 +32,7 @@ public class ProspectusController {
     public @ResponseBody
     Set<BookDTO>
     getAllAvailableBooks() {
-        return bookService.getAllAvailableBooks()
+        return bookService.getPortionOfAvailableBooks()
                 .stream()
                 .map(BookDTO::new)
                 .collect(Collectors.toSet());

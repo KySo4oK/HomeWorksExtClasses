@@ -7,7 +7,6 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
-    Set<Book> findAllByUserIsNull();
-
+    Set<Book> findFirst10ByAvailableIsTrue();
     Optional<Book> findByName(String name);
 }
