@@ -1,6 +1,8 @@
 package extclasses.final_project_spring.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.Entity;
@@ -10,6 +12,8 @@ import javax.persistence.Id;
 
 @Data
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity(name = "tag")
 public class Tag {
     @Id
