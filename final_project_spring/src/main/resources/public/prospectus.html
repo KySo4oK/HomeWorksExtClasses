@@ -23,7 +23,11 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-md-6 boxes">
+        <div>
+            <input id="partOfName" type="text" v-model="partOfName">
+            <label for="partOfName">Input part of name</label>
+        </div>
+        <div id="tagsCheckbox" class="col-md-6 boxes">
             <div v-for="tag in tags">
                 <div>
                     <input type="checkbox"
@@ -32,13 +36,11 @@
                     <h6>{{tag}}</h6>
                 </div>
             </div>
-            <span>{{addedTags}}</span>
+            <span>{{addedTags}} - added tags</span>
         </div>
-        <div>
-            <input type="text" v-model="partOfName">
-        </div>
+        <label for="tagsCheckbox">Select tags</label>
         <span>{{partOfName}}</span>
-        <div class="col-md-6 boxes">
+        <div id="authorsCheckbox" class="col-md-6 boxes">
             <div v-for="author in authors">
                 <div>
                     <input type="checkbox"
@@ -47,24 +49,22 @@
                     <h6>{{author}}</h6>
                 </div>
             </div>
-            <span>{{addedAuthors}}</span>
+            <span>{{addedAuthors}} - added authors</span>
         </div>
+        <label for="tagsCheckbox">Select authors</label>
         <button v-on:click="changeList">load</button>
     </div>
-    <span>{{books}}</span>
-    <span>{{authors}}</span>
-    <span>{{tags}}</span>
 </div>
 <script type="text/javascript">
     let app = new Vue({
         el: '#app',
         data: {
             books: [],
-            tags: ["tag1", "tag2"],
+            tags: [],
             addedTags: [],
             addedAuthors: [],
             partOfName: null,
-            authors: ["a1", "a2"],
+            authors: [],
         },
         async mounted() {
             await this.getBooks();
@@ -85,7 +85,7 @@
             async getTags() {
                 let res = await axios.get('/tags');
                 if (!res) return;
-                this.books = res.data;
+                this.tags = res.data;
                 console.log(this.books);
             },
             async getBooks() {
