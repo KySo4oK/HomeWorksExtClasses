@@ -74,7 +74,7 @@ public class BookService {
 //        shelfRepository.save(shelf);
 //    }
 
-    public Set<Book> getPortionOfAvailableBooks() {
+    public Set<Book> getAvailableBooks() {
         return bookRepository.findFirst10ByAvailableIsTrue();
     }
 
@@ -94,7 +94,10 @@ public class BookService {
         return true;
     }
 
-    public Set<Book> getPortionOfAvailableBooksByFilter(FilterDTO filterDTO) {
-        return null;//TODO
+    public Set<Book> getAvailableBooksByFilter(FilterDTO filterDTO) {
+        return bookRepository.getBooksByFilter(
+                filterDTO.getName(),
+                filterDTO.getAuthors(),
+                filterDTO.getTags());
     }
 }

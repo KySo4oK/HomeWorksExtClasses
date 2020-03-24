@@ -37,7 +37,7 @@ public class ProspectusController {
     Set<BookDTO>
     getAvailableBooks() {
         return bookService
-                .getPortionOfAvailableBooks()
+                .getAvailableBooks()
                 .stream()
                 .map(BookDTO::new)
                 .collect(Collectors.toSet());
@@ -69,7 +69,7 @@ public class ProspectusController {
     public @ResponseBody
     Set<BookDTO> getBooksByFilter(@RequestBody FilterDTO filterDTO) {
         return bookService
-                .getPortionOfAvailableBooksByFilter(filterDTO)
+                .getAvailableBooksByFilter(filterDTO)
                 .stream()
                 .map(BookDTO::new)
                 .collect(Collectors.toSet());

@@ -76,7 +76,7 @@
                 let filter = {
                     tags: this.addedTags,
                     authors: this.addedAuthors,
-                    name: this.partOfName,
+                    name: '%' + this.partOfName + '%',
                 };
                 let res = await axios.post('/filter', filter);
                 if (!res) return;
