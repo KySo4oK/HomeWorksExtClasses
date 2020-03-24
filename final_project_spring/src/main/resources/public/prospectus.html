@@ -16,6 +16,7 @@
     <header>
         <div class="navbar navbar-default">
             <h1>{{ sitename }}</h1>
+            <h1>{{ message }}</h1>
         </div>
 
     </header>
@@ -69,6 +70,7 @@
                             <h1 v-text="book.name"></h1>
                             <h1 v-text="book.authors"></h1>
                             <h1 v-text="book.tags"></h1>
+                            <button class="btn btn-primary btn-lg" v-on:click="orderBook(book)">order</button>
                         </div>
                     </div>
                 </div>
@@ -88,6 +90,7 @@
             addedAuthors: [],
             partOfName: null,
             authors: [],
+            message: null,
         },
         async mounted() {
             await this.getBooks();
@@ -120,6 +123,11 @@
                 let res = await axios.get('/authors');
                 if (!res) return;
                 this.authors = res.data;
+            },
+            async orderBook(book){
+                let res = await axios.post('/order', book);
+                if (!res) return;
+                this.message = res.data + book.name;
             }
         }
     });

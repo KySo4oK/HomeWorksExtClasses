@@ -1,6 +1,8 @@
 package extclasses.final_project_spring.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -16,4 +18,7 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "book_id")
     private Book book;
+    @ToString.Exclude
+    @JsonManagedReference
+    private boolean active;
 }

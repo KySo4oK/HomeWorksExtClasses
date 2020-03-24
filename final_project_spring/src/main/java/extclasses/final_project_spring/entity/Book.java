@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@EqualsAndHashCode(exclude = "shelf")
+@EqualsAndHashCode(exclude = {"shelf","orders"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "book")
@@ -36,6 +36,8 @@ public class Book {
     private Shelf shelf;
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "user_id", nullable = true)
+    @ToString.Exclude
+    @JsonManagedReference
     private User user;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
     private Set<Order> orders = new HashSet<>();

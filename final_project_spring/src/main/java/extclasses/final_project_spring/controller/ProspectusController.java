@@ -6,15 +6,16 @@ import extclasses.final_project_spring.entity.Author;
 import extclasses.final_project_spring.entity.Tag;
 import extclasses.final_project_spring.service.AuthorService;
 import extclasses.final_project_spring.service.BookService;
+import extclasses.final_project_spring.service.OrderService;
 import extclasses.final_project_spring.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.File;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,8 @@ public class ProspectusController {
     private TagService tagService;
     @Autowired
     private AuthorService authorService;
-
+    @Autowired
+    private OrderService orderService;
     @GetMapping("/prospectus")
     public String getProspectusPage() {
         return "prospectus.html";
@@ -73,5 +75,15 @@ public class ProspectusController {
                 .stream()
                 .map(BookDTO::new)
                 .collect(Collectors.toSet());
+    }
+
+    @PostMapping("/order")
+    public @ResponseBody
+    String orderBook(@RequestBody BookDTO bookDTO, Authentication authentication){
+        try {
+            return orderService.createOrder(bookDTO,authentication.getName()) ? "added" : "not added";
+        } catch (Exception e) {
+            return "not add";
+        }
     }
 }
