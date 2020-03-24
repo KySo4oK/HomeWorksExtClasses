@@ -99,4 +99,12 @@ public class BookService {
                 filterDTO.getAuthors(),
                 filterDTO.getTags());
     }
+
+    public boolean editBook(BookDTO bookDTO) throws Exception {
+        Book book = bookRepository.findByName(bookDTO.getName()).orElseThrow(() -> new Exception("book with this name not exist"));
+        book.setAuthors(authorService.createAuthorsByString(bookDTO.getAuthors()));
+        book.setTags(tagService.createTagsByString(bookDTO.getTags()));
+        bookRepository.save(book);
+        return true;
+    }
 }
