@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+<body>
+<div id="app">
+    <!--        passive orders -->
+    <div style="margin-left:25%">
+        <div class="col-md-6 col-md-6 col-md-offset-0 description">
+            <div v-for="order in passiveOrders">
+                <div class="row">
+                    <div class="col col-expand">
+                        <h1 v-text="order.bookName"></h1>
+                        <h1 v-text="order.userName"></h1>
+                        <h1 v-text="order.startDate"></h1>
+                        <button class="btn btn-primary btn-lg" v-on:click="permitOrder(order)">permit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    active orders-->
+    <div style="margin-left:25%">
+        <div class="col-md-6 col-md-6 col-md-offset-0 description">
+            <div v-for="order in activeOrders">
+                <div class="row">
+                    <div class="col col-expand">
+                        <h1 v-text="order.bookName"></h1>
+                        <h1 v-text="order.userName"></h1>
+                        <h1 v-text="order.startDate"></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    let app = new Vue({
+        el: '#app',
+        data: {
+            activeOrders: [],
+            passiveOrders: [],
+        },
+        async mounted() {
+            await this.getActiveOrders();
+            await this.getPassiveOrders();
+        },
+        methods: {
+            async getActiveOrders() {
+                let res = await axios.get('/active');
+                if (!res) return;
+                this.activeOrders = res.data;
+            },
+            async getPassiveOrders() {
+                let res = await axios.get('/passive');
+                if (!res) return;
+                this.passiveOrders = res.data;
+            },
+            async permitOrder(order) {
+                let res = await axios.put('/permit', order);
+                if (!res) return;
+                this.message = res.data + book.name;
+            },
+
+        }
+
+
+    });
+</script>
+</body>
+</html>

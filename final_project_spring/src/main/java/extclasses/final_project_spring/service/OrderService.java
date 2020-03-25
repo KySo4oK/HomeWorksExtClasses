@@ -1,6 +1,7 @@
 package extclasses.final_project_spring.service;
 
 import extclasses.final_project_spring.dto.BookDTO;
+import extclasses.final_project_spring.dto.OrderDTO;
 import extclasses.final_project_spring.entity.Book;
 import extclasses.final_project_spring.entity.Order;
 import extclasses.final_project_spring.entity.User;
@@ -11,6 +12,7 @@ import extclasses.final_project_spring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Component
@@ -25,8 +27,8 @@ public class OrderService {
     private UserRepository userRepository;
 
     public boolean createOrder(BookDTO bookDTO, String userName) throws Exception {
-        Optional<Book> bookOptional= bookRepository.findByName(bookDTO.getName());
-        if(bookOptional.isEmpty()) return false;
+        Optional<Book> bookOptional = bookRepository.findByName(bookDTO.getName());
+        if (bookOptional.isEmpty()) return false;
         Book book = bookOptional.get();
         Order order = new Order();
         book.addOrder(order);
@@ -34,5 +36,14 @@ public class OrderService {
         order.setUser(user);
         orderRepository.save(order);
         return true;
+    }
+
+    public void permitOrder(OrderDTO orderDTO) throws Exception {
+        Order order = orderRepository
+                .findByActiveFalseAndBook_NameAndUser_Username(orderDTO.getBookName(), orderDTO.getUserName())
+                .orElseThrow(() -> new Exception("cannot permit order"));
+        order.setActive(true);
+        order.setStartDate(new Date());
+        order.setEndDate(new Date(order.getStartDate().getMonth() + 1));
     }
 }
