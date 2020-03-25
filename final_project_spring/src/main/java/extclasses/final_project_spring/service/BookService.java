@@ -109,7 +109,11 @@ public class BookService {
     }
 
     public boolean deleteBook(String name) throws Exception {
-        bookRepository.delete(bookRepository.findByName(name).orElseThrow(()-> new Exception("book with this name not exist") ));
+        bookRepository
+                .delete(
+                        bookRepository
+                                .findByName(name)
+                                .orElseThrow(() -> new Exception("book with this name not exist")));
         return true;
     }
 }

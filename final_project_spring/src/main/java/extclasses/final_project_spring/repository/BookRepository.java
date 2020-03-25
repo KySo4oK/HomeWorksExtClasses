@@ -1,13 +1,10 @@
 package extclasses.final_project_spring.repository;
 
-import extclasses.final_project_spring.dto.FilterDTO;
-import extclasses.final_project_spring.entity.Author;
 import extclasses.final_project_spring.entity.Book;
-import extclasses.final_project_spring.entity.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.parameters.P;
 
 import java.util.Optional;
 import java.util.Set;
