@@ -35,4 +35,16 @@ public class BookController {
             return "error";
         }
     }
+    @DeleteMapping("/delete/{name}")
+    public @ResponseBody
+    String deleteBook(@PathVariable("name") String name) {
+        System.out.println(name);
+        try {
+            if (bookService.deleteBook(name)) {
+                return "successful";
+            } else return "error";
+        } catch (Exception e) {
+            return "error";
+        }
+    }
 }

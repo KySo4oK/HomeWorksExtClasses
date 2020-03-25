@@ -107,4 +107,9 @@ public class BookService {
         bookRepository.save(book);
         return true;
     }
+
+    public boolean deleteBook(String name) throws Exception {
+        bookRepository.delete(bookRepository.findByName(name).orElseThrow(()-> new Exception("book with this name not exist") ));
+        return true;
+    }
 }

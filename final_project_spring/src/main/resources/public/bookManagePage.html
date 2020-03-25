@@ -88,6 +88,7 @@
                                 <label for="book_t">Book Tags</label>
                             </div>
                             <button class="btn btn-primary btn-lg" v-on:click="editBook(book)">edit</button>
+                            <button class="btn btn-primary btn-lg" v-on:click="deleteBook(book)">delete</button>
                         </div>
                     </div>
                 </div>
@@ -117,7 +118,7 @@
         async mounted() {
             await this.getBooks();
             await this.getAuthors();
-            await this.getTags()
+            await this.getTags();
         },
         methods: {
             async addBook() {
@@ -153,6 +154,15 @@
                 let res = await axios.put('/edit', book);
                 if (!res) return;
                 this.message = res.data + book.name;
+            },
+            async deleteBook(book) {
+                let res = await axios.delete('/delete/' + book.name);
+                if (!res) return;
+                this.message = res.data + book.name;
+                await this.getBooks();
+                await this.getAuthors();
+                await this.getTags();
+
             }
         }
     });
