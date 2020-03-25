@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Controller
 public class OrderController {
     @Autowired
@@ -28,5 +31,24 @@ public class OrderController {
             return "fall";
         }
         return "success";
+    }
+
+    @GetMapping("/active")
+    public @ResponseBody
+    Set<OrderDTO> getActiveOrders() {
+        return orderService
+                .getActiveOrders()
+                .stream()
+                .map(OrderDTO::new)
+                .collect(Collectors.toSet());
+    }
+    @GetMapping("/passive")
+    public @ResponseBody
+    Set<OrderDTO> getPassiveOrders() {
+        return orderService
+                .getPassiveOrders()
+                .stream()
+                .map(OrderDTO::new)
+                .collect(Collectors.toSet());
     }
 }

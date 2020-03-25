@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.Optional;
+import java.util.Set;
 
 @Component
 public class OrderService {
@@ -45,5 +46,13 @@ public class OrderService {
         order.setActive(true);
         order.setStartDate(new Date());
         order.setEndDate(new Date(order.getStartDate().getMonth() + 1));
+    }
+
+    public Set<Order> getActiveOrders() {
+        return orderRepository.findAllByActiveIsTrue();
+    }
+
+    public Set<Order> getPassiveOrders() {
+        return orderRepository.findAllByActiveIsFalse();
     }
 }
