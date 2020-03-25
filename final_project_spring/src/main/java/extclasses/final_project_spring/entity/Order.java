@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -22,8 +23,6 @@ public class Order {
     @ToString.Exclude
     @JsonManagedReference
     private boolean active;
-    @Temporal(TemporalType.DATE)
-    private Date startDate = new Date();
-    @Temporal(TemporalType.DATE)
-    private Date endDate = new Date();
+    private LocalDate startDate = LocalDate.now();
+    private LocalDate endDate = LocalDate.now();
 }

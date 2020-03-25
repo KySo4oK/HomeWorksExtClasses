@@ -12,6 +12,7 @@ import extclasses.final_project_spring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
@@ -44,8 +45,9 @@ public class OrderService {
                 .findByActiveFalseAndBook_NameAndUser_Username(orderDTO.getBookName(), orderDTO.getUserName())
                 .orElseThrow(() -> new Exception("cannot permit order"));
         order.setActive(true);
-        order.setStartDate(new Date());
-        order.setEndDate(new Date(order.getStartDate().getMonth() + 1));
+        order.setStartDate(LocalDate.now());
+        order.setEndDate(LocalDate.now().plusMonths(1));
+        orderRepository.save(order);
     }
 
     public Set<Order> getActiveOrders() {
