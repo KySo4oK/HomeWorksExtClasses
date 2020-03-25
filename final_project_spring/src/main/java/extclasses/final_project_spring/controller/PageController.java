@@ -1,13 +1,17 @@
 package extclasses.final_project_spring.controller;
 
+import extclasses.final_project_spring.dto.OrderDTO;
 import extclasses.final_project_spring.dto.UserDTO;
 import extclasses.final_project_spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Set;
 
 
 @Controller
@@ -18,11 +22,6 @@ public class PageController {
     @GetMapping("/")
     public String getMainPage() {
         return "main.html";
-    }
-
-    @GetMapping("/user")
-    public String getUserPage() {
-        return "user.html";
     }
 
     @GetMapping("/admin")
@@ -41,5 +40,4 @@ public class PageController {
         userService.setNewUser(userDTO);
         return "redirect:/";
     }
-
 }

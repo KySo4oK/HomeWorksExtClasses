@@ -10,6 +10,8 @@ import extclasses.final_project_spring.repository.OrderRepository;
 import extclasses.final_project_spring.repository.ShelfRepository;
 import extclasses.final_project_spring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.ExpressionException;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -56,5 +58,28 @@ public class OrderService {
 
     public Set<Order> getPassiveOrders() {
         return orderRepository.findAllByActiveIsFalse();
+    }
+
+    public Set<Order> getActiveOrdersByUserName(String name) {
+        return orderRepository.findAllByActiveIsTrueAndUser_Username(name);
+    }
+
+    public Set<Order> getPassiveOrdersByUserName(String name) {
+        return orderRepository.findAllByActiveIsFalseAndUser_Username(name);
+    }
+
+    public void returnBook(OrderDTO orderDTO, Authentication authentication) throws Exception {
+        Book book = bookRepository
+                .findByName(orderDTO.getBookName())
+                .orElseThrow(() -> new Exception("no book"));
+        Order order = orderRepository
+                .findByActiveTrueAndBook_NameAndUser_Username(
+                        orderDTO.getBookName(),
+                        orderDTO.getUserName())
+                .orElseThrow(() -> new Exception("No order"));
+        book.setUser(null);
+        book.removeOrder(order);
+        bookRepository.save(book);
+        orderRepository.delete(order);
     }
 }

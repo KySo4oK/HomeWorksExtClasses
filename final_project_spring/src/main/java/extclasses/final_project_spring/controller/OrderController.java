@@ -3,6 +3,7 @@ package extclasses.final_project_spring.controller;
 import extclasses.final_project_spring.dto.OrderDTO;
 import extclasses.final_project_spring.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -42,6 +43,7 @@ public class OrderController {
                 .map(OrderDTO::new)
                 .collect(Collectors.toSet());
     }
+
     @GetMapping("/passive")
     public @ResponseBody
     Set<OrderDTO> getPassiveOrders() {
@@ -50,5 +52,41 @@ public class OrderController {
                 .stream()
                 .map(OrderDTO::new)
                 .collect(Collectors.toSet());
+    }
+
+    @GetMapping("/user")
+    public String getUserPage() {
+        return "user.html";
+    }
+
+    @GetMapping("/user/active")
+    public @ResponseBody
+    Set<OrderDTO> getActiveOrdersByUser(Authentication authentication) {
+        return orderService
+                .getActiveOrdersByUserName(authentication.getName())
+                .stream()
+                .map(OrderDTO::new)
+                .collect(Collectors.toSet());
+    }
+
+    @GetMapping("/user/passive")
+    public @ResponseBody
+    Set<OrderDTO> getPassiveOrdersByUser(Authentication authentication) {
+        return orderService
+                .getPassiveOrdersByUserName(authentication.getName())
+                .stream()
+                .map(OrderDTO::new)
+                .collect(Collectors.toSet());
+    }
+
+    @PutMapping("/user/return")
+    public @ResponseBody
+    String returnBook(@RequestBody OrderDTO orderDTO, Authentication authentication) {
+        try {
+            orderService.returnBook(orderDTO, authentication);
+        } catch (Exception e) {
+            return "-";
+        }
+        return "+";
     }
 }
