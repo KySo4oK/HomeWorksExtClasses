@@ -25,5 +25,5 @@ public class Order {
     @Temporal(TemporalType.DATE)
     private Date startDate = new Date();
     @Temporal(TemporalType.DATE)
-    private Date endDate;
+    private Date endDate = new Date();
 }
