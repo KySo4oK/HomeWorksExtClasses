@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity(name = "orders")
@@ -21,4 +22,8 @@ public class Order {
     @ToString.Exclude
     @JsonManagedReference
     private boolean active;
+    @Temporal(TemporalType.DATE)
+    private Date startDate = new Date();
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
 }
