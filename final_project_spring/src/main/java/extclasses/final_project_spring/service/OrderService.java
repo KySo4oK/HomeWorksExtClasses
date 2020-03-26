@@ -10,12 +10,11 @@ import extclasses.final_project_spring.repository.OrderRepository;
 import extclasses.final_project_spring.repository.ShelfRepository;
 import extclasses.final_project_spring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.ExpressionException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
 
@@ -42,6 +41,7 @@ public class OrderService {
         return true;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void permitOrder(OrderDTO orderDTO) throws Exception {
         Order order = orderRepository
                 .findByActiveFalseAndBook_NameAndUser_Username(orderDTO.getBookName(), orderDTO.getUserName())
@@ -68,6 +68,7 @@ public class OrderService {
         return orderRepository.findAllByActiveIsFalseAndUser_Username(name);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void returnBook(OrderDTO orderDTO, Authentication authentication) throws Exception {
         Book book = bookRepository
                 .findByName(orderDTO.getBookName())
