@@ -12,62 +12,75 @@
 <body style="text-align:center">
 <div id="app">
     <header>
-        <div class="navbar navbar-default" style="background-color: mediumseagreen;">
-            <h1 style="float: left"><i>{{ siteName }}</i></h1>
-            <h1><i><a style="float: right;" href="/main">Main</a></i></h1>
+        <div class="navbar navbar-default" style="background-color: aquamarine;">
+            <h1 style="float: left">{{ siteName }}</h1>
+            <h1><a style="float: right; margin-right: 5px" href="/login">Login</a></h1>
+            <h1><a style="float: right; margin-right: 5px" href="/main">Main</a></h1>
         </div>
     </header>
     <div style="margin:0 auto;width:75%;text-align:left">
-        <p class="h4 text-center mb-4">Sign up</p>
-        <form style="max-width: 500px; margin: auto;">
-            <div>
-                <input id="username" class="form-control" placeholder="username" type="text" v-model="user.username">
+        <p class="h3 text-center mb-4">Sign up</p>
+        <div style="max-width: 500px; margin: auto;">
+            <input id="username" class="form-control" placeholder="Name" type="text" v-model="username">
+            <input id="phone" class="form-control" placeholder="Phone" type="text" v-model="phone">
+            <input type="email" class="form-control" id="email" placeholder="Email" v-model="email">
+            <input type="password" class="form-control" placeholder="Password" id="password"
+                   v-model="password">
+            <div style="text-align: center; margin-top: 20px">
+                <button @click="reg()" class="btn btn-warning " style="width: 30%; ">Sign Up</button>
             </div>
-            <div>
-                <input id="phone" class="form-control" placeholder="phone" type="text" v-model="user.phone">
-            </div>
-            <div>
-                <input type="email" class="form-control" id="email" placeholder="email" v-model="user.email">
-            </div>
-            <div>
-                <input type="password" class="form-control" placeholder="password" id="password"
-                       v-model="user.password">
-            </div>
-            <button v-on:click="reg" class="btn btn-primary btn-lg" style="width: 500px">Sign Up</button>
             <span>{{ message }}</span>
-        </form>
+        </div>
     </div>
-    <v-footer padless>
-        <v-col
+    <footer padless>
+        <col
                 class="text-center"
                 cols="12"
         >
-            {{ new Date().getFullYear() }} — <strong>e-lib</strong>
-        </v-col>
-    </v-footer>
+        {{ new Date().getFullYear() }} — <strong>e-lib</strong>
+        </col>
+    </footer>
 </div>
 <script type="text/javascript">
     let app = new Vue({
         el: '#app',
         data: {
             siteName: 'e-lib',
-            user: {
-                username: null,
-                phone: null,
-                email: null,
-                password: null,
-            },
+            username: '',
+            phone: '',
+            email: '',
+            password: '',
             message: null
         },
         methods: {
             async reg() {
-                console.log(this.user);
-                let res = await axios.post('/reg', this.user);
+                let res = await axios.post('/reg', {
+                    username: this.username,
+                    email: this.email,
+                    phone: this.phone,
+                    password: this.password,
+                });
                 if (!res) return;
                 this.message = res.data;
             },
         }
     })
 </script>
+<style lang="less">
+    input {
+        margin-top: 17px;
+    }
+    body{
+        font-family: Arial;
+        font-style: normal;
+    }
+    footer {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 80px;
+    }
+</style>
 </body>
 </html>
