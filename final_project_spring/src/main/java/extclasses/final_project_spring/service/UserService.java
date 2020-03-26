@@ -2,11 +2,12 @@ package extclasses.final_project_spring.service;
 
 import extclasses.final_project_spring.dto.UserDTO;
 import extclasses.final_project_spring.entity.User;
+import extclasses.final_project_spring.exception.UserAlreadyExistException;
 import extclasses.final_project_spring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Component
@@ -37,7 +38,11 @@ public class UserService {
         return usersStr.toString();
     }
 
+    @Transactional(rollbackFor = UserAlreadyExistException.class)
     public void setNewUser(UserDTO userDTO) {
+        if (userRepository.findByUsername(userDTO.getUsername()).isPresent()) {
+            throw new UserAlreadyExistException("user - " + userDTO.getUsername() + " already exist");
+        }
         User user = new User(userDTO);
         userRepository.save(user);
     }
