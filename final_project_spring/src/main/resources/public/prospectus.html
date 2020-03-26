@@ -10,25 +10,26 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
-<body>
+<body style="text-align: center">
 <div id="app">
     <header>
-        <div class="navbar navbar-default">
-            <h1>{{ sitename }}</h1>
-            <h1>{{ message }}</h1>
+        <div class="navbar navbar-default" style="background-color: aquamarine;">
+            <h1 style="float: left">{{ siteName }}</h1>
+            <h1><a style="float: right; margin-right: 5px" href="/logout">Logout</a></h1>
+            <h1><a style="float: right; margin-right: 5px" href="/user">My Books</a></h1>
+            <h1><a style="float: right; margin-right: 5px" href="/prospectus">Prospectus</a></h1>
+            <h1><a style="float: right; margin-right: 5px" href="/main">Main</a></h1>
         </div>
-
     </header>
     <main>
         <!--        filter-->
-        <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:25%">
+        <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:15%; float: left">
             <!--            name-->
             <div>
                 <input id="partOfName" type="text" v-model="partOfName">
-                <hr>
                 <label for="partOfName">Input part of name</label>
             </div>
-            <hr>
+            <br>
             <!--            tags-->
             <div id="tagsCheckbox" class="col-md-6 boxes">
                 <div v-for="tag in tags">
@@ -38,12 +39,11 @@
                                v-model="addedTags">
                         <h6>{{tag}}</h6>
                     </div>
-                    <hr>
                 </div>
             </div>
-            <hr>
+            <br>
             <label for="tagsCheckbox">Select tags</label>
-            <hr>
+            <br>
             <!--            authors-->
             <div id="authorsCheckbox" class="col-md-6 boxes">
                 <div v-for="author in authors">
@@ -54,11 +54,11 @@
                         <h6>{{author}}</h6>
                     </div>
                 </div>
-                <hr>
             </div>
+            <br>
             <label for="authorsCheckbox">Select authors</label>
-            <hr>
-            <button class="btn btn-primary btn-lg" v-on:click="changeList">load</button>
+            <br>
+            <button class="btn btn-warning" style="width: 30%" @click="changeList">load</button>
         </div>
         <!--        books -->
         <div style="margin-left:25%">
@@ -66,17 +66,26 @@
                 <div v-for="book in books">
                     <div class="row">
                         <div class="col col-expand">
+                            <hr>
                             <h1 v-text="book.name"></h1>
                             <h1 v-text="book.authors"></h1>
                             <h1 v-text="book.tags"></h1>
                             <button class="btn btn-primary btn-lg" v-on:click="orderBook(book)">order</button>
+                            <hr>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </main>
+    <footer padless>
+        <col
+                class="text-center"
+                cols="12"
+        >
+        {{ new Date().getFullYear() }} — <strong>e-lib</strong>
+        </col>
+    </footer>
 </div>
 <script type="text/javascript">
     let app = new Vue({
@@ -90,6 +99,7 @@
             partOfName: null,
             authors: [],
             message: null,
+            siteName: 'e-lib'
         },
         async mounted() {
             await this.getBooks();
@@ -131,5 +141,46 @@
         }
     });
 </script>
+<style lang="less">
+    input {
+        margin-top: 17px;
+    }
+
+    body {
+        font-family: Arial;
+        font-style: normal;
+    }
+
+    footer {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 80px;
+    }
+    navbar-container {
+        position: sticky;
+        top: 0;
+        overflow-y: auto;
+        height: 100vh;
+    }
+    navbar-container .navbar {
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        flex-direction: column;
+        height: 100%;
+    }
+    navbar-container .navbar-collapse {
+        align-items: flex-start;
+    }
+    navbar-container .nav {
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+    navbar-container .navbar-nav {
+        flex-direction: column !important;
+    }
+</style>
 </body>
 </html>
