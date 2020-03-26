@@ -26,12 +26,8 @@ public class OrderController {
     @PutMapping("/permit")
     public @ResponseBody
     String permitOrder(@RequestBody OrderDTO orderDTO) {
-        try {
-            orderService.permitOrder(orderDTO);
-        } catch (Exception e) {
-            return "fall";
-        }
-        return "success";
+        orderService.permitOrder(orderDTO);
+        return "you permit order " + orderDTO.getBookName() + " - " + orderDTO.getUserName();
     }
 
     @GetMapping("/active")
@@ -82,11 +78,7 @@ public class OrderController {
     @PutMapping("/user/return")
     public @ResponseBody
     String returnBook(@RequestBody OrderDTO orderDTO, Authentication authentication) {
-        try {
-            orderService.returnBook(orderDTO, authentication);
-        } catch (Exception e) {
-            return "-";
-        }
-        return "+";
+        orderService.returnBook(orderDTO);
+        return "you return - " + orderDTO.getBookName();
     }
 }
