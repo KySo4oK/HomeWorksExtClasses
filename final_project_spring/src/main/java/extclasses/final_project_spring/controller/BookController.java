@@ -19,32 +19,20 @@ public class BookController {
     @PostMapping("/add")
     public @ResponseBody
     String addBook(@RequestBody BookDTO bookDTO) {
-        if (bookService.saveBookNewBookFromClient(bookDTO)) {
-            return "successful";
-        } else return "error";
+        bookService.saveBookNewBookFromClient(bookDTO);
+        return "successful adding book - " + bookDTO.getName();
     }
 
     @PutMapping("/edit")
     public @ResponseBody
     String editBook(@RequestBody BookDTO bookDTO) {
-        try {
-            if (bookService.editBook(bookDTO)) {
-                return "successful";
-            } else return "error";
-        } catch (Exception e) {
-            return "error";
-        }
+        bookService.editBook(bookDTO);
+        return "successful edit book - " + bookDTO.getName();
     }
     @DeleteMapping("/delete/{name}")
     public @ResponseBody
     String deleteBook(@PathVariable("name") String name) {
-        System.out.println(name);
-        try {
-            if (bookService.deleteBook(name)) {
-                return "successful";
-            } else return "error";
-        } catch (Exception e) {
-            return "error";
-        }
+        bookService.deleteBook(name);
+        return "successful delete book - " + name;
     }
 }

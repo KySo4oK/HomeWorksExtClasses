@@ -6,6 +6,8 @@ import extclasses.final_project_spring.entity.Author;
 import extclasses.final_project_spring.entity.Book;
 import extclasses.final_project_spring.entity.Shelf;
 import extclasses.final_project_spring.entity.Tag;
+import extclasses.final_project_spring.exception.BookAlreadyExistException;
+import extclasses.final_project_spring.exception.BookNotFoundException;
 import extclasses.final_project_spring.repository.BookRepository;
 import extclasses.final_project_spring.repository.ShelfRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,9 @@ public class BookService {
         return bookRepository.findFirst10ByAvailableIsTrue();
     }
 
-    public boolean saveBookNewBookFromClient(BookDTO bookDTO) {
-        if (bookRepository.findByName(bookDTO.getName()).isPresent()) return false;
+    public void saveBookNewBookFromClient(BookDTO bookDTO) {
+        if (bookRepository.findByName(bookDTO.getName()).isPresent())
+            throw new BookAlreadyExistException("book with this name already exist");
         Set<Tag> tags = tagService.createTagsByString(bookDTO.getTags());
         Set<Author> authors = authorService.createAuthorsByString(bookDTO.getAuthors());
         Shelf shelf = shelfRepository.findByBookIsNull().orElse(new Shelf());
@@ -41,7 +44,6 @@ public class BookService {
         bookRepository.save(book);
         shelf.setBook(book);
         shelfRepository.save(shelf);
-        return true;
     }
 
     public Set<Book> getAvailableBooksByFilter(FilterDTO filterDTO) {
@@ -51,20 +53,20 @@ public class BookService {
                 filterDTO.getTags());
     }
 
-    public boolean editBook(BookDTO bookDTO) throws Exception {
-        Book book = bookRepository.findByName(bookDTO.getName()).orElseThrow(() -> new Exception("book with this name not exist"));
+    public void editBook(BookDTO bookDTO) throws BookNotFoundException {
+        Book book = bookRepository
+                .findByName(bookDTO.getName())
+                .orElseThrow(() -> new BookNotFoundException("book with this name not exist"));
         book.setAuthors(authorService.createAuthorsByString(bookDTO.getAuthors()));
         book.setTags(tagService.createTagsByString(bookDTO.getTags()));
         bookRepository.save(book);
-        return true;
     }
 
-    public boolean deleteBook(String name) throws Exception {
+    public void deleteBook(String name) throws BookNotFoundException {
         bookRepository
                 .delete(
                         bookRepository
                                 .findByName(name)
-                                .orElseThrow(() -> new Exception("book with this name not exist")));
-        return true;
+                                .orElseThrow(() -> new BookNotFoundException("book with this name not exist")));
     }
 }
