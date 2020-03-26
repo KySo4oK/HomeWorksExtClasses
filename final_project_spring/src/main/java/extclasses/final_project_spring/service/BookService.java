@@ -32,7 +32,7 @@ public class BookService {
 
     public void saveBookNewBookFromClient(BookDTO bookDTO) {
         if (bookRepository.findByName(bookDTO.getName()).isPresent())
-            throw new BookAlreadyExistException("book with this name already exist");
+            throw new BookAlreadyExistException("book - " + bookDTO.getName() + " already exist");
         Set<Tag> tags = tagService.createTagsByString(bookDTO.getTags());
         Set<Author> authors = authorService.createAuthorsByString(bookDTO.getAuthors());
         Shelf shelf = shelfRepository.findByBookIsNull().orElse(new Shelf());
@@ -56,7 +56,7 @@ public class BookService {
     public void editBook(BookDTO bookDTO) throws BookNotFoundException {
         Book book = bookRepository
                 .findByName(bookDTO.getName())
-                .orElseThrow(() -> new BookNotFoundException("book with this name not exist"));
+                .orElseThrow(() -> new BookNotFoundException("book - " + bookDTO.getName() + " not exist"));
         book.setAuthors(authorService.createAuthorsByString(bookDTO.getAuthors()));
         book.setTags(tagService.createTagsByString(bookDTO.getTags()));
         bookRepository.save(book);
@@ -67,6 +67,6 @@ public class BookService {
                 .delete(
                         bookRepository
                                 .findByName(name)
-                                .orElseThrow(() -> new BookNotFoundException("book with this name not exist")));
+                                .orElseThrow(() -> new BookNotFoundException("book - " + name + " not exist")));
     }
 }
