@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class OrderService {
@@ -31,6 +32,7 @@ public class OrderService {
     @Autowired
     private UserRepository userRepository;
 
+    @Transactional
     public boolean createOrder(BookDTO bookDTO, String userName) {
         Book book = bookRepository.findByName(bookDTO.getName())
                 .orElseThrow(() -> new BookNotFoundException("book - " + bookDTO.getName() + " not exist"));
@@ -55,20 +57,33 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    public Set<Order> getActiveOrders() {
-        return orderRepository.findAllByActiveIsTrue();
+    public Set<OrderDTO> getActiveOrders() {
+        return orderRepository
+                .findAllByActiveIsTrue()
+                .stream()
+                .map(OrderDTO::new)
+                .collect(Collectors.toSet());
     }
 
-    public Set<Order> getPassiveOrders() {
-        return orderRepository.findAllByActiveIsFalse();
+    public Set<OrderDTO> getPassiveOrders() {
+        return orderRepository.findAllByActiveIsFalse()
+                .stream()
+                .map(OrderDTO::new)
+                .collect(Collectors.toSet());
     }
 
-    public Set<Order> getActiveOrdersByUserName(String name) {
-        return orderRepository.findAllByActiveIsTrueAndUser_Username(name);
+    public Set<OrderDTO> getActiveOrdersByUserName(String name) {
+        return orderRepository.findAllByActiveIsTrueAndUser_Username(name)
+                .stream()
+                .map(OrderDTO::new)
+                .collect(Collectors.toSet());
     }
 
-    public Set<Order> getPassiveOrdersByUserName(String name) {
-        return orderRepository.findAllByActiveIsFalseAndUser_Username(name);
+    public Set<OrderDTO> getPassiveOrdersByUserName(String name) {
+        return orderRepository.findAllByActiveIsFalseAndUser_Username(name)
+                .stream()
+                .map(OrderDTO::new)
+                .collect(Collectors.toSet());
     }
 
     @Transactional(rollbackFor = {BookNotFoundException.class, OrderNotFoundException.class})

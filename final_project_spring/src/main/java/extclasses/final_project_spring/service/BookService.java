@@ -12,8 +12,10 @@ import extclasses.final_project_spring.repository.BookRepository;
 import extclasses.final_project_spring.repository.ShelfRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class BookService {
@@ -26,10 +28,14 @@ public class BookService {
     @Autowired
     private AuthorService authorService;
 
-    public Set<Book> getAvailableBooks() {
-        return bookRepository.findFirst10ByAvailableIsTrue();
+    public Set<BookDTO> getAvailableBooks() {
+        return bookRepository.findFirst10ByAvailableIsTrue()
+                .stream()
+                .map(BookDTO::new)
+                .collect(Collectors.toSet());
     }
 
+    @Transactional
     public void saveBookNewBookFromClient(BookDTO bookDTO) {
         if (bookRepository.findByName(bookDTO.getName()).isPresent())
             throw new BookAlreadyExistException("book - " + bookDTO.getName() + " already exist");
@@ -46,11 +52,14 @@ public class BookService {
         shelfRepository.save(shelf);
     }
 
-    public Set<Book> getAvailableBooksByFilter(FilterDTO filterDTO) {
+    public Set<BookDTO> getAvailableBooksByFilter(FilterDTO filterDTO) {
         return bookRepository.getBooksByFilter(
                 filterDTO.getName(),
                 filterDTO.getAuthors(),
-                filterDTO.getTags());
+                filterDTO.getTags())
+                .stream()
+                .map(BookDTO::new)
+                .collect(Collectors.toSet());
     }
 
     public void editBook(BookDTO bookDTO) throws BookNotFoundException {
@@ -63,10 +72,7 @@ public class BookService {
     }
 
     public void deleteBook(String name) throws BookNotFoundException {
-        bookRepository
-                .delete(
-                        bookRepository
-                                .findByName(name)
+        bookRepository.delete(bookRepository.findByName(name)
                                 .orElseThrow(() -> new BookNotFoundException("book - " + name + " not exist")));
     }
 }

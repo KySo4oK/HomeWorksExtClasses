@@ -8,14 +8,18 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class TagService {
     @Autowired
     private TagRepository tagRepository;
 
-    public List<Tag> getAllTags() {
-        return tagRepository.findAll();
+    public Set<String> getAllTags() {
+        return tagRepository.findAll()
+                .stream()
+                .map(Tag::getName)
+                .collect(Collectors.toSet());
     }
 
     public Set<Tag> createTagsByString(String tagsString) {

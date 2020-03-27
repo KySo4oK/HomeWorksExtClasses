@@ -38,43 +38,28 @@ public class ProspectusController {
     public @ResponseBody
     Set<BookDTO>
     getAvailableBooks() {
-        return bookService
-                .getAvailableBooks()
-                .stream()
-                .map(BookDTO::new)
-                .collect(Collectors.toSet());
+        return bookService.getAvailableBooks();
     }
 
     @GetMapping(value = "/tags", produces = "application/json")
     public @ResponseBody
     Set<String>
     getAllTags() {
-        return tagService
-                .getAllTags()
-                .stream()
-                .map(Tag::getName)
-                .collect(Collectors.toSet());
+        return tagService.getAllTags();
     }
 
     @GetMapping(value = "/authors", produces = "application/json")
     public @ResponseBody
     Set<String>
     getAllAuthors() {
-        return authorService
-                .getAllAuthors()
-                .stream()
-                .map(Author::getName)
-                .collect(Collectors.toSet());
+        return authorService.getAllAuthors();
     }
 
     @PostMapping("/filter")
     public @ResponseBody
     Set<BookDTO> getBooksByFilter(@RequestBody FilterDTO filterDTO) {
         return bookService
-                .getAvailableBooksByFilter(filterDTO)
-                .stream()
-                .map(BookDTO::new)
-                .collect(Collectors.toSet());
+                .getAvailableBooksByFilter(filterDTO);
     }
 
     @PostMapping("/order")

@@ -9,14 +9,18 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class AuthorService {
     @Autowired
     private AuthorRepository authorRepository;
 
-    public List<Author> getAllAuthors() {
-        return authorRepository.findAll();
+    public Set<String> getAllAuthors() {
+        return authorRepository.findAll()
+                .stream()
+                .map(Author::getName)
+                .collect(Collectors.toSet());
     }
 
     public Set<Author> createAuthorsByString(String authorsString) {

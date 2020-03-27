@@ -33,21 +33,13 @@ public class OrderController {
     @GetMapping("/active")
     public @ResponseBody
     Set<OrderDTO> getActiveOrders() {
-        return orderService
-                .getActiveOrders()
-                .stream()
-                .map(OrderDTO::new)
-                .collect(Collectors.toSet());
+        return orderService.getActiveOrders();
     }
 
     @GetMapping("/passive")
     public @ResponseBody
     Set<OrderDTO> getPassiveOrders() {
-        return orderService
-                .getPassiveOrders()
-                .stream()
-                .map(OrderDTO::new)
-                .collect(Collectors.toSet());
+        return orderService.getPassiveOrders();
     }
 
     @GetMapping("/user")
@@ -58,21 +50,13 @@ public class OrderController {
     @GetMapping("/user/active")
     public @ResponseBody
     Set<OrderDTO> getActiveOrdersByUser(Authentication authentication) {
-        return orderService
-                .getActiveOrdersByUserName(authentication.getName())
-                .stream()
-                .map(OrderDTO::new)
-                .collect(Collectors.toSet());
+        return orderService.getActiveOrdersByUserName(authentication.getName());
     }
 
     @GetMapping("/user/passive")
     public @ResponseBody
     Set<OrderDTO> getPassiveOrdersByUser(Authentication authentication) {
-        return orderService
-                .getPassiveOrdersByUserName(authentication.getName())
-                .stream()
-                .map(OrderDTO::new)
-                .collect(Collectors.toSet());
+        return orderService.getPassiveOrdersByUserName(authentication.getName());
     }
 
     @PutMapping("/user/return")
