@@ -48,7 +48,7 @@
             <div style="padding-top: 10px" id="authorsCheckbox" class="col-md-6 boxes">
                 <div v-for="author in authors">
                     <div style="display: inline;">
-                        <input style="display: inline;" type="checkbox"
+                        <input  style="display: inline; float: left; margin-left: 0px" type="checkbox"
                                v-bind:value="author"
                                v-model="addedAuthors">
                         <h6 style="display: inline;">{{author}}</h6>
@@ -58,24 +58,31 @@
             <br>
             <label for="authorsCheckbox" style="margin: 20px">Select authors</label>
             <br>
-            <button class="btn btn-warning" style="width: 30%" @click="changeList">load</button>
+            <button class="btn btn-warning" style="width: 30%;" @click="changeList">load</button>
         </div>
         <!--        books -->
-        <div style="margin-left:25%; padding-top: 10%;">
-            <div class="col-md-6 col-md-6 col-md-offset-0 description">
-                <div v-for="book in books">
-                    <div class="row">
-                        <div class="col col-expand">
-                            <hr>
-                            <h1 v-text="book.name"></h1>
-                            <h1 v-text="book.authors"></h1>
-                            <h1 v-text="book.tags"></h1>
-                            <button class="btn btn-primary btn-lg" v-on:click="orderBook(book)">order</button>
-                            <hr>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div style="padding-top: 10%;">
+            <table style="width: 75%;margin-left:25%; padding-top: 10%; display: table" class="table table-borderedless">
+                <thead>
+                <tr>
+                    <th>name</th>
+                    <th>authors</th>
+                    <th>tags</th>
+                    <th>order</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="book in books">
+                    <td><h1 v-text="book.name"></h1></td>
+                    <td><h1 v-text="book.authors"></h1></td>
+                    <td><h1 v-text="book.tags"></h1></td>
+                    <td>
+                        <button class="btn btn-warning" style="height: 100%; width: 100%;" v-on:click="orderBook(book)">order
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </main>
     <!--    <footer>-->
@@ -86,8 +93,11 @@
     let app = new Vue({
         el: '#app',
         data: {
-            sitename: 'elib',
             books: [{
+                name: 'name',
+                authors: 'author',
+                tags: 'tags'
+            }, {
                 name: 'name',
                 authors: 'author',
                 tags: 'tags'
