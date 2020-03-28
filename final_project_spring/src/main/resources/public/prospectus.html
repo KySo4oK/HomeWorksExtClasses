@@ -15,15 +15,15 @@
     <header>
         <div class="navbar navbar-default" style="background-color: aquamarine; margin: 0 !important">
             <h1 style="float: left">{{ siteName }}</h1>
-            <h1><a style="float: right; margin-right: 5px" href="/logout">Logout</a></h1>
-            <h1><a style="float: right; margin-right: 5px" href="/user">My Books</a></h1>
-            <h1><a style="float: right; margin-right: 5px" href="/prospectus">Prospectus</a></h1>
-            <h1><a style="float: right; margin-right: 5px" href="/main">Main</a></h1>
+            <span><a style="float: right; margin-right: 5px" href="/logout">Logout</a></span>
+            <span><a style="float: right; margin-right: 5px" href="/user">My Books</a></span>
+            <span><a style="float: right; margin-right: 5px" href="/prospectus">Prospectus</a></span>
+            <span><a style="float: right; margin-right: 5px" href="/main">Main</a></span>
         </div>
     </header>
     <main>
         <!--        filter-->
-        <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:15%; float: left; padding-top: 10%;">
+        <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:17%; float: left; padding-top: 10%;">
             <!--            name-->
             <div>
                 <input id="partOfName" class="form-control" type="text" v-model="partOfName">
@@ -34,10 +34,10 @@
             <div id="tagsCheckbox" class="col-md-6 boxes">
                 <div v-for="tag in tags">
                     <div style="display: inline;">
-                        <input style="display: inline;" type="checkbox"
+                        <input style="display: inline; float: left; margin-left: 0px" type="checkbox"
                                v-bind:value="tag"
                                v-model="addedTags">
-                        <h6 style="display: inline;">{{tag}}</h6>
+                        <h6 style="display: inline; margin-right: 0px;">{{tag}}</h6>
                     </div>
                 </div>
             </div>
@@ -87,8 +87,12 @@
         el: '#app',
         data: {
             sitename: 'elib',
-            books: [],
-            tags: [1, 2, 3],
+            books: [{
+                name: 'name',
+                authors: 'author',
+                tags: 'tags'
+            }],
+            tags: [11111, 22222, 3333334444],
             addedTags: [],
             addedAuthors: [],
             partOfName: null,
@@ -153,6 +157,11 @@
         top: 0;
         width: 100%;
         z-index: 10;
+    }
+
+    span {
+        font-size: 30px;
+        height: content-box;
     }
 
     /*footer {*/
