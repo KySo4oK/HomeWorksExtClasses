@@ -12,89 +12,104 @@
         <meta charset="UTF-8">
         <title>Title</title>
     </head>
-<body>
+<body style="text-align: center">
 <div id="app">
+    <header>
+        <div class="navbar navbar-default" style="background-color: aquamarine; margin: 0 !important">
+            <h1 style="float: left">{{ siteName }}</h1>
+            <span><a style="float: right; margin-right: 5px" href="/logout">Logout</a></span>
+            <span><a style="float: right; margin-right: 5px" href="/user">My Books</a></span>
+            <span><a style="float: right; margin-right: 5px" href="/prospectus">Prospectus</a></span>
+            <span><a style="float: right; margin-right: 5px" href="/">Main</a></span>
+        </div>
+    </header>
+    <div style="padding-top: 10%; text-align: center; width: 83%; float: right">
+        <input type="radio" id="one" value="1" v-model="picked">
+        <label for="one">add book</label>
+        <input type="radio" id="two" value="2" v-model="picked">
+        <label for="two">edit/delete</label>
+        <hr>
+    </div>
     <!--    add-->
-    <div id="add">
-        <div>
-            <input id="book_name" type="text" v-model="addedBook.name">
-            <label for="book_name">Book name</label>
+    <div v-if="picked==1" id="add" style="max-width: 500px; margin: auto;">
+        <input id="book_name" type="text" class="form-control" placeholder="name" v-model="addedBook.name">
+        <input id="book_authors" type="text" class="form-control" placeholder="authors" v-model="addedBook.authors">
+        <input id="book_tags" type="text" class="form-control" placeholder="tags" v-model="addedBook.tags">
+        <div style="text-align: center; margin-top: 20px">
+            <button v-on:click="addBook" class="btn btn-warning" style="width: 30%;">load</button>
         </div>
-        <div>
-            <input id="book_authors" type="text" v-model="addedBook.authors">
-            <label for="book_authors">Book authors</label>
-        </div>
-        <div>
-            <input id="book_tags" type="text" v-model="addedBook.tags">
-            <label for="book_tags">Book Tags</label>
-        </div>
-        <button v-on:click="addBook">load</button>
     </div>
     <!--    edit or delete-->
-    <div>
+    <div v-else>
         <!--        filter-->
-        <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:25%">
+        <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:17%; float: left; padding-top: 10%;background-color: #f1f1f1!important;">
             <!--            name-->
             <div>
-                <input id="partOfName" type="text" v-model="partOfName">
-                <hr>
+                <input id="partOfName" class="form-control" type="text" v-model="partOfName">
                 <label for="partOfName">Input part of name</label>
             </div>
-            <hr>
+            <br>
             <!--            tags-->
             <div id="tagsCheckbox" class="col-md-6 boxes">
                 <div v-for="tag in tags">
-                    <div>
-                        <input type="checkbox"
+                    <div style="display: inline;">
+                        <input style="display: inline; float: left; margin-left: 0px" type="checkbox"
                                v-bind:value="tag"
                                v-model="addedTags">
-                        <h6>{{tag}}</h6>
+                        <h6 style="display: inline; margin-right: 0px;">{{tag}}</h6>
                     </div>
-                    <hr>
                 </div>
             </div>
-            <hr>
-            <label for="tagsCheckbox">Select tags</label>
-            <hr>
+            <br>
+            <label for="tagsCheckbox" style="margin: 30px ;">Select tags</label>
+            <br>
             <!--            authors-->
-            <div id="authorsCheckbox" class="col-md-6 boxes">
+            <div style="padding-top: 10px" id="authorsCheckbox" class="col-md-6 boxes">
                 <div v-for="author in authors">
-                    <div>
-                        <input type="checkbox"
-                               v-bind:value="author"
-                               v-model="addedAuthors">
-                        <h6>{{author}}</h6>
+                    <div style="display: inline;">
+                        <input  style="display: inline; float: left; margin-left: 0px" type="checkbox"
+                                v-bind:value="author"
+                                v-model="addedAuthors">
+                        <h6 style="display: inline;">{{author}}</h6>
                     </div>
                 </div>
-                <hr>
             </div>
-            <label for="authorsCheckbox">Select authors</label>
-            <hr>
-            <button class="btn btn-primary btn-lg" v-on:click="changeList">load</button>
+            <br>
+            <label for="authorsCheckbox" style="margin: 20px">Select authors</label>
+            <br>
+            <button class="btn btn-warning" style="width: 30%;" @click="changeList">load</button>
         </div>
         <!--        books -->
-        <div style="margin-left:25%">
-            <div class="col-md-6 col-md-6 col-md-offset-0 description">
-                <div v-for="book in books">
-                    <div class="row">
-                        <div class="col col-expand">
-                            <h1 v-text="book.name"></h1>
-                            <div>
-                                <input id="book_a" type="text" v-bind:value="book.authors" v-model="book.authors">
-                                <label for="book_a">Book authors</label>
-                            </div>
-                            <div>
-                                <input id="book_t" type="text" v-bind:value="book.tags" v-model="book.tags">
-                                <label for="book_t">Book Tags</label>
-                            </div>
-                            <button class="btn btn-primary btn-lg" v-on:click="editBook(book)">edit</button>
-                            <button class="btn btn-primary btn-lg" v-on:click="deleteBook(book)">delete</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div>
+            <table style="width: 75%;margin-left:25%; padding-top: 10%; display: table" class="table table-borderless">
+                <thead>
+                <tr>
+                    <th>name</th>
+                    <th>authors</th>
+                    <th>tags</th>
+                    <th>edit</th>
+                    <th>delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="book in books">
+                    <td><h1 v-text="book.name"></h1></td>
+                    <td><input id="book_a" type="text" class="form-control" v-bind:value="book.authors" v-model="book.authors"></td>
+                    <td><input id="book_t" type="text" class="form-control" v-bind:value="book.tags" v-model="book.tags"></td>
+                    <td>
+                        <button class="btn btn-warning" v-on:click="editBook(book)">edit</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning" v-on:click="deleteBook(book)">delete</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
+</div>
+</div>
 </div>
 
 <script type="text/javascript">
@@ -106,14 +121,23 @@
                 authors: "",
                 tags: "",
             },
-            sitename: 'elib',
-            books: [],
+            picked: '',
+            books: [{
+                name: 'name',
+                authors: 'author',
+                tags: 'tags'
+            }, {
+                name: 'name',
+                authors: 'author',
+                tags: 'tags'
+            }],
             tags: [],
             addedTags: [],
             addedAuthors: [],
             partOfName: null,
             authors: [],
             message: null,
+            siteName: 'e-lib'
         },
         async mounted() {
             await this.getBooks();
@@ -167,5 +191,29 @@
         }
     });
 </script>
+<style lang="less">
+    input {
+        margin-top: 17px;
+    }
+
+    body {
+        font-family: Arial;
+        font-style: normal;
+    }
+
+    header {
+        position: fixed;
+        height: 10%;
+        left: 0;
+        top: 0;
+        width: 100%;
+        z-index: 10;
+    }
+
+    span {
+        font-size: 30px;
+        height: content-box;
+    }
+</style>
 </body>
 </html>
