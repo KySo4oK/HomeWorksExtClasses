@@ -33,30 +33,30 @@
             <!--            tags-->
             <div id="tagsCheckbox" class="col-md-6 boxes">
                 <div v-for="tag in tags">
-                    <div>
-                        <input type="checkbox"
+                    <div style="display: inline;">
+                        <input style="display: inline;" type="checkbox"
                                v-bind:value="tag"
                                v-model="addedTags">
-                        <h6>{{tag}}</h6>
+                        <h6 style="display: inline;">{{tag}}</h6>
                     </div>
                 </div>
             </div>
             <br>
-            <label for="tagsCheckbox">Select tags</label>
+            <label for="tagsCheckbox" style="margin: 20px ;">Select tags</label>
             <br>
             <!--            authors-->
-            <div id="authorsCheckbox" class="col-md-6 boxes">
+            <div style="padding-top: 10px" id="authorsCheckbox" class="col-md-6 boxes">
                 <div v-for="author in authors">
-                    <div>
-                        <input type="checkbox"
+                    <div style="display: inline;">
+                        <input style="display: inline;" type="checkbox"
                                v-bind:value="author"
                                v-model="addedAuthors">
-                        <h6>{{author}}</h6>
+                        <h6 style="display: inline;">{{author}}</h6>
                     </div>
                 </div>
             </div>
             <br>
-            <label for="authorsCheckbox">Select authors</label>
+            <label for="authorsCheckbox" style="margin: 20px">Select authors</label>
             <br>
             <button class="btn btn-warning" style="width: 30%" @click="changeList">load</button>
         </div>
@@ -78,9 +78,9 @@
             </div>
         </div>
     </main>
-<!--    <footer>-->
-<!--        {{ new Date().getFullYear() }} — <strong>e-lib</strong>-->
-<!--    </footer>-->
+    <!--    <footer>-->
+    <!--        {{ new Date().getFullYear() }} — <strong>e-lib</strong>-->
+    <!--    </footer>-->
 </div>
 <script type="text/javascript">
     let app = new Vue({
@@ -88,11 +88,11 @@
         data: {
             sitename: 'elib',
             books: [],
-            tags: [],
+            tags: [1, 2, 3],
             addedTags: [],
             addedAuthors: [],
             partOfName: null,
-            authors: [],
+            authors: [1, 2, 3],
             message: null,
             siteName: 'e-lib'
         },
