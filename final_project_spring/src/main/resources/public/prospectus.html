@@ -18,7 +18,7 @@
             <h1><a style="float: right; margin-right: 5px" href="/logout">Logout</a></h1>
             <h1><a style="float: right; margin-right: 5px" href="/user">My Books</a></h1>
             <h1><a style="float: right; margin-right: 5px" href="/prospectus">Prospectus</a></h1>
-            <h1><a style="float: right; margin-right: 5px" href="/">Main</a></h1>
+            <h1><a style="float: right; margin-right: 5px" href="/main">Main</a></h1>
         </div>
     </header>
     <main>
@@ -31,19 +31,29 @@
             </div>
             <br>
             <!--            tags-->
-            <div id="tagsCheckbox" class="">
-                <select v-model="addedTags" name="tag" multiple size="1">
-                    <option v-for="tag in tags" value="tag">{{ tag }}</option>
-                </select>
+            <div id="tagsCheckbox" class="col-md-6 boxes">
+                <div v-for="tag in tags">
+                    <div>
+                        <input type="checkbox"
+                               v-bind:value="tag"
+                               v-model="addedTags">
+                        <h6>{{tag}}</h6>
+                    </div>
+                </div>
             </div>
             <br>
             <label for="tagsCheckbox">Select tags</label>
             <br>
             <!--            authors-->
-            <div id="authorsCheckbox">
-                <select v-model="addedAuthors" multiple size="1">
-                    <option v-for="author in authors">{{ author }}</option>
-                </select>
+            <div id="authorsCheckbox" class="col-md-6 boxes">
+                <div v-for="author in authors">
+                    <div>
+                        <input type="checkbox"
+                               v-bind:value="author"
+                               v-model="addedAuthors">
+                        <h6>{{author}}</h6>
+                    </div>
+                </div>
             </div>
             <br>
             <label for="authorsCheckbox">Select authors</label>
@@ -68,16 +78,17 @@
             </div>
         </div>
     </main>
-    <!--    <footer>-->
-    <!--        {{ new Date().getFullYear() }} — <strong>e-lib</strong>-->
-    <!--    </footer>-->
+<!--    <footer>-->
+<!--        {{ new Date().getFullYear() }} — <strong>e-lib</strong>-->
+<!--    </footer>-->
 </div>
 <script type="text/javascript">
     let app = new Vue({
         el: '#app',
         data: {
+            sitename: 'elib',
             books: [],
-            tags: [1, 2, 3],
+            tags: [],
             addedTags: [],
             addedAuthors: [],
             partOfName: null,
@@ -142,12 +153,6 @@
         top: 0;
         width: 100%;
         z-index: 10;
-    }
-
-    select {
-        font-size: 120%;
-        width: 100%;
-        z-index: initial;
     }
 
     /*footer {*/
