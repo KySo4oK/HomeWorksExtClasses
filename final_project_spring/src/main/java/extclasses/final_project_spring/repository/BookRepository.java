@@ -1,16 +1,16 @@
 package extclasses.final_project_spring.repository;
 
 import extclasses.final_project_spring.entity.Book;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
-    Set<Book> findFirst10ByAvailableIsTrue();
+    List<Book> findAllByAvailableIsTrue(Pageable pageable);
 
     Optional<Book> findByName(String name);
 
@@ -29,7 +29,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
                     "                                   from tag  \n" +
                     "                                   where name in (:tags)))\n" +
                     "and name like :name\n")
-    Set<Book> getBooksByFilter(@Param("name") String partOfName,
+    List<Book> getBooksByFilter(@Param("name") String partOfName,
                                @Param("authors") String[] authors,
-                               @Param("tags") String[] tags);
+                               @Param("tags") String[] tags, Pageable pageable);
 }

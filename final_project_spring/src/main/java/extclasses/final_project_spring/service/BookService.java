@@ -11,9 +11,12 @@ import extclasses.final_project_spring.exception.BookNotFoundException;
 import extclasses.final_project_spring.repository.BookRepository;
 import extclasses.final_project_spring.repository.ShelfRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -28,11 +31,11 @@ public class BookService {
     @Autowired
     private AuthorService authorService;
 
-    public Set<BookDTO> getAvailableBooks() {
-        return bookRepository.findFirst10ByAvailableIsTrue()
+    public List<BookDTO> getAvailableBooks(Pageable pageable) {
+        return bookRepository.findAllByAvailableIsTrue(pageable)
                 .stream()
                 .map(BookDTO::new)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     @Transactional
@@ -52,14 +55,14 @@ public class BookService {
         shelfRepository.save(shelf);
     }
 
-    public Set<BookDTO> getAvailableBooksByFilter(FilterDTO filterDTO) {
+    public List<BookDTO> getAvailableBooksByFilter(FilterDTO filterDTO, Pageable pageable) {
         return bookRepository.getBooksByFilter(
                 filterDTO.getName(),
                 filterDTO.getAuthors(),
-                filterDTO.getTags())
+                filterDTO.getTags(),pageable)
                 .stream()
                 .map(BookDTO::new)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public void editBook(BookDTO bookDTO) throws BookNotFoundException {

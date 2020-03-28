@@ -84,6 +84,8 @@
                 </tbody>
             </table>
         </div>
+        <button class="btn btn-warning" style="width: 30%;" @click="loadMore()">Load More
+        </button>
     </main>
     <!--    <footer>-->
     <!--        {{ new Date().getFullYear() }} — <strong>e-lib</strong>-->
@@ -108,23 +110,27 @@
             partOfName: null,
             authors: [1, 2, 3],
             message: null,
-            siteName: 'e-lib'
+            siteName: 'e-lib',
+            page: 0,
+            filter : false,
         },
         async mounted() {
-            await this.getBooks();
+            await this.getBooks(0);
             await this.getAuthors();
             await this.getTags()
         },
         methods: {
             async changeList() {
+                this.page = 0;
+                this.filter = true;
                 let filter = {
                     tags: this.addedTags,
                     authors: this.addedAuthors,
                     name: '%' + this.partOfName + '%',
                 };
-                let res = await axios.post('/filter', filter);
+                let res = await axios.post('/filter/' + this.page + "/5", filter);
                 if (!res) return;
-                this.books = res.data;
+                this.books = this.books.concat(res.data);
             },
             async getTags() {
                 let res = await axios.get('/tags');
@@ -133,9 +139,9 @@
                 console.log(this.books);
             },
             async getBooks() {
-                let res = await axios.get('/books');
+                let res = await axios.get('/books/' + this.page + "/5");
                 if (!res) return;
-                this.books = res.data;
+                this.books = this.books.concat(res.data);
             },
             async getAuthors() {
                 let res = await axios.get('/authors');
@@ -146,6 +152,14 @@
                 let res = await axios.post('/order', book);
                 if (!res) return;
                 this.message = res.data + book.name;
+            },
+            async loadMore() {
+                if(this.filter){
+                    this.page ++;
+                    this.changeList();
+                }
+                this.page ++;
+                this.getBooks();
             }
         }
     });
