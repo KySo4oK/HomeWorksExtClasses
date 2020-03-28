@@ -24,12 +24,12 @@
         </div>
     </header>
     <div style="padding-top: 10%; text-align: center; width: 83%; float: right">
-        <input type="radio" id="one" value="1" v-model="picked">
-        <label for="one">add book</label>
-        <input type="radio" id="two" value="2" v-model="picked">
-        <label for="two">edit/delete</label>
-        <hr>
-    </div>
+    <input type="radio" id="one" value="1" v-model="picked">
+    <label for="one">add book</label>
+    <input type="radio" id="two" value="2" v-model="picked">
+    <label for="two">edit/delete</label>
+    <hr>
+</div>
     <!--    add-->
     <div v-if="picked==1" id="add" style="max-width: 500px; margin: auto;">
         <input id="book_name" type="text" class="form-control" placeholder="name" v-model="addedBook.name">

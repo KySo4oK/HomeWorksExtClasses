@@ -9,37 +9,63 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
-<body>
+<body style="text-align: center">
 <div id="app">
-    <!--        passive orders -->
-    <div style="margin-left:25%">
-        <div class="col-md-6 col-md-6 col-md-offset-0 description">
-            <div v-for="order in passiveOrders">
-                <div class="row">
-                    <div class="col col-expand">
-                        <h1 v-text="order.bookName"></h1>
-                        <h1 v-text="order.userName"></h1>
-                        <h1 v-text="order.startDate"></h1>
-                    </div>
-                </div>
-            </div>
+    <header>
+        <div class="navbar navbar-default" style="background-color: aquamarine; margin: 0 !important">
+            <h1 style="float: left">{{ siteName }}</h1>
+            <span><a style="float: right; margin-right: 5px" href="/logout">Logout</a></span>
+            <span><a style="float: right; margin-right: 5px" href="/user">My Books</a></span>
+            <span><a style="float: right; margin-right: 5px" href="/prospectus">Prospectus</a></span>
+            <span><a style="float: right; margin-right: 5px" href="/">Main</a></span>
         </div>
+    </header>
+    <div style="padding-top: 7%; text-align: center; width: 100%; float: right">
+        <input type="radio" id="one" value="1" v-model="picked">
+        <label for="one">passive</label>
+        <input type="radio" id="two" value="2" v-model="picked">
+        <label for="two">active</label>
+        <hr>
+    </div>
+    <!--        passive orders -->
+    <div v-if="picked==1">
+        <table style="width: 100%; padding-top: 10%; display: table" class="table table-borderless">
+            <thead>
+            <tr>
+                <th>Book Name</th>
+                <th>Order date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="order in passiveOrders">
+                <td><h1 v-text="order.bookName"></h1></td>
+                <td><h1 v-text="order.startDate"></h1></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
     <!--    active orders-->
-    <div style="margin-left:25%">
-        <div class="col-md-6 col-md-6 col-md-offset-0 description">
-            <div v-for="order in activeOrders">
-                <div class="row">
-                    <div class="col col-expand">
-                        <h1 v-text="order.bookName"></h1>
-                        <h1 v-text="order.userName"></h1>
-                        <h1 v-text="order.startDate"></h1>
-                        <h1 v-text="order.endDate"></h1>
-                        <button class="btn btn-primary btn-lg" v-on:click="returnBook(order)">permit</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div v-else>
+        <table style="width: 100%; padding-top: 10%; display: table" class="table table-borderless">
+            <thead>
+            <tr>
+                <th>Book Name</th>
+                <th>Start date</th>
+                <th>End date</th>
+                <th>Return</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="order in activeOrders">
+                <td><h1 v-text="order.bookName"></h1></td>
+                <td><h1 v-text="order.startDate"></h1></td>
+                <td><h1 v-text="order.endDate"></h1></td>
+                <td>
+                    <button class="btn btn-warning" v-on:click="returnBook(order)">return</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 <script type="text/javascript">
@@ -48,6 +74,8 @@
         data: {
             activeOrders: [],
             passiveOrders: [],
+            picked: '',
+            siteName: 'e-lib'
         },
         async mounted() {
             await this.getActiveOrders();
@@ -75,5 +103,29 @@
 
     });
 </script>
+<style lang="less">
+    input {
+        margin-top: 17px;
+    }
+
+    body {
+        font-family: Arial;
+        font-style: normal;
+    }
+
+    header {
+        position: fixed;
+        height: 10%;
+        left: 0;
+        top: 0;
+        width: 100%;
+        z-index: 10;
+    }
+
+    span {
+        font-size: 30px;
+        height: content-box;
+    }
+</style>
 </body>
 </html>
