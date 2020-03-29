@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -16,23 +17,35 @@
             <h1 style="float: left">{{ siteName }}</h1>
             <!--            admin-->
             <div v-if="user==1">
-                <span><a style="float: right; margin-right: 5px" href="/logout">Logout</a></span>
-                <span><a style="float: right; margin-right: 5px" href="/book">Books</a></span>
-                <span><a style="float: right; margin-right: 5px" href="/orders">Orders</a></span>
-                <span><a style="float: right; margin-right: 5px" href="/">Main</a></span>
+                 <span><a style="float: right; margin-right: 5px" href="/user?language=ua"
+                          th:text="#{label.lang.ua}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/user?language=en"
+                         th:text="#{label.lang.en}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/logout" th:text="#{logout}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/book" th:text="#{books}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/orders" th:text="#{orders}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/" th:text="#{main}"></a></span>
             </div>
             <!--            user-->
             <div v-else-if="user==2">
-                <span><a style="float: right; margin-right: 5px" href="/logout">Logout</a></span>
-                <span><a style="float: right; margin-right: 5px" href="/user">My Books</a></span>
-                <span><a style="float: right; margin-right: 5px" href="/prospectus">Prospectus</a></span>
-                <span><a style="float: right; margin-right: 5px" href="/">Main</a></span>
+                <span><a style="float: right; margin-right: 5px" href="/user?language=ua"
+                         th:text="#{label.lang.ua}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/user?language=en"
+                         th:text="#{label.lang.en}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/logout" th:text="#{logout}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/user" th:text="#{my.books}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/prospectus" th:text="#{prospectus}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/" th:text="#{main}"></a></span>
             </div>
             <!--            guest-->
             <div v-else>
-                <span><a style="float: right; margin-right: 5px" href="/login">Sign in</a></span>
-                <span><a style="float: right; margin-right: 5px" href="/reg">Sign up</a></span>
-                <span><a style="float: right; margin-right: 5px" href="/">Main</a></span>
+                <span><a style="float: right; margin-right: 5px" href="/user?language=ua"
+                         th:text="#{label.lang.ua}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/user?language=en"
+                         th:text="#{label.lang.en}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/login" th:text = "#{sign.in}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/reg" th:text = "#{sign.up}"></a></span>
+                <span><a style="float: right; margin-right: 5px" href="/" th:text = "#{main}"></a></span>
             </div>
         </div>
     </header>
