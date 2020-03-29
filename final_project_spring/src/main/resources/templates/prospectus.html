@@ -101,20 +101,12 @@
     let app = new Vue({
         el: '#app',
         data: {
-            books: [{
-                name: 'name',
-                authors: 'author',
-                tags: 'tags'
-            }, {
-                name: 'name',
-                authors: 'author',
-                tags: 'tags'
-            }],
-            tags: [11111, 22222, 3333334444],
+            books: [],
+            tags: [],
             addedTags: [],
             addedAuthors: [],
             partOfName: null,
-            authors: [1, 2, 3],
+            authors: [],
             message: null,
             siteName: 'e-lib',
             page: 0,
@@ -129,6 +121,9 @@
             async changeList() {
                 this.page = 0;
                 this.filter = true;
+                this.loadByFilter();
+            },
+            async loadByFilter() {
                 let filter = {
                     tags: this.addedTags,
                     authors: this.addedAuthors,
@@ -136,7 +131,12 @@
                 };
                 let res = await axios.post('/filter/' + this.page + "/5", filter);
                 if (!res) return;
-                this.books = this.books.concat(res.data);
+                if (this.page === 0) {
+                    this.books = res.data;
+                } else {
+                    this.books = this.books.concat(res.data);
+                }
+                this.page++;
             },
             async getTags() {
                 let res = await axios.get('/tags');
@@ -162,10 +162,11 @@
             async loadMore() {
                 if (this.filter) {
                     this.page++;
-                    this.changeList();
+                    this.loadByFilter();
+                } else {
+                    this.page++;
+                    this.getBooks();
                 }
-                this.page++;
-                this.getBooks();
             }
         }
     });
