@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -17,36 +18,40 @@
     <header>
         <div class="navbar navbar-default" style="background-color: aquamarine; margin: 0 !important">
             <h1 style="float: left">{{ siteName }}</h1>
-            <span><a style="float: right; margin-right: 5px" href="/logout">Logout</a></span>
-            <span><a style="float: right; margin-right: 5px" href="/book">Books</a></span>
-            <span><a style="float: right; margin-right: 5px" href="/orders">Orders</a></span>
-            <span><a style="float: right; margin-right: 5px" href="/">Main</a></span>
+            <span><a style="float: right; margin-right: 5px" href="/book?language=ua"
+                     th:text="#{label.lang.ua}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/book?language=en"
+                     th:text="#{label.lang.en}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/logout" th:text="#{logout}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/book" th:text="#{books}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/orders" th:text="#{orders}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/" th:text="#{main}"></a></span>
         </div>
     </header>
     <div style="padding-top: 10%; text-align: center; width: 83%; float: right">
     <input type="radio" id="one" value="1" v-model="picked">
-    <label for="one">add book</label>
+    <label for="one" th:text="#{add.book}"></label>
     <input type="radio" id="two" value="2" v-model="picked">
-    <label for="two">edit/delete</label>
+    <label for="two" th:text="#{edit.delete}"></label>
     <hr>
 </div>
     <!--    add-->
     <div v-if="picked==1" id="add" style="max-width: 500px; margin: auto;">
-        <input id="book_name" type="text" class="form-control" placeholder="name" v-model="addedBook.name">
-        <input id="book_authors" type="text" class="form-control" placeholder="authors" v-model="addedBook.authors">
-        <input id="book_tags" type="text" class="form-control" placeholder="tags" v-model="addedBook.tags">
+        <input id="book_name" type="text" class="form-control" th:placeholder="#{book.name}" v-model="addedBook.name">
+        <input id="book_authors" type="text" class="form-control" th:placeholder="#{authors}" v-model="addedBook.authors">
+        <input id="book_tags" type="text" class="form-control" th:placeholder="#{tags}" v-model="addedBook.tags">
         <div style="text-align: center; margin-top: 20px">
-            <button v-on:click="addBook" class="btn btn-warning" style="width: 30%;">load</button>
+            <button v-on:click="addBook" class="btn btn-warning" style="width: 30%;" th:text="#{load}"></button>
         </div>
     </div>
     <!--    edit or delete-->
     <div v-else>
         <!--        filter-->
-        <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:17%; float: left; padding-top: 10%;background-color: #f1f1f1!important;">
+        <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:17%; float: left; padding-top: 10%;">
             <!--            name-->
             <div>
                 <input id="partOfName" class="form-control" type="text" v-model="partOfName">
-                <label for="partOfName">Input part of name</label>
+                <label for="partOfName" th:text="#{part.of.name}">Input part of name</label>
             </div>
             <br>
             <!--            tags-->
@@ -61,34 +66,34 @@
                 </div>
             </div>
             <br>
-            <label for="tagsCheckbox" style="margin: 30px ;">Select tags</label>
+            <label for="tagsCheckbox" style="margin: 20px ;" th:text="#{select.tags}"></label>
             <br>
             <!--            authors-->
             <div style="padding-top: 10px" id="authorsCheckbox" class="col-md-6 boxes">
                 <div v-for="author in authors">
                     <div style="display: inline;">
-                        <input  style="display: inline; float: left; margin-left: 0px" type="checkbox"
-                                v-bind:value="author"
-                                v-model="addedAuthors">
+                        <input style="display: inline; float: left; margin-left: 0px" type="checkbox"
+                               v-bind:value="author"
+                               v-model="addedAuthors">
                         <h6 style="display: inline;">{{author}}</h6>
                     </div>
                 </div>
             </div>
             <br>
-            <label for="authorsCheckbox" style="margin: 20px">Select authors</label>
+            <label for="authorsCheckbox" style="margin: 20px" th:text="#{select.authors}"></label>
             <br>
-            <button class="btn btn-warning" style="width: 30%;" @click="changeList">load</button>
+            <button class="btn btn-warning" style="width: 30%;" @click="changeList" th:text="#{load}"></button>
         </div>
         <!--        books -->
         <div>
             <table style="width: 75%;margin-left:25%; padding-top: 10%; display: table" class="table table-borderless">
                 <thead>
                 <tr>
-                    <th>name</th>
-                    <th>authors</th>
-                    <th>tags</th>
-                    <th>edit</th>
-                    <th>delete</th>
+                    <th th:text="#{book.name}"></th>
+                    <th th:text="#{authors}"></th>
+                    <th th:text="#{tags}"></th>
+                    <th th:text="#{edit}"></th>
+                    <th th:text="#{delete}"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -97,10 +102,10 @@
                     <td><input id="book_a" type="text" class="form-control" v-bind:value="book.authors" v-model="book.authors"></td>
                     <td><input id="book_t" type="text" class="form-control" v-bind:value="book.tags" v-model="book.tags"></td>
                     <td>
-                        <button class="btn btn-warning" v-on:click="editBook(book)">edit</button>
+                        <button class="btn btn-warning" v-on:click="editBook(book)" th:text="#{edit}"></button>
                     </td>
                     <td>
-                        <button class="btn btn-warning" v-on:click="deleteBook(book)">delete</button>
+                        <button class="btn btn-warning" v-on:click="deleteBook(book)" th:text="#{delete}"></button>
                     </td>
                 </tr>
                 </tbody>
