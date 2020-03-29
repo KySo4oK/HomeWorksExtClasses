@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">\
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -15,10 +16,14 @@
     <header>
         <div class="navbar navbar-default" style="background-color: aquamarine; margin: 0 !important">
             <h1 style="float: left">{{ siteName }}</h1>
-            <span><a style="float: right; margin-right: 5px" href="/logout">Logout</a></span>
-            <span><a style="float: right; margin-right: 5px" href="/user">My Books</a></span>
-            <span><a style="float: right; margin-right: 5px" href="/prospectus">Prospectus</a></span>
-            <span><a style="float: right; margin-right: 5px" href="/">Main</a></span>
+            <span><a style="float: right; margin-right: 5px" href="/prospectus?language=ua"
+                     th:text="#{label.lang.ua}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/prospectus?language=en"
+                     th:text="#{label.lang.en}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/logout" th:text="#{logout}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/user" th:text="#{my.books}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/prospectus" th:text="#{prospectus}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/" th:text="#{main}"></a></span>
         </div>
     </header>
     <main>
@@ -27,7 +32,7 @@
             <!--            name-->
             <div>
                 <input id="partOfName" class="form-control" type="text" v-model="partOfName">
-                <label for="partOfName">Input part of name</label>
+                <label for="partOfName" th:text="#{part.of.name}">Input part of name</label>
             </div>
             <br>
             <!--            tags-->
@@ -42,13 +47,13 @@
                 </div>
             </div>
             <br>
-            <label for="tagsCheckbox" style="margin: 20px ;">Select tags</label>
+            <label for="tagsCheckbox" style="margin: 20px ;" th:text="#{select.tags}"></label>
             <br>
             <!--            authors-->
             <div style="padding-top: 10px" id="authorsCheckbox" class="col-md-6 boxes">
                 <div v-for="author in authors">
                     <div style="display: inline;">
-                        <input  style="display: inline; float: left; margin-left: 0px" type="checkbox"
+                        <input style="display: inline; float: left; margin-left: 0px" type="checkbox"
                                v-bind:value="author"
                                v-model="addedAuthors">
                         <h6 style="display: inline;">{{author}}</h6>
@@ -56,19 +61,19 @@
                 </div>
             </div>
             <br>
-            <label for="authorsCheckbox" style="margin: 20px">Select authors</label>
+            <label for="authorsCheckbox" style="margin: 20px" th:text="#{select.authors}"></label>
             <br>
-            <button class="btn btn-warning" style="width: 30%;" @click="changeList">load</button>
+            <button class="btn btn-warning" style="width: 30%;" @click="changeList" th:text="#{load}"></button>
         </div>
         <!--        books -->
         <div style="padding-top: 10%;">
             <table style="width: 75%;margin-left:25%; padding-top: 10%; display: table" class="table table-borderless">
                 <thead>
                 <tr>
-                    <th>name</th>
-                    <th>authors</th>
-                    <th>tags</th>
-                    <th>order</th>
+                    <th th:text="#{name}">name</th>
+                    <th th:text="#{authors}">authors</th>
+                    <th th:text="#{tags}">tags</th>
+                    <th th:text="#{order}">order</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -77,14 +82,15 @@
                     <td><h1 v-text="book.authors"></h1></td>
                     <td><h1 v-text="book.tags"></h1></td>
                     <td>
-                        <button class="btn btn-warning" style="height: 100%; width: 100%;" v-on:click="orderBook(book)">order
+                        <button class="btn btn-warning" style="height: 100%; width: 100%;" v-on:click="orderBook(book)"
+                                th:text="#{order}">
                         </button>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <button class="btn btn-warning" style="width: 30%;" @click="loadMore()">Load More
+        <button class="btn btn-warning" style="width: 30%;" @click="loadMore()" th:text="#{load.more}">
         </button>
     </main>
     <!--    <footer>-->
@@ -112,7 +118,7 @@
             message: null,
             siteName: 'e-lib',
             page: 0,
-            filter : false,
+            filter: false,
         },
         async mounted() {
             await this.getBooks(0);
@@ -154,11 +160,11 @@
                 this.message = res.data + book.name;
             },
             async loadMore() {
-                if(this.filter){
-                    this.page ++;
+                if (this.filter) {
+                    this.page++;
                     this.changeList();
                 }
-                this.page ++;
+                this.page++;
                 this.getBooks();
             }
         }
