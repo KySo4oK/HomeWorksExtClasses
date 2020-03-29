@@ -20,6 +20,7 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long authorId;
     private String name;
+    private String name_ua;
 
     public Author(String name) {
         this.name = name;
