@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -17,17 +18,21 @@
     <header>
         <div class="navbar navbar-default" style="background-color: aquamarine; margin: 0 !important">
             <h1 style="float: left">{{ siteName }}</h1>
-            <span><a style="float: right; margin-right: 5px" href="/logout">Logout</a></span>
-            <span><a style="float: right; margin-right: 5px" href="/book">Books</a></span>
-            <span><a style="float: right; margin-right: 5px" href="/orders">Orders</a></span>
-            <span><a style="float: right; margin-right: 5px" href="/">Main</a></span>
+            <span><a style="float: right; margin-right: 5px" href="/orders?language=ua"
+                     th:text="#{label.lang.ua}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/orders?language=en"
+                     th:text="#{label.lang.en}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/logout" th:text="#{logout}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/book" th:text="#{books}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/orders" th:text="#{orders}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/" th:text="#{main}"></a></span>
         </div>
     </header>
     <div style="padding-top: 7%; text-align: center; width: 100%; float: right">
         <input type="radio" id="one" value="1" v-model="picked">
-        <label for="one">passive</label>
+        <label for="one" th:text="#{orders}"></label>
         <input type="radio" id="two" value="2" v-model="picked">
-        <label for="two">active</label>
+        <label for="two" th:text="#{users.books}"></label>
         <hr>
     </div>
     <!--        passive orders -->
@@ -35,10 +40,10 @@
         <table style="width: 100%; padding-top: 10%; display: table" class="table table-borderless">
             <thead>
             <tr>
-                <th>Book Name</th>
-                <th>Username</th>
-                <th>Order date</th>
-                <th>Permit</th>
+                <th th:text="#{book.name}"></th>
+                <th th:text="#{username}"></th>
+                <th th:text="#{order.date}"></th>
+                <th th:text="#{permit}"></th>
             </tr>
             </thead>
             <tbody>
@@ -47,7 +52,7 @@
                 <td><h1 v-text="order.userName"></h1></td>
                 <td><h1 v-text="order.startDate"></h1></td>
                 <td>
-                    <button class="btn btn-warning" v-on:click="permitOrder(order)">permit</button>
+                    <button class="btn btn-warning" v-on:click="permitOrder(order)" th:text="#{permit}"></button>
                 </td>
             </tr>
             </tbody>
@@ -58,10 +63,10 @@
         <table style="width: 100%; padding-top: 10%; display: table" class="table table-borderless">
             <thead>
             <tr>
-                <th>Book Name</th>
-                <th>UserName</th>
-                <th>Start date</th>
-                <th>End date</th>
+                <th th:text="#{book.name}"></th>
+                <th th:text="#{username}"></th>
+                <th th:text="#{start.date}"></th>
+                <th th:text="#{end.date}"></th>
             </tr>
             </thead>
             <tbody>
