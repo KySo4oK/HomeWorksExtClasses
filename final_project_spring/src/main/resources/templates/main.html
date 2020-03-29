@@ -15,9 +15,9 @@
     <header>
         <div class="navbar navbar-default" style="background-color: aquamarine; margin: 0 !important">
             <h1 style="float: left">{{ siteName }}</h1>
-            <span><a style="float: right; margin-right: 5px" href="/main?language=ua"
+            <span><a style="float: right; margin-right: 5px" href="/?language=ua"
                      th:text="#{label.lang.ua}"></a></span>
-            <span><a style="float: right; margin-right: 5px" href="/main?language=en"
+            <span><a style="float: right; margin-right: 5px" href="/?language=en"
                      th:text="#{label.lang.en}"></a></span>
             <!--            admin-->
             <div v-if="user==1">
