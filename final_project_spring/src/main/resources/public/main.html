@@ -1,14 +1,61 @@
 <!DOCTYPE html>
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
-<body>
-<a href="/user">page for user's</a>
-<a href="/admin">page for admin's</a>
-<a href="/reg">page for registration</a>
-
+<body style="text-align: center">
+<div id="app">
+    <header>
+        <div class="navbar navbar-default" style="background-color: aquamarine; margin: 0 !important">
+            <h1 style="float: left">{{ siteName }}</h1>
+            <div v-if="user==1">
+                <span><a style="float: right; margin-right: 5px" href="/logout">Logout</a></span>
+                <span><a style="float: right; margin-right: 5px" href="/book">Books</a></span>
+                <span><a style="float: right; margin-right: 5px" href="/orders">Orders</a></span>
+                <span><a style="float: right; margin-right: 5px" href="/">Main</a></span>
+            </div>
+            <div v-else-if="user==2">
+                <span><a style="float: right; margin-right: 5px" href="/logout">Logout</a></span>
+                <span><a style="float: right; margin-right: 5px" href="/user">My Books</a></span>
+                <span><a style="float: right; margin-right: 5px" href="/prospectus">Prospectus</a></span>
+                <span><a style="float: right; margin-right: 5px" href="/">Main</a></span>
+            </div>
+            <div v-else>
+                <span><a style="float: right; margin-right: 5px" href="/login">Sign in</a></span>
+                <span><a style="float: right; margin-right: 5px" href="/reg">Sign up</a></span>
+                <span><a style="float: right; margin-right: 5px" href="/">Main</a></span>
+            </div>
+        </div>
+    </header>
+    <a href="/user">page for user's</a>
+    <a href="/admin">page for admin's</a>
+    <a href="/reg">page for registration</a>
+</div>
+<script type="text/javascript">
+    let app = new Vue({
+        el: '#app',
+        data: {
+            user: 3,
+            siteName: 'e-lib',
+        },
+        async mounted() {
+            await this.getAuthorities();
+        },
+        methods: {
+            async getAuthorities() {
+                let res = await axios.get('/authorities');
+                if (!res) return;
+                this.user = res.data;
+                console.log(this.user);
+            }
+        }
+    });
+</script>
 </body>
 </html>
