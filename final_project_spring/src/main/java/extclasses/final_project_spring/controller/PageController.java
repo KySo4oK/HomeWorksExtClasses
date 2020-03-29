@@ -35,6 +35,11 @@ public class PageController {
         return "reg.html";
     }
 
+    @GetMapping("/login")
+    public String getLoginPage() {
+        return "login.html";
+    }
+
     @PostMapping("/reg")
     public @ResponseBody
     String getNewUser(@RequestBody UserDTO userDTO) {

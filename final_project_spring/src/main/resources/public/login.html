@@ -21,16 +21,14 @@
     </header>
     <div style="margin:0 auto;width:75%;text-align:left">
         <p class="h3 text-center mb-4">Sign up</p>
-        <div style="max-width: 500px; margin: auto;">
-            <input id="username" class="form-control" placeholder="Name" type="text" v-model="username">
-            <input id="phone" class="form-control" placeholder="Phone" type="text" v-model="phone">
-            <input type="email" class="form-control" id="email" placeholder="Email" v-model="email">
-            <input type="password" class="form-control" placeholder="Password" id="password"
+        <form action="login" method="post" style="max-width: 500px; margin: auto;">
+            <input id="username" class="form-control" placeholder="Name" type="text"name="username" v-model="username">
+            <input type="password" class="form-control" placeholder="Password" name="password" id="password"
                    v-model="password">
             <div style="text-align: center; margin-top: 20px">
-                <button @click="reg()" class="btn btn-warning " style="width: 30%; ">Sign Up</button>
+                <input class="btn btn-warning" type="submit" name="submit" value="submit">
             </div>
-        </div>
+        </form>
     </div>
     <footer padless>
         <col
@@ -47,18 +45,20 @@
         data: {
             siteName: 'e-lib',
             username: '',
-            phone: '',
-            email: '',
             password: '',
             message: null
         },
         methods: {
-            async reg() {
-                let res = await axios.post('/reg', {
-                    username: this.username,
-                    email: this.email,
-                    phone: this.phone,
+            async login() {
+                console.log(this.password);
+                console.log(this.username);
+                let res = await axios.post('/login', {
                     password: this.password,
+                    username: this.username,
+                }, {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    }
                 });
                 if (!res) return;
                 this.message = res.data;
@@ -70,10 +70,12 @@
     input {
         margin-top: 17px;
     }
-    body{
+
+    body {
         font-family: Arial;
         font-style: normal;
     }
+
     footer {
         position: absolute;
         left: 0;

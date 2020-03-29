@@ -34,8 +34,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/prospectus", "/order", "/user/return", "/user/active", "/user/passive").hasRole("USER")
                 .antMatchers("/main", "/", "/css/**", "/add", "/edit",
                         "/book", "/books", "/tags", "/authors", "/filter", "/delete", "/active", "/passive", "/orders").permitAll()
-                .antMatchers("/reg").anonymous()
-                .and().formLogin();
+                .antMatchers("/reg", "/login").anonymous()
+                .and().formLogin().loginPage("/login").permitAll();
     }
 
     @Bean
