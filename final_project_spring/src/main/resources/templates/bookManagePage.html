@@ -111,6 +111,8 @@
                 </tbody>
             </table>
         </div>
+        <button class="btn btn-warning" style="width: 30%;" @click="loadMore()" th:text="#{load.more}">
+        </button>
     </div>
 </div>
 </div>
@@ -127,21 +129,14 @@
                 tags: "",
             },
             picked: '',
-            books: [{
-                name: 'name',
-                authors: 'author',
-                tags: 'tags'
-            }, {
-                name: 'name',
-                authors: 'author',
-                tags: 'tags'
-            }],
+            books: [],
             tags: [],
             addedTags: [],
             addedAuthors: [],
             partOfName: null,
             authors: [],
             message: null,
+            page: 0,
             siteName: 'e-lib'
         },
         async mounted() {
@@ -154,14 +149,24 @@
                 let res = await axios.post('/add', this.addedBook);
             },
             async changeList() {
+                this.page = 0;
+                this.filter = true;
+                this.loadByFilter();
+            },
+            async loadByFilter() {
                 let filter = {
                     tags: this.addedTags,
                     authors: this.addedAuthors,
                     name: '%' + this.partOfName + '%',
                 };
-                let res = await axios.post('/filter', filter);
+                let res = await axios.post('/filter/' + this.page + "/5", filter);
                 if (!res) return;
-                this.books = res.data;
+                if (this.page === 0) {
+                    this.books = res.data;
+                } else {
+                    this.books = this.books.concat(res.data);
+                }
+                this.page++;
             },
             async getTags() {
                 let res = await axios.get('/tags');
@@ -174,10 +179,10 @@
                 if (!res) return;
                 this.books = res.data;
             },
-            async getAuthors() {
-                let res = await axios.get('/authors');
+            async getBooks() {
+                let res = await axios.get('/books/' + this.page + "/5");
                 if (!res) return;
-                this.authors = res.data;
+                this.books = this.books.concat(res.data);
             },
             async editBook(book) {
                 let res = await axios.put('/edit', book);
@@ -192,6 +197,15 @@
                 await this.getAuthors();
                 await this.getTags();
 
+            },
+            async loadMore() {
+                if (this.filter) {
+                    this.page++;
+                    this.loadByFilter();
+                } else {
+                    this.page++;
+                    this.getBooks();
+                }
             }
         }
     });
