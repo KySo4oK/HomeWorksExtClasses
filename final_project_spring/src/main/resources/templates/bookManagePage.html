@@ -175,14 +175,14 @@
                 console.log(this.books);
             },
             async getBooks() {
-                let res = await axios.get('/books');
-                if (!res) return;
-                this.books = res.data;
-            },
-            async getBooks() {
                 let res = await axios.get('/books/' + this.page + "/5");
                 if (!res) return;
                 this.books = this.books.concat(res.data);
+            },
+            async getAuthors() {
+                let res = await axios.get('/authors');
+                if (!res) return;
+                this.authors = res.data;
             },
             async editBook(book) {
                 let res = await axios.put('/edit', book);
