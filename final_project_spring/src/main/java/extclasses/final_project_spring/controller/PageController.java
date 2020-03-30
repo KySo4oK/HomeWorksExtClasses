@@ -24,12 +24,6 @@ public class PageController {
         return "main.html";
     }
 
-    @GetMapping("/admin")
-    public @ResponseBody
-    String getAdminPage() {
-        return userService.getStringOfUsers();
-    }
-
     @GetMapping("/reg")
     public String getRegPage() {
         return "reg.html";
