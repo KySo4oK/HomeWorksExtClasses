@@ -25,7 +25,8 @@
     <div style="margin:0 auto;width:75%;text-align:left">
         <p class="h3 text-center mb-4" th:text = "#{sign.up}"></p>
         <div style="max-width: 500px; margin: auto;">
-            <input id="username" class="form-control" th:placeholder="#{username}"  type="text" v-model="username">
+            <input id="username_en" class="form-control" th:placeholder="#{username.en}"  type="text" v-model="usernameEn">
+            <input id="username_ua" class="form-control" th:placeholder="#{username.ua}"  type="text" v-model="usernameUa">
             <input id="phone" class="form-control" th:placeholder="#{phone}" type="text" v-model="phone">
             <input type="email" class="form-control" id="email" th:placeholder="#{email}" v-model="email">
             <input type="password" class="form-control" th:placeholder="#{password}" id="password"
@@ -49,7 +50,8 @@
         el: '#app',
         data: {
             siteName: 'e-lib',
-            username: '',
+            usernameEn: '',
+            usernameUa: '',
             phone: '',
             email: '',
             password: '',
@@ -58,7 +60,8 @@
         methods: {
             async reg() {
                 let res = await axios.post('/reg', {
-                    username: this.username,
+                    username: this.usernameEn,
+                    username_ua: this.usernameUa,
                     email: this.email,
                     phone: this.phone,
                     password: this.password,

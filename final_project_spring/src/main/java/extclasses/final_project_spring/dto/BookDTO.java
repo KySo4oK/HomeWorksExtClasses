@@ -16,8 +16,11 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class BookDTO {
     private String name;
+    private String name_ua;
     private String tags;
+    private String tags_ua;
     private String authors;
+    private String authors_ua;
 
     public BookDTO(Book book) {
         this.name = book.getName();
