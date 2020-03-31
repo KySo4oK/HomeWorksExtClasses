@@ -5,6 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.context.i18n.LocaleContextHolder;
+
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 @Data
 @ToString
@@ -22,7 +26,10 @@ public class OrderDTO {
         this.bookName = isDefaultLocale ?
                 order.getBook().getName() : order.getBook().getNameUa();
         this.userName = order.getUser().getUsername();
-        this.startDate = order.getStartDate().toString();
-        this.endDate = order.getEndDate().toString();
+        this.startDate = order.getStartDate()
+                .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
+                        .withLocale(LocaleContextHolder.getLocale()));
+        this.endDate = order.getEndDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
+                .withLocale(LocaleContextHolder.getLocale()));
     }
 }
