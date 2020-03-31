@@ -3,9 +3,11 @@ package extclasses.final_project_spring.service;
 import extclasses.final_project_spring.entity.Author;
 import extclasses.final_project_spring.exception.AuthorNotFoundException;
 import extclasses.final_project_spring.repository.AuthorRepository;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,13 +20,19 @@ public class AuthorService {
     }
 
     public Set<String> getAllAuthors() {
-        return authorRepository.findAll()
-                .stream()
-                .map(Author::getName)
-                .collect(Collectors.toSet());
+        return LocaleContextHolder.getLocale().equals(Locale.US) ?
+                authorRepository.findAll()
+                        .stream()
+                        .map(Author::getName)
+                        .collect(Collectors.toSet()) :
+                authorRepository.findAll()
+                        .stream()
+                        .map(Author::getNameUa)
+                        .collect(Collectors.toSet());
+
     }
 
-    public Set<Author> createAuthorsByString(String[] authors) {
+    public Set<Author> getAuthorsFromStringArray(String[] authors) {
         return Arrays.stream(authors)
                 .map(x -> authorRepository
                         .findByName(x)

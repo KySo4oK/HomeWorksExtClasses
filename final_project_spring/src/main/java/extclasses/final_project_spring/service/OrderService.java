@@ -12,11 +12,13 @@ import extclasses.final_project_spring.repository.BookRepository;
 import extclasses.final_project_spring.repository.OrderRepository;
 import extclasses.final_project_spring.repository.ShelfRepository;
 import extclasses.final_project_spring.repository.UserRepository;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -36,9 +38,9 @@ public class OrderService {
 
     @Transactional
     public boolean createOrder(BookDTO bookDTO, String userName) {
-        Book book = bookRepository.findByName(bookDTO.getName())
+        Book book = bookRepository.findById(bookDTO.getId())
                 .orElseThrow(() -> new BookNotFoundException("book - " + bookDTO.getName() + " not exist"));
-        Order order = new Order();
+        Order order = new Order();//todo builder
         book.addOrder(order);
         User user = userRepository.findByUsername(userName)
                 .orElseThrow(() -> new UsernameNotFoundException("User - " + userName + " not exist"));
@@ -50,7 +52,7 @@ public class OrderService {
     @Transactional(rollbackFor = OrderNotFoundException.class)
     public void permitOrder(OrderDTO orderDTO) {
         Order order = orderRepository
-                .findByActiveFalseAndBook_NameAndUser_Username(orderDTO.getBookName(), orderDTO.getUserName())
+                .findById(orderDTO.getId())
                 .orElseThrow(() -> new OrderNotFoundException("Active order - " + orderDTO.getBookName() +
                         " - " + orderDTO.getUserName() + " not exist"));
         order.setActive(true);
@@ -63,42 +65,42 @@ public class OrderService {
         return orderRepository
                 .findAllByActiveIsTrue()
                 .stream()
-                .map(OrderDTO::new)
+                .map(x -> new OrderDTO(x, LocaleContextHolder.getLocale().equals(Locale.US)))
                 .collect(Collectors.toSet());
     }
 
     public Set<OrderDTO> getPassiveOrders() {
         return orderRepository.findAllByActiveIsFalse()
                 .stream()
-                .map(OrderDTO::new)
+                .map(x -> new OrderDTO(x, LocaleContextHolder.getLocale().equals(Locale.US)))
                 .collect(Collectors.toSet());
     }
 
     public Set<OrderDTO> getActiveOrdersByUserName(String name) {
         return orderRepository.findAllByActiveIsTrueAndUser_Username(name)
                 .stream()
-                .map(OrderDTO::new)
+                .map(x -> new OrderDTO(x, LocaleContextHolder.getLocale().equals(Locale.US)))
                 .collect(Collectors.toSet());
     }
 
     public Set<OrderDTO> getPassiveOrdersByUserName(String name) {
         return orderRepository.findAllByActiveIsFalseAndUser_Username(name)
                 .stream()
-                .map(OrderDTO::new)
+                .map(x -> new OrderDTO(x, LocaleContextHolder.getLocale().equals(Locale.US)))
                 .collect(Collectors.toSet());
     }
 
     @Transactional(rollbackFor = {BookNotFoundException.class, OrderNotFoundException.class})
     public void returnBook(OrderDTO orderDTO) {
-        Book book = bookRepository
+        Book book = LocaleContextHolder.getLocale().equals(Locale.US) ? bookRepository
                 .findByName(orderDTO.getBookName())
-                .orElseThrow(() -> new BookNotFoundException("book - " + orderDTO.getBookName() + " not exist"));
+                .orElseThrow(() -> new BookNotFoundException("book not exist")) :
+        bookRepository
+                .findByName(orderDTO.getBookName())
+                .orElseThrow(() -> new BookNotFoundException("book not exist"));
         Order order = orderRepository
-                .findByActiveTrueAndBook_NameAndUser_Username(
-                        orderDTO.getBookName(),
-                        orderDTO.getUserName())
-                .orElseThrow(() -> new OrderNotFoundException("order - " + orderDTO.getBookName() +
-                        " - " + orderDTO.getUserName() + " not exist"));
+                .findById(orderDTO.getId())
+                .orElseThrow(() -> new OrderNotFoundException("order not exist"));
         book.setUser(null);
         book.removeOrder(order);
         book.setShelf(shelfRepository.findByBookIsNull().orElse(new Shelf()));

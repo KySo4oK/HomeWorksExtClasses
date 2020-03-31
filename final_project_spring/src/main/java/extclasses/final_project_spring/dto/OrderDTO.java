@@ -17,8 +17,10 @@ public class OrderDTO {
     private String startDate;
     private String endDate;
 
-    public OrderDTO(Order order) {
-        this.bookName = order.getBook().getName();
+    public OrderDTO(Order order, boolean isDefaultLocale) {
+        this.id = order.getOrderId();
+        this.bookName = isDefaultLocale ?
+                order.getBook().getName() : order.getBook().getNameUa();
         this.userName = order.getUser().getUsername();
         this.startDate = order.getStartDate().toString();
         this.endDate = order.getEndDate().toString();

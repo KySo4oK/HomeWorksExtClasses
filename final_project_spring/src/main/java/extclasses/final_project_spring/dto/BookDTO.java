@@ -21,16 +21,26 @@ public class BookDTO {
     private String authors;
     private String authors_ua;
 
-    public BookDTO(Book book) {
+    public BookDTO(Book book, boolean isDefaultLocale) {
         this.id = book.getBookId();
-        this.name = book.getName();
-        this.tags = book.getTags()
-                .stream()
-                .map(Tag::getName)
-                .toArray(String[]::new);
-        this.authors = book.getAuthors()
-                .stream()
-                .map(Author::getName)
-                .toArray(String[]::new);
+        this.name = isDefaultLocale ? book.getName() : book.getNameUa();
+        this.tags = isDefaultLocale ?
+                book.getTags()
+                        .stream()
+                        .map(Tag::getName)
+                        .toArray(String[]::new) :
+                book.getTags()
+                        .stream()
+                        .map(Tag::getNameUa)
+                        .toArray(String[]::new);
+        this.authors = isDefaultLocale ?
+                book.getAuthors()
+                        .stream()
+                        .map(Author::getName)
+                        .toArray(String[]::new) :
+                book.getAuthors()
+                        .stream()
+                        .map(Author::getNameUa)
+                        .toArray(String[]::new);
     }
 }

@@ -30,6 +30,25 @@ public interface BookRepository extends JpaRepository<Book, Long> {
                     "                                   where name in (:tags)))\n" +
                     "and name like :name\n")
     List<Book> getBooksByFilter(@Param("name") String partOfName,
-                               @Param("authors") String[] authors,
-                               @Param("tags") String[] tags, Pageable pageable);
+                                @Param("authors") String[] authors,
+                                @Param("tags") String[] tags, Pageable pageable);
+
+    @Query(nativeQuery = true, value =
+            "select * from book  \n" +
+                    "where available = true\n" +
+                    "  and book_id in\n" +
+                    "      (select book_id\n" +
+                    "       from book_author \n" +
+                    "       where author_id in (select author_id\n" +
+                    "                           from author \n" +
+                    "                           where name_ua in (:authors)))\n" +
+                    "  and book_id in (select book_id\n" +
+                    "                  from book_tag \n" +
+                    "                  where tag_id in (select tag_id \n" +
+                    "                                   from tag  \n" +
+                    "                                   where name_ua in (:tags)))\n" +
+                    "and name_ua like :name\n")
+    List<Book> getBooksByFilterUa(@Param("name") String partOfName,
+                                  @Param("authors") String[] authors,
+                                  @Param("tags") String[] tags, Pageable pageable);
 }

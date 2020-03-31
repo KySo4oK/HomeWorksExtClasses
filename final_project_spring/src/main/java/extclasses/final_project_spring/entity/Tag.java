@@ -20,6 +20,7 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tagId;
     private String name;
+    private String nameUa;
 
     public Tag(String name) {
         this.name = name;

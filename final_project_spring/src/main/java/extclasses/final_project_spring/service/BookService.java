@@ -10,11 +10,13 @@ import extclasses.final_project_spring.exception.BookAlreadyExistException;
 import extclasses.final_project_spring.exception.BookNotFoundException;
 import extclasses.final_project_spring.repository.BookRepository;
 import extclasses.final_project_spring.repository.ShelfRepository;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -25,7 +27,10 @@ public class BookService {
     private final TagService tagService;
     private final AuthorService authorService;
 
-    public BookService(BookRepository bookRepository, ShelfRepository shelfRepository, TagService tagService, AuthorService authorService) {
+    public BookService(BookRepository bookRepository,
+                       ShelfRepository shelfRepository,
+                       TagService tagService,
+                       AuthorService authorService) {
         this.bookRepository = bookRepository;
         this.shelfRepository = shelfRepository;
         this.tagService = tagService;
@@ -35,16 +40,16 @@ public class BookService {
     public List<BookDTO> getAvailableBooks(Pageable pageable) {
         return bookRepository.findAllByAvailableIsTrue(pageable)
                 .stream()
-                .map(BookDTO::new)
+                .map(x -> new BookDTO(x, LocaleContextHolder.getLocale().equals(Locale.US)))
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public void saveBookNewBookFromClient(BookDTO bookDTO) {
+    public void saveBookNewBookFromClient(BookDTO bookDTO) {//todo use builder
         if (bookRepository.findByName(bookDTO.getName()).isPresent())
             throw new BookAlreadyExistException("book - " + bookDTO.getName() + " already exist");
         Set<Tag> tags = tagService.createTagsByString(bookDTO.getTags());
-        Set<Author> authors = authorService.createAuthorsByString(bookDTO.getAuthors());
+        Set<Author> authors = authorService.getAuthorsFromStringArray(bookDTO.getAuthors());
         Shelf shelf = shelfRepository.findByBookIsNull().orElse(new Shelf());
         Book book = new Book();
         book.setName(bookDTO.getName());
@@ -58,20 +63,29 @@ public class BookService {
     }
 
     public List<BookDTO> getAvailableBooksByFilter(FilterDTO filterDTO, Pageable pageable) {
-        return bookRepository.getBooksByFilter(
-                filterDTO.getName(),
-                filterDTO.getAuthors(),
-                filterDTO.getTags(), pageable)
-                .stream()
-                .map(BookDTO::new)
-                .collect(Collectors.toList());
+        return LocaleContextHolder.getLocale().equals(Locale.US) ?
+                bookRepository.getBooksByFilter(
+                        filterDTO.getName(),
+                        filterDTO.getAuthors(),
+                        filterDTO.getTags(), pageable)
+                        .stream()
+                        .map(x -> new BookDTO(x, LocaleContextHolder.getLocale().equals(Locale.US)))
+                        .collect(Collectors.toList()) :
+                bookRepository.getBooksByFilterUa(
+                        filterDTO.getName(),
+                        filterDTO.getAuthors(),
+                        filterDTO.getTags(), pageable)
+                        .stream()
+                        .map(x -> new BookDTO(x, LocaleContextHolder.getLocale().equals(Locale.US)))
+                        .collect(Collectors.toList());
+
     }
 
     public void editBook(BookDTO bookDTO) throws BookNotFoundException {
         Book book = bookRepository
-                .findByName(bookDTO.getName())
+                .findById(bookDTO.getId())
                 .orElseThrow(() -> new BookNotFoundException("book - " + bookDTO.getName() + " not exist"));
-        book.setAuthors(authorService.createAuthorsByString(bookDTO.getAuthors()));
+        book.setAuthors(authorService.getAuthorsFromStringArray(bookDTO.getAuthors()));
         book.setTags(tagService.createTagsByString(bookDTO.getTags()));
         bookRepository.save(book);
     }
