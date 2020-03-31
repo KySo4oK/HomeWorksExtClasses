@@ -2,7 +2,6 @@ package extclasses.final_project_spring.controller;
 
 import extclasses.final_project_spring.dto.OrderDTO;
 import extclasses.final_project_spring.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 public class OrderController {

@@ -10,8 +10,6 @@ import extclasses.final_project_spring.exception.BookAlreadyExistException;
 import extclasses.final_project_spring.exception.BookNotFoundException;
 import extclasses.final_project_spring.repository.BookRepository;
 import extclasses.final_project_spring.repository.ShelfRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,7 +61,7 @@ public class BookService {
         return bookRepository.getBooksByFilter(
                 filterDTO.getName(),
                 filterDTO.getAuthors(),
-                filterDTO.getTags(),pageable)
+                filterDTO.getTags(), pageable)
                 .stream()
                 .map(BookDTO::new)
                 .collect(Collectors.toList());
@@ -78,8 +76,8 @@ public class BookService {
         bookRepository.save(book);
     }
 
-    public void deleteBook(String name) throws BookNotFoundException {
-        bookRepository.delete(bookRepository.findByName(name)
-                                .orElseThrow(() -> new BookNotFoundException("book - " + name + " not exist")));
+    public void deleteBook(long id) throws BookNotFoundException {
+        bookRepository.delete(bookRepository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException("book - " + id + " not exist")));
     }
 }

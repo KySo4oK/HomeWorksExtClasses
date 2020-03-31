@@ -2,7 +2,6 @@ package extclasses.final_project_spring.controller;
 
 import extclasses.final_project_spring.dto.BookDTO;
 import extclasses.final_project_spring.service.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,10 +31,10 @@ public class BookController {
         bookService.editBook(bookDTO);
         return "successful edit book - " + bookDTO.getName();
     }
-    @DeleteMapping("/delete/{name}")
+    @DeleteMapping("/delete/{id}")
     public @ResponseBody
-    String deleteBook(@PathVariable("name") String name) {
-        bookService.deleteBook(name);
-        return "successful delete book - " + name;
+    String deleteBook(@PathVariable("id") long id) {
+        bookService.deleteBook(id);
+        return "successful delete book - " + id;
     }
 }

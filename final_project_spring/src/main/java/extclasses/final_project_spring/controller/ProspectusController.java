@@ -6,7 +6,6 @@ import extclasses.final_project_spring.service.AuthorService;
 import extclasses.final_project_spring.service.BookService;
 import extclasses.final_project_spring.service.OrderService;
 import extclasses.final_project_spring.service.TagService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
