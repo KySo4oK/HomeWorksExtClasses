@@ -18,14 +18,17 @@ import java.util.Set;
 
 @Controller
 public class ProspectusController {
-    @Autowired
-    private BookService bookService;
-    @Autowired
-    private TagService tagService;
-    @Autowired
-    private AuthorService authorService;
-    @Autowired
-    private OrderService orderService;
+    private final BookService bookService;
+    private final TagService tagService;
+    private final AuthorService authorService;
+    private final OrderService orderService;
+
+    public ProspectusController(BookService bookService, TagService tagService, AuthorService authorService, OrderService orderService) {
+        this.bookService = bookService;
+        this.tagService = tagService;
+        this.authorService = authorService;
+        this.orderService = orderService;
+    }
 
     @GetMapping("/prospectus")
     public String getProspectusPage() {

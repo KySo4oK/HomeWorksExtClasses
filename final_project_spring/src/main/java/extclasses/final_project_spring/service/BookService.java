@@ -22,14 +22,17 @@ import java.util.stream.Collectors;
 
 @Component
 public class BookService {
-    @Autowired
-    private BookRepository bookRepository;
-    @Autowired
-    private ShelfRepository shelfRepository;
-    @Autowired
-    private TagService tagService;
-    @Autowired
-    private AuthorService authorService;
+    private final BookRepository bookRepository;
+    private final ShelfRepository shelfRepository;
+    private final TagService tagService;
+    private final AuthorService authorService;
+
+    public BookService(BookRepository bookRepository, ShelfRepository shelfRepository, TagService tagService, AuthorService authorService) {
+        this.bookRepository = bookRepository;
+        this.shelfRepository = shelfRepository;
+        this.tagService = tagService;
+        this.authorService = authorService;
+    }
 
     public List<BookDTO> getAvailableBooks(Pageable pageable) {
         return bookRepository.findAllByAvailableIsTrue(pageable)

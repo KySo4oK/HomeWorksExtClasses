@@ -12,7 +12,6 @@ import extclasses.final_project_spring.repository.BookRepository;
 import extclasses.final_project_spring.repository.OrderRepository;
 import extclasses.final_project_spring.repository.ShelfRepository;
 import extclasses.final_project_spring.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,14 +22,17 @@ import java.util.stream.Collectors;
 
 @Component
 public class OrderService {
-    @Autowired
-    private OrderRepository orderRepository;
-    @Autowired
-    private BookRepository bookRepository;
-    @Autowired
-    private ShelfRepository shelfRepository;
-    @Autowired
-    private UserRepository userRepository;
+    private final OrderRepository orderRepository;
+    private final BookRepository bookRepository;
+    private final ShelfRepository shelfRepository;
+    private final UserRepository userRepository;
+
+    public OrderService(OrderRepository orderRepository, BookRepository bookRepository, ShelfRepository shelfRepository, UserRepository userRepository) {
+        this.orderRepository = orderRepository;
+        this.bookRepository = bookRepository;
+        this.shelfRepository = shelfRepository;
+        this.userRepository = userRepository;
+    }
 
     @Transactional
     public boolean createOrder(BookDTO bookDTO, String userName) {

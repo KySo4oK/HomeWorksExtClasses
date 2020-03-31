@@ -2,18 +2,19 @@ package extclasses.final_project_spring.service;
 
 import extclasses.final_project_spring.entity.Tag;
 import extclasses.final_project_spring.repository.TagRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
 public class TagService {
-    @Autowired
-    private TagRepository tagRepository;
+    private final TagRepository tagRepository;
+
+    public TagService(TagRepository tagRepository) {
+        this.tagRepository = tagRepository;
+    }
 
     public Set<String> getAllTags() {
         return tagRepository.findAll()

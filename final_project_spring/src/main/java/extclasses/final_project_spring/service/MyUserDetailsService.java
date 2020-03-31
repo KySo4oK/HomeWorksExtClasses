@@ -4,7 +4,6 @@ package extclasses.final_project_spring.service;
 import extclasses.final_project_spring.entity.MyUserDetails;
 import extclasses.final_project_spring.entity.User;
 import extclasses.final_project_spring.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,8 +16,12 @@ import java.util.Optional;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
-    @Autowired
+    final
     UserRepository userRepository;
+
+    public MyUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
 //    @PostConstruct
 //    public void newUser() {

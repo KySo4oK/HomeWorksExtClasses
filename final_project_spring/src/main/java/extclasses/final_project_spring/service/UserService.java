@@ -4,7 +4,6 @@ import extclasses.final_project_spring.dto.UserDTO;
 import extclasses.final_project_spring.entity.User;
 import extclasses.final_project_spring.exception.UserAlreadyExistException;
 import extclasses.final_project_spring.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,8 +11,11 @@ import java.util.List;
 
 @Component
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
 //    @PostConstruct
 //    public void newUser() {

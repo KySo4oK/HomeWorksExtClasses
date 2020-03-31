@@ -15,8 +15,11 @@ import java.util.stream.Collectors;
 
 @Controller
 public class OrderController {
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
+
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @GetMapping("/orders")
     public String getOrdersPage() {
