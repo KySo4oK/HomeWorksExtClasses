@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookDTO {
+    private Long id;
     private String name;
     private String name_ua;
     private String tags;
@@ -23,6 +24,7 @@ public class BookDTO {
     private String authors_ua;
 
     public BookDTO(Book book) {
+        this.id = book.getBookId();
         this.name = book.getName();
         this.tags = book.getTags()
                 .stream()

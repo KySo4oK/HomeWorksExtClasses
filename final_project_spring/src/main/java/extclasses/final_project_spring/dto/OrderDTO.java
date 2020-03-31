@@ -11,10 +11,11 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDTO {
-    String bookName;
-    String userName;
-    String startDate;
-    String endDate;
+    private Long id;
+    private String bookName;
+    private String userName;
+    private String startDate;
+    private String endDate;
 
     public OrderDTO(Order order) {
         this.bookName = order.getBook().getName();
