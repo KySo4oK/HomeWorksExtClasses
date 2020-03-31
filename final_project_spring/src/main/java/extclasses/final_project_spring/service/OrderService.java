@@ -37,13 +37,13 @@ public class OrderService {
     }
 
     @Transactional
-    public boolean createOrder(BookDTO bookDTO, String userName) {
+    public boolean createOrder(BookDTO bookDTO, String username) {
         Book book = bookRepository.findById(bookDTO.getId())
                 .orElseThrow(() -> new BookNotFoundException("book - " + bookDTO.getName() + " not exist"));
         Order order = new Order();//todo builder
         book.addOrder(order);
-        User user = userRepository.findByUsername(userName)
-                .orElseThrow(() -> new UsernameNotFoundException("User - " + userName + " not exist"));
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User - " + username + " not exist"));
         order.setUser(user);
         orderRepository.save(order);
         return true;
