@@ -3,15 +3,15 @@ package extclasses.final_project_spring.dto;
 import extclasses.final_project_spring.entity.Author;
 import extclasses.final_project_spring.entity.Book;
 import extclasses.final_project_spring.entity.Tag;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+
+import java.util.Locale;
 
 @Data
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class BookDTO {
     private Long id;
     private String name;
@@ -21,10 +21,10 @@ public class BookDTO {
     private String authors;
     private String authors_ua;
 
-    public BookDTO(Book book, boolean isDefaultLocale) {
+    public BookDTO(Book book, Locale locale) {
         this.id = book.getBookId();
-        this.name = isDefaultLocale ? book.getName() : book.getNameUa();
-        this.tags = isDefaultLocale ?
+        this.name = locale.equals(Locale.US) ? book.getName() : book.getNameUa();
+        this.tags = locale.equals(Locale.US) ?
                 book.getTags()
                         .stream()
                         .map(Tag::getName)
@@ -33,7 +33,7 @@ public class BookDTO {
                         .stream()
                         .map(Tag::getNameUa)
                         .toArray(String[]::new);
-        this.authors = isDefaultLocale ?
+        this.authors = locale.equals(Locale.US) ?
                 book.getAuthors()
                         .stream()
                         .map(Author::getName)

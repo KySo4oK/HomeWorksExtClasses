@@ -1,19 +1,18 @@
 package extclasses.final_project_spring.dto;
 
 import extclasses.final_project_spring.entity.Order;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Locale;
 
 @Data
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class OrderDTO {
     private Long id;
     private String bookName;
@@ -21,15 +20,16 @@ public class OrderDTO {
     private String startDate;
     private String endDate;
 
-    public OrderDTO(Order order, boolean isDefaultLocale) {
+    public OrderDTO(Order order, Locale locale) {
         this.id = order.getOrderId();
-        this.bookName = isDefaultLocale ?
+        this.bookName = locale.equals(Locale.US) ?
                 order.getBook().getName() : order.getBook().getNameUa();
         this.userName = order.getUser().getUsername();
         this.startDate = order.getStartDate()
                 .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
-                        .withLocale(LocaleContextHolder.getLocale()));
-        this.endDate = order.getEndDate().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
-                .withLocale(LocaleContextHolder.getLocale()));
+                        .withLocale(locale));
+        this.endDate = order.getEndDate()
+                .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
+                        .withLocale(locale));
     }
 }

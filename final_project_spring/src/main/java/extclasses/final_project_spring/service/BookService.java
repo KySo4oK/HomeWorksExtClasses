@@ -40,7 +40,7 @@ public class BookService {
     public List<BookDTO> getAvailableBooks(Pageable pageable) {
         return bookRepository.findAllByAvailableIsTrue(pageable)
                 .stream()
-                .map(x -> new BookDTO(x, LocaleContextHolder.getLocale().equals(Locale.US)))
+                .map(x -> new BookDTO(x, LocaleContextHolder.getLocale()))
                 .collect(Collectors.toList());
     }
 
@@ -69,14 +69,14 @@ public class BookService {
                         filterDTO.getAuthors(),
                         filterDTO.getTags(), pageable)
                         .stream()
-                        .map(x -> new BookDTO(x, LocaleContextHolder.getLocale().equals(Locale.US)))
+                        .map(x -> new BookDTO(x, LocaleContextHolder.getLocale()))
                         .collect(Collectors.toList()) :
                 bookRepository.getBooksByFilterUa(
                         filterDTO.getName(),
                         filterDTO.getAuthors(),
                         filterDTO.getTags(), pageable)
                         .stream()
-                        .map(x -> new BookDTO(x, LocaleContextHolder.getLocale().equals(Locale.US)))
+                        .map(x -> new BookDTO(x, LocaleContextHolder.getLocale()))
                         .collect(Collectors.toList());
 
     }

@@ -65,28 +65,28 @@ public class OrderService {
         return orderRepository
                 .findAllByActiveIsTrue()
                 .stream()
-                .map(x -> new OrderDTO(x, LocaleContextHolder.getLocale().equals(Locale.US)))
+                .map(x -> new OrderDTO(x, LocaleContextHolder.getLocale()))
                 .collect(Collectors.toSet());
     }
 
     public Set<OrderDTO> getPassiveOrders() {
         return orderRepository.findAllByActiveIsFalse()
                 .stream()
-                .map(x -> new OrderDTO(x, LocaleContextHolder.getLocale().equals(Locale.US)))
+                .map(x -> new OrderDTO(x, LocaleContextHolder.getLocale()))
                 .collect(Collectors.toSet());
     }
 
     public Set<OrderDTO> getActiveOrdersByUserName(String name) {
         return orderRepository.findAllByActiveIsTrueAndUser_Username(name)
                 .stream()
-                .map(x -> new OrderDTO(x, LocaleContextHolder.getLocale().equals(Locale.US)))
+                .map(x -> new OrderDTO(x, LocaleContextHolder.getLocale()))
                 .collect(Collectors.toSet());
     }
 
     public Set<OrderDTO> getPassiveOrdersByUserName(String name) {
         return orderRepository.findAllByActiveIsFalseAndUser_Username(name)
                 .stream()
-                .map(x -> new OrderDTO(x, LocaleContextHolder.getLocale().equals(Locale.US)))
+                .map(x -> new OrderDTO(x, LocaleContextHolder.getLocale()))
                 .collect(Collectors.toSet());
     }
 
