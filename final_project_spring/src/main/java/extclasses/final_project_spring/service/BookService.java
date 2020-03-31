@@ -50,6 +50,7 @@ public class BookService {
         Shelf shelf = shelfRepository.findByBookIsNull().orElse(new Shelf());
         Book book = new Book();
         book.setName(bookDTO.getName());
+        book.setNameUa(bookDTO.getNameUa());
         book.setShelf(shelf);
         book.setAuthors(authors);
         book.setTags(tags);

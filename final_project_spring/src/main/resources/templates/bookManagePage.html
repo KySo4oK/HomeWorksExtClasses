@@ -37,9 +37,36 @@
 </div>
     <!--    add-->
     <div v-if="picked==1" id="add" style="max-width: 500px; margin: auto;">
-        <input id="book_name" type="text" class="form-control" th:placeholder="#{book.name}" v-model="addedBook.name">
-        <input id="book_authors" type="text" class="form-control" th:placeholder="#{authors}" v-model="addedBook.authors">
-        <input id="book_tags" type="text" class="form-control" th:placeholder="#{tags}" v-model="addedBook.tags">
+        <input id="book_name" type="text" class="form-control" th:placeholder="#{book.name.en}" v-model="addedBook.name">
+        <input id="book_name_ua" type="text" class="form-control" th:placeholder="#{book.name.ua}" v-model="addedBook.nameUa">
+        <!--            tags-->
+        <div id="tagsChecks" class="col-md-6 boxes">
+            <div v-for="tag in tags">
+                <div style="display: inline;">
+                    <input style="display: inline; float: left; margin-left: 0px" type="checkbox"
+                           v-bind:value="tag"
+                           v-model="addedBook.tags">
+                    <h6 style="display: inline; margin-right: 0px;">{{tag}}</h6>
+                </div>
+            </div>
+        </div>
+        <br>
+        <label for="tagsCheckbox" style="margin: 20px ;" th:text="#{select.tags}"></label>
+        <br>
+        <!--            authors-->
+        <div style="padding-top: 10px" id="authorsСhecks" class="col-md-6 boxes">
+            <div v-for="author in authors">
+                <div style="display: inline;">
+                    <input style="display: inline; float: left; margin-left: 0px" type="checkbox"
+                           v-bind:value="author"
+                           v-model="addedBook.authors">
+                    <h6 style="display: inline;">{{author}}</h6>
+                </div>
+            </div>
+        </div>
+        <br>
+        <label for="authorsCheckbox" style="margin: 20px" th:text="#{select.authors}"></label>
+        <br>
         <div style="text-align: center; margin-top: 20px">
             <button v-on:click="addBook" class="btn btn-warning" style="width: 30%;" th:text="#{load}"></button>
         </div>
@@ -125,8 +152,9 @@
         data: {
             addedBook: {
                 name: "",
-                authors: "",
-                tags: "",
+                nameUa: "",
+                authors: [],
+                tags: [],
             },
             picked: '',
             books: [],

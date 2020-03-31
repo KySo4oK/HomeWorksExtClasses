@@ -8,8 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.stream.Collectors;
-
 @Data
 @ToString
 @AllArgsConstructor
@@ -29,10 +27,10 @@ public class BookDTO {
         this.tags = book.getTags()
                 .stream()
                 .map(Tag::getName)
-                .collect(Collectors.joining(","));
+                .toArray(String[]::new);
         this.authors = book.getAuthors()
                 .stream()
                 .map(Author::getName)
-                .collect(Collectors.joining(","));
+                .toArray(String[]::new);
     }
 }

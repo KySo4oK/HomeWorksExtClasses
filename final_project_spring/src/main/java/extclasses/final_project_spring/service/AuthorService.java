@@ -1,10 +1,11 @@
 package extclasses.final_project_spring.service;
 
 import extclasses.final_project_spring.entity.Author;
+import extclasses.final_project_spring.exception.AuthorNotFoundException;
 import extclasses.final_project_spring.repository.AuthorRepository;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -23,12 +24,11 @@ public class AuthorService {
                 .collect(Collectors.toSet());
     }
 
-    public Set<Author> createAuthorsByString(String authorsString) {
-        String[] authorsArray = authorsString.split(",");
-        Set<Author> authors = new HashSet<>();
-        for (String s : authorsArray) {
-            authors.add(authorRepository.findByName(s).orElse(new Author(s)));
-        }
-        return authors;
+    public Set<Author> createAuthorsByString(String[] authors) {
+        return Arrays.stream(authors)
+                .map(x -> authorRepository
+                        .findByName(x)
+                        .orElseThrow(() -> new AuthorNotFoundException("can not found tag")))
+                .collect(Collectors.toSet());
     }
 }
