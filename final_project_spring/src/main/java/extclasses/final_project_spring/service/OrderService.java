@@ -59,7 +59,7 @@ public class OrderService {
                         " - " + orderDTO.getUserName() + " not exist"));
         order.setActive(true);
         order.setStartDate(LocalDate.now());
-        order.setEndDate(LocalDate.now().plusMonths(1));
+        order.setEndDate(LocalDate.now().plusMonths(1));//todo replace hardcode
         orderRepository.save(order);
     }
 

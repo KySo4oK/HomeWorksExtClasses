@@ -40,8 +40,33 @@ public class BookService {
     public List<BookDTO> getAvailableBooks(Pageable pageable) {
         return bookRepository.findAllByAvailableIsTrue(pageable)
                 .stream()
-                .map(x -> new BookDTO(x, LocaleContextHolder.getLocale()))
+                .map(this::buildBookDTO)
                 .collect(Collectors.toList());
+    }
+
+    private BookDTO buildBookDTO(Book book) {
+        return BookDTO.builder()
+                .id(book.getBookId())
+                .authors(getArrayOfAuthors(book))
+                .tags(getArrayOfTags(book))
+                .name(LocaleContextHolder.getLocale().equals(Locale.US) ? book.getName() : book.getNameUa())
+                .build();
+    }
+
+    private String[] getArrayOfTags(Book book) {
+        return book.getTags()
+                .stream()
+                .map(LocaleContextHolder.getLocale().equals(Locale.US) ?
+                        Tag::getName : Tag::getNameUa)
+                .toArray(String[]::new);
+    }
+
+    private String[] getArrayOfAuthors(Book book) {
+        return book.getAuthors()
+                .stream()
+                .map(LocaleContextHolder.getLocale().equals(Locale.US) ?
+                        Author::getName : Author::getNameUa)
+                .toArray(String[]::new);
     }
 
     @Transactional
@@ -63,21 +88,13 @@ public class BookService {
     }
 
     public List<BookDTO> getAvailableBooksByFilter(FilterDTO filterDTO, Pageable pageable) {
-        return LocaleContextHolder.getLocale().equals(Locale.US) ?
-                bookRepository.getBooksByFilter(
-                        filterDTO.getName(),
-                        filterDTO.getAuthors(),
-                        filterDTO.getTags(), pageable)
-                        .stream()
-                        .map(x -> new BookDTO(x, LocaleContextHolder.getLocale()))
-                        .collect(Collectors.toList()) :
-                bookRepository.getBooksByFilterUa(
-                        filterDTO.getName(),
-                        filterDTO.getAuthors(),
-                        filterDTO.getTags(), pageable)
-                        .stream()
-                        .map(x -> new BookDTO(x, LocaleContextHolder.getLocale()))
-                        .collect(Collectors.toList());
+        return bookRepository.getBooksByFilter(
+                filterDTO.getName(),
+                filterDTO.getAuthors(),
+                filterDTO.getTags(), pageable)
+                .stream()
+                .map(this::buildBookDTO)
+                .collect(Collectors.toList());
 
     }
 
