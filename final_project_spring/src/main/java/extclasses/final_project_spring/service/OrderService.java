@@ -113,7 +113,7 @@ public class OrderService {
                 .findByName(orderDTO.getBookName())
                 .orElseThrow(() -> new BookNotFoundException("book not exist")) :
                 bookRepository
-                        .findByName(orderDTO.getBookName())
+                        .findByNameUa(orderDTO.getBookName())
                         .orElseThrow(() -> new BookNotFoundException("book not exist"));
         Order order = orderRepository
                 .findById(orderDTO.getId())

@@ -51,4 +51,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> getBooksByFilterUa(@Param("name") String partOfName,
                                   @Param("authors") String[] authors,
                                   @Param("tags") String[] tags, Pageable pageable);
+
+    Optional<Book> findByNameUa(String bookNameUa);
 }
