@@ -70,18 +70,16 @@ public class BookService {
     }
 
     @Transactional
-    public void saveBookNewBookFromClient(BookDTO bookDTO) {//todo use builder
-        if (bookRepository.findByName(bookDTO.getName()).isPresent())
-            throw new BookAlreadyExistException("book - " + bookDTO.getName() + " already exist");
-        Set<Tag> tags = tagService.createTagsByString(bookDTO.getTags());
-        Set<Author> authors = authorService.getAuthorsFromStringArray(bookDTO.getAuthors());
+    public void saveBookNewBookFromClient(BookDTO bookDTO) {
         Shelf shelf = shelfRepository.findByBookIsNull().orElse(new Shelf());
-        Book book = new Book();
-        book.setName(bookDTO.getName());
-        book.setNameUa(bookDTO.getNameUa());
-        book.setShelf(shelf);
-        book.setAuthors(authors);
-        book.setTags(tags);
+        Book book = Book.builder()
+                .name(bookDTO.getName())
+                .nameUa(bookDTO.getNameUa())
+                .shelf(shelf)
+                .authors(authorService.getAuthorsFromStringArray(bookDTO.getAuthors()))
+                .tags(tagService.getTagsByStringArray(bookDTO.getTags()))
+                .available(true)
+                .build();
         bookRepository.save(book);
         shelf.setBook(book);
         shelfRepository.save(shelf);
@@ -98,12 +96,13 @@ public class BookService {
 
     }
 
+    @Transactional
     public void editBook(BookDTO bookDTO) throws BookNotFoundException {
         Book book = bookRepository
                 .findById(bookDTO.getId())
                 .orElseThrow(() -> new BookNotFoundException("book - " + bookDTO.getName() + " not exist"));
         book.setAuthors(authorService.getAuthorsFromStringArray(bookDTO.getAuthors()));
-        book.setTags(tagService.createTagsByString(bookDTO.getTags()));
+        book.setTags(tagService.getTagsByStringArray(bookDTO.getTags()));
         bookRepository.save(book);
     }
 

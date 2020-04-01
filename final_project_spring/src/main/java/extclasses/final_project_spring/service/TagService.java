@@ -32,7 +32,7 @@ public class TagService {
 
     }
 
-    public Set<Tag> createTagsByString(String[] tags) {
+    public Set<Tag> getTagsByStringArray(String[] tags) {
         return LocaleContextHolder.getLocale().equals(Locale.US) ?
                 Arrays.stream(tags)
                         .map(x -> tagRepository

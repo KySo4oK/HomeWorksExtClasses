@@ -11,6 +11,7 @@ import java.util.Set;
 @EqualsAndHashCode(exclude = {"shelf", "orders"})
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity(name = "book")
 public class Book {
     @Id
