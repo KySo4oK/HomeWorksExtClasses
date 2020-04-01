@@ -79,8 +79,16 @@
                 <tbody>
                 <tr v-for="book in books">
                     <td><h1 v-text="book.name"></h1></td>
-                    <td><h1 v-text="book.authors"></h1></td>
-                    <td><h1 v-text="book.tags"></h1></td>
+                    <td>
+                        <div v-for="author in book.authors">
+                            <h1 v-text="author">
+                            </h1>
+                        </div>
+                   </td>
+                    <td><div v-for="tag in book.tags">
+                        <h1 v-text="tag">
+                        </h1>
+                    </div></td>
                     <td>
                         <button class="btn btn-warning" style="height: 100%; width: 100%;" v-on:click="orderBook(book)"
                                 th:text="#{order}">
