@@ -101,6 +101,7 @@
                 let res = await axios.put('/user/return', order);
                 if (!res) return;
                 this.message = res.data + book.name;
+                await this.getActiveOrders();
             },
 
         }

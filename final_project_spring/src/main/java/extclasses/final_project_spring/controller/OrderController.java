@@ -59,7 +59,8 @@ public class OrderController {
     }
 
     @PutMapping("/user/return")
-    public void returnBook(@RequestBody OrderDTO orderDTO, Authentication authentication) {
+    public String returnBook(@RequestBody OrderDTO orderDTO) {
         orderService.returnBook(orderDTO);
+        return "user.html";
     }
 }

@@ -241,15 +241,15 @@
                 let res = await axios.put('/edit', book);
                 if (!res) return;
                 this.message = res.data + book.name;
+                this.page = 0;
+                await this.getBooks();
             },
             async deleteBook(book) {
-                let res = await axios.delete('/delete/' + book.name);
+                let res = await axios.delete('/delete/' + book.id);
                 if (!res) return;
                 this.message = res.data + book.name;
+                this.page = 0;
                 await this.getBooks();
-                await this.getAuthors();
-                await this.getTags();
-
             },
             async loadMore() {
                 if (this.filter) {

@@ -15,17 +15,19 @@
     <header>
         <div class="navbar navbar-default" style="background-color: aquamarine;">
             <h1 style="float: left">{{ siteName }}</h1>
-            <span><a style="float: right; margin-right: 5px" href="/reg?language=ua" th:text = "#{label.lang.ua}"></a></span>
-            <span><a style="float: right; margin-right: 5px" href="/reg?language=en" th:text = "#{label.lang.en}"></a></span>
-            <span><a style="float: right; margin-right: 5px" href="/login" th:text = "#{sign.in}"></a></span>
-            <span><a style="float: right; margin-right: 5px" href="/reg" th:text = "#{sign.up}"></a></span>
-            <span><a style="float: right; margin-right: 5px" href="/" th:text = "#{main}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/reg?language=ua"
+                     th:text="#{label.lang.ua}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/reg?language=en"
+                     th:text="#{label.lang.en}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/login" th:text="#{sign.in}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/reg" th:text="#{sign.up}"></a></span>
+            <span><a style="float: right; margin-right: 5px" href="/" th:text="#{main}"></a></span>
         </div>
     </header>
     <div style="margin:0 auto;width:75%;text-align:left">
-        <p class="h3 text-center mb-4" th:text = "#{sign.up}"></p>
+        <p class="h3 text-center mb-4" th:text="#{sign.up}"></p>
         <div style="max-width: 500px; margin: auto;">
-            <input id="username" class="form-control" th:placeholder="#{username}"  type="text" v-model="username">
+            <input id="username" class="form-control" th:placeholder="#{username}" type="text" v-model="username">
             <input id="phone" class="form-control" th:placeholder="#{phone}" type="text" v-model="phone">
             <input type="email" class="form-control" id="email" th:placeholder="#{email}" v-model="email">
             <input type="password" class="form-control" th:placeholder="#{password}" id="password"
@@ -35,13 +37,8 @@
             </div>
         </div>
     </div>
-    <footer padless>
-        <col
-                class="text-center"
-                cols="12"
-        >
+    <footer>
         {{ new Date().getFullYear() }} — <strong>e-lib</strong>
-        </col>
     </footer>
 </div>
 <script type="text/javascript">
@@ -73,10 +70,12 @@
     input {
         margin-top: 17px;
     }
-    body{
+
+    body {
         font-family: Arial;
         font-style: normal;
     }
+
     footer {
         position: absolute;
         left: 0;

@@ -107,7 +107,8 @@
             async permitOrder(order) {
                 let res = await axios.put('/permit', order);
                 if (!res) return;
-                this.message = res.data + book.name;
+                await this.getActiveOrders();
+                await this.getPassiveOrders();
             },
 
         }
