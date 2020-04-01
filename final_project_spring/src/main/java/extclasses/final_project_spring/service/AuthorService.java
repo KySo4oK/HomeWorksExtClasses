@@ -20,7 +20,7 @@ public class AuthorService {
     }
 
     public Set<String> getAllAuthors() {
-        return LocaleContextHolder.getLocale().equals(Locale.US) ?
+        return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
                 authorRepository.findAll()
                         .stream()
                         .map(Author::getName)

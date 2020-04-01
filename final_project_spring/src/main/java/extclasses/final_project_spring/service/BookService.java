@@ -49,14 +49,14 @@ public class BookService {
                 .id(book.getBookId())
                 .authors(getArrayOfAuthors(book))
                 .tags(getArrayOfTags(book))
-                .name(LocaleContextHolder.getLocale().equals(Locale.US) ? book.getName() : book.getNameUa())
+                .name(LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ? book.getName() : book.getNameUa())
                 .build();
     }
 
     private String[] getArrayOfTags(Book book) {
         return book.getTags()
                 .stream()
-                .map(LocaleContextHolder.getLocale().equals(Locale.US) ?
+                .map(LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
                         Tag::getName : Tag::getNameUa)
                 .toArray(String[]::new);
     }
@@ -64,7 +64,7 @@ public class BookService {
     private String[] getArrayOfAuthors(Book book) {
         return book.getAuthors()
                 .stream()
-                .map(LocaleContextHolder.getLocale().equals(Locale.US) ?
+                .map(LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
                         Author::getName : Author::getNameUa)
                 .toArray(String[]::new);
     }

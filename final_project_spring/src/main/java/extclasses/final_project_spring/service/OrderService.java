@@ -87,7 +87,7 @@ public class OrderService {
 
     private OrderDTO buildOrderDTO(Order order) {
         return OrderDTO.builder()
-                .bookName(LocaleContextHolder.getLocale().equals(Locale.US) ?
+                .bookName(LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
                         order.getBook().getName() : order.getBook().getNameUa())
                 .id(order.getOrderId())
                 .userName(order.getUser().getUsername())
@@ -109,7 +109,7 @@ public class OrderService {
 
     @Transactional(rollbackFor = {BookNotFoundException.class, OrderNotFoundException.class})
     public void returnBook(OrderDTO orderDTO) {
-        Book book = LocaleContextHolder.getLocale().equals(Locale.US) ? bookRepository
+        Book book = LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ? bookRepository
                 .findByName(orderDTO.getBookName())
                 .orElseThrow(() -> new BookNotFoundException("book not exist")) :
                 bookRepository

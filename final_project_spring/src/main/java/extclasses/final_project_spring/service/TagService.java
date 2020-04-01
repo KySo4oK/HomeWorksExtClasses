@@ -20,7 +20,7 @@ public class TagService {
     }
 
     public Set<String> getAllTags() {
-        return LocaleContextHolder.getLocale().equals(Locale.US) ?
+        return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
                 tagRepository.findAll()
                         .stream()
                         .map(Tag::getName)
@@ -33,7 +33,7 @@ public class TagService {
     }
 
     public Set<Tag> getTagsByStringArray(String[] tags) {
-        return LocaleContextHolder.getLocale().equals(Locale.US) ?
+        return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
                 Arrays.stream(tags)
                         .map(x -> tagRepository
                                 .findByName(x)
