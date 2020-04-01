@@ -18,6 +18,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -65,28 +67,43 @@ public class OrderService {
         return orderRepository
                 .findAllByActiveIsTrue()
                 .stream()
-                .map(x -> new OrderDTO(x, LocaleContextHolder.getLocale()))
+                .map(this::buildOrderDTO)
                 .collect(Collectors.toSet());
     }
 
     public Set<OrderDTO> getPassiveOrders() {
         return orderRepository.findAllByActiveIsFalse()
                 .stream()
-                .map(x -> new OrderDTO(x, LocaleContextHolder.getLocale()))
+                .map(this::buildOrderDTO)
                 .collect(Collectors.toSet());
     }
 
     public Set<OrderDTO> getActiveOrdersByUserName(String name) {
         return orderRepository.findAllByActiveIsTrueAndUser_Username(name)
                 .stream()
-                .map(x -> new OrderDTO(x, LocaleContextHolder.getLocale()))
+                .map(this::buildOrderDTO)
                 .collect(Collectors.toSet());
+    }
+
+    private OrderDTO buildOrderDTO(Order order) {
+        return OrderDTO.builder()
+                .bookName(LocaleContextHolder.getLocale().equals(Locale.US) ?
+                        order.getBook().getName() : order.getBook().getNameUa())
+                .id(order.getOrderId())
+                .userName(order.getUser().getUsername())
+                .endDate(order.getEndDate()
+                        .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
+                                .withLocale(LocaleContextHolder.getLocale())))
+                .startDate(order.getStartDate()
+                        .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
+                                .withLocale(LocaleContextHolder.getLocale())))
+                .build();
     }
 
     public Set<OrderDTO> getPassiveOrdersByUserName(String name) {
         return orderRepository.findAllByActiveIsFalseAndUser_Username(name)
                 .stream()
-                .map(x -> new OrderDTO(x, LocaleContextHolder.getLocale()))
+                .map(this::buildOrderDTO)
                 .collect(Collectors.toSet());
     }
 
@@ -95,9 +112,9 @@ public class OrderService {
         Book book = LocaleContextHolder.getLocale().equals(Locale.US) ? bookRepository
                 .findByName(orderDTO.getBookName())
                 .orElseThrow(() -> new BookNotFoundException("book not exist")) :
-        bookRepository
-                .findByName(orderDTO.getBookName())
-                .orElseThrow(() -> new BookNotFoundException("book not exist"));
+                bookRepository
+                        .findByName(orderDTO.getBookName())
+                        .orElseThrow(() -> new BookNotFoundException("book not exist"));
         Order order = orderRepository
                 .findById(orderDTO.getId())
                 .orElseThrow(() -> new OrderNotFoundException("order not exist"));
