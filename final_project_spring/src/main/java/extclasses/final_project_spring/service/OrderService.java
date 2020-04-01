@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class OrderService {
+    private static final int PERIOD_OF_USE = 1;
     private final OrderRepository orderRepository;
     private final BookRepository bookRepository;
     private final ShelfRepository shelfRepository;
@@ -59,7 +60,7 @@ public class OrderService {
                         " - " + orderDTO.getUserName() + " not exist"));
         order.setActive(true);
         order.setStartDate(LocalDate.now());
-        order.setEndDate(LocalDate.now().plusMonths(1));//todo replace hardcode
+        order.setEndDate(LocalDate.now().plusMonths(PERIOD_OF_USE));
         orderRepository.save(order);
     }
 
