@@ -2,6 +2,7 @@ package extclasses.final_project_spring.controller;
 
 import extclasses.final_project_spring.dto.BookDTO;
 import extclasses.final_project_spring.service.BookService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,22 +20,18 @@ public class BookController {
     }
 
     @PostMapping("/add")
-    public @ResponseBody
-    String addBook(@RequestBody BookDTO bookDTO) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addBook(@RequestBody BookDTO bookDTO) {
         bookService.saveBookNewBookFromClient(bookDTO);
-        return "successful adding book - " + bookDTO.getName();
     }
 
     @PutMapping("/edit")
-    public @ResponseBody
-    String editBook(@RequestBody BookDTO bookDTO) {
+    public void editBook(@RequestBody BookDTO bookDTO) {
         bookService.editBook(bookDTO);
-        return "successful edit book - " + bookDTO.getName();
     }
+
     @DeleteMapping("/delete/{id}")
-    public @ResponseBody
-    String deleteBook(@PathVariable("id") long id) {
+    public void deleteBook(@PathVariable("id") long id) {
         bookService.deleteBook(id);
-        return "successful delete book - " + id;
     }
 }

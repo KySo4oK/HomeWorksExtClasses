@@ -8,6 +8,7 @@ import extclasses.final_project_spring.service.OrderService;
 import extclasses.final_project_spring.service.TagService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -63,16 +64,12 @@ public class ProspectusController {
                                    @RequestBody FilterDTO filterDTO) {
         Pageable pageable = PageRequest.of(Integer.parseInt(page), Integer.parseInt(number));
         return bookService
-                .getAvailableBooksByFilter(filterDTO,pageable);
+                .getAvailableBooksByFilter(filterDTO, pageable);
     }
 
     @PostMapping("/order")
-    public @ResponseBody
-    String orderBook(@RequestBody BookDTO bookDTO, Authentication authentication) {
-        try {
-            return orderService.createOrder(bookDTO, authentication.getName()) ? "added" : "not added";
-        } catch (Exception e) {
-            return "not add";
-        }
+    @ResponseStatus(HttpStatus.CREATED)
+    public void orderBook(@RequestBody BookDTO bookDTO, Authentication authentication) {
+        orderService.createOrder(bookDTO, authentication.getName());
     }
 }

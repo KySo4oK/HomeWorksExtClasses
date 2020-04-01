@@ -25,10 +25,8 @@ public class OrderController {
     }
 
     @PutMapping("/permit")
-    public @ResponseBody
-    String permitOrder(@RequestBody OrderDTO orderDTO) {
+    public void permitOrder(@RequestBody OrderDTO orderDTO) {
         orderService.permitOrder(orderDTO);
-        return "you permit order " + orderDTO.getBookName() + " - " + orderDTO.getUserName();
     }
 
     @GetMapping("/active")
@@ -61,9 +59,7 @@ public class OrderController {
     }
 
     @PutMapping("/user/return")
-    public @ResponseBody
-    String returnBook(@RequestBody OrderDTO orderDTO, Authentication authentication) {
+    public void returnBook(@RequestBody OrderDTO orderDTO, Authentication authentication) {
         orderService.returnBook(orderDTO);
-        return "you return - " + orderDTO.getBookName();
     }
 }
