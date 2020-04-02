@@ -6,7 +6,6 @@ import extclasses.final_project_spring.entity.Author;
 import extclasses.final_project_spring.entity.Book;
 import extclasses.final_project_spring.entity.Shelf;
 import extclasses.final_project_spring.entity.Tag;
-import extclasses.final_project_spring.exception.BookAlreadyExistException;
 import extclasses.final_project_spring.exception.BookNotFoundException;
 import extclasses.final_project_spring.repository.BookRepository;
 import extclasses.final_project_spring.repository.ShelfRepository;
@@ -17,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -100,7 +98,7 @@ public class BookService {
     public void editBook(BookDTO bookDTO) throws BookNotFoundException {
         Book book = bookRepository
                 .findById(bookDTO.getId())
-                .orElseThrow(() -> new BookNotFoundException("book - " + bookDTO.getName() + " not exist"));
+                .orElseThrow(() -> new BookNotFoundException("book not exist"));
         book.setAuthors(authorService.getAuthorsFromStringArray(bookDTO.getAuthors()));
         book.setTags(tagService.getTagsByStringArray(bookDTO.getTags()));
         bookRepository.save(book);
@@ -108,6 +106,6 @@ public class BookService {
 
     public void deleteBook(long id) throws BookNotFoundException {
         bookRepository.delete(bookRepository.findById(id)
-                .orElseThrow(() -> new BookNotFoundException("book - " + id + " not exist")));
+                .orElseThrow(() -> new BookNotFoundException("book not exist")));
     }
 }

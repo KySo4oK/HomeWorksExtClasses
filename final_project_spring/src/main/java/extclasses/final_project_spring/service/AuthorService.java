@@ -36,7 +36,7 @@ public class AuthorService {
         return Arrays.stream(authors)
                 .map(x -> authorRepository
                         .findByName(x)
-                        .orElseThrow(() -> new AuthorNotFoundException("can not found tag")))
+                        .orElseThrow(() -> new AuthorNotFoundException("can not found author")))
                 .collect(Collectors.toSet());
     }
 }
