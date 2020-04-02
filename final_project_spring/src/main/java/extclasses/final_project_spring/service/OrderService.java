@@ -6,6 +6,7 @@ import extclasses.final_project_spring.entity.Book;
 import extclasses.final_project_spring.entity.Order;
 import extclasses.final_project_spring.entity.Shelf;
 import extclasses.final_project_spring.entity.User;
+import extclasses.final_project_spring.exception.BookNotAvailableException;
 import extclasses.final_project_spring.exception.BookNotFoundException;
 import extclasses.final_project_spring.exception.OrderNotFoundException;
 import extclasses.final_project_spring.repository.BookRepository;
@@ -32,7 +33,10 @@ public class OrderService {
     private final ShelfRepository shelfRepository;
     private final UserRepository userRepository;
 
-    public OrderService(OrderRepository orderRepository, BookRepository bookRepository, ShelfRepository shelfRepository, UserRepository userRepository) {
+    public OrderService(OrderRepository orderRepository,
+                        BookRepository bookRepository,
+                        ShelfRepository shelfRepository,
+                        UserRepository userRepository) {
         this.orderRepository = orderRepository;
         this.bookRepository = bookRepository;
         this.shelfRepository = shelfRepository;
@@ -56,11 +60,13 @@ public class OrderService {
     public void permitOrder(OrderDTO orderDTO) {
         Order order = orderRepository
                 .findById(orderDTO.getId())
-                .orElseThrow(() -> new OrderNotFoundException("Active order - " + orderDTO.getBookName() +
-                        " - " + orderDTO.getUserName() + " not exist"));
+                .orElseThrow(() -> new OrderNotFoundException("Active order not exist"));
+        if (!order.getBook().isAvailable()) throw new BookNotAvailableException("Book not available");
         order.setActive(true);
         order.setStartDate(LocalDate.now());
         order.setEndDate(LocalDate.now().plusMonths(PERIOD_OF_USE));
+        order.getBook().setUser(order.getUser());
+        order.getBook().setAvailable(false);
         orderRepository.save(order);
     }
 
@@ -120,6 +126,7 @@ public class OrderService {
                 .findById(orderDTO.getId())
                 .orElseThrow(() -> new OrderNotFoundException("order not exist"));
         book.setUser(null);
+        book.setAvailable(true);
         book.removeOrder(order);
         book.setShelf(shelfRepository.findByBookIsNull().orElse(new Shelf()));
         bookRepository.save(book);
