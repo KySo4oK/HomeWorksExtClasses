@@ -98,7 +98,13 @@
                 this.passiveOrders = res.data;
             },
             async returnBook(order) {
-                let res = await axios.put('/user/return', order);
+                let res = await axios.put('/user/return', order)
+                    .catch(function (error) {
+                        if (error.response) {
+                            if(error.response.status == '404')
+                                return;//todo show field with this problem
+                        }
+                    });
                 if (!res) return;
                 this.message = res.data + book.name;
                 await this.getActiveOrders();

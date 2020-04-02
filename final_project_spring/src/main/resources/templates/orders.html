@@ -105,7 +105,13 @@
                 this.passiveOrders = res.data;
             },
             async permitOrder(order) {
-                let res = await axios.put('/permit', order);
+                let res = await axios.put('/permit', order)
+                    .catch(function (error) {
+                        if (error.response) {
+                            if(error.response.status == '404')
+                                return;//todo show field with this problem
+                        }
+                    });
                 if (!res) return;
                 await this.getActiveOrders();
                 await this.getPassiveOrders();

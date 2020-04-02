@@ -5,7 +5,6 @@ import extclasses.final_project_spring.dto.OrderDTO;
 import extclasses.final_project_spring.entity.Book;
 import extclasses.final_project_spring.entity.Order;
 import extclasses.final_project_spring.entity.Shelf;
-import extclasses.final_project_spring.entity.User;
 import extclasses.final_project_spring.exception.BookNotAvailableException;
 import extclasses.final_project_spring.exception.BookNotFoundException;
 import extclasses.final_project_spring.exception.OrderNotFoundException;

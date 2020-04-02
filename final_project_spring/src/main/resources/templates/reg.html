@@ -59,7 +59,13 @@
                     email: this.email,
                     phone: this.phone,
                     password: this.password,
-                });
+                })
+                    .catch(function (error) {
+                        if (error.response) {
+                            if(error.response.status == '404')
+                                return;//todo show field with this problem
+                        }
+                    });
                 if (!res) return;
                 this.message = res.data;
             },

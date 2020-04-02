@@ -53,8 +53,6 @@
         },
         methods: {
             async login() {
-                console.log(this.password);
-                console.log(this.username);
                 let res = await axios.post('/login', {
                     password: this.password,
                     username: this.username,

@@ -199,7 +199,13 @@
         },
         methods: {
             async addBook() {
-                let res = await axios.post('/add', this.addedBook);
+                let res = await axios.post('/add', this.addedBook)
+                    .catch(function (error) {
+                        if (error.response) {
+                            if(error.response.status == '404')
+                                return;//todo show field with this problem
+                        }
+                    });
             },
             async changeList() {
                 this.page = 0;
@@ -238,14 +244,26 @@
                 this.authors = res.data;
             },
             async editBook(book) {
-                let res = await axios.put('/edit', book);
+                let res = await axios.put('/edit', book)
+                    .catch(function (error) {
+                    if (error.response) {
+                        if(error.response.status == '404')
+                            return;//todo show field with this problem
+                    }
+                });
                 if (!res) return;
                 this.message = res.data + book.name;
                 this.page = 0;
                 await this.getBooks();
             },
             async deleteBook(book) {
-                let res = await axios.delete('/delete/' + book.id);
+                let res = await axios.delete('/delete/' + book.id)
+                    .catch(function (error) {
+                        if (error.response) {
+                            if(error.response.status == '404')
+                                return;//todo show field with this problem
+                        }
+                    });
                 if (!res) return;
                 this.message = res.data + book.name;
                 this.page = 0;

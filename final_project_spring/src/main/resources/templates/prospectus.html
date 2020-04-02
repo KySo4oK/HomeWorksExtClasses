@@ -163,7 +163,13 @@
                 this.authors = res.data;
             },
             async orderBook(book) {
-                let res = await axios.post('/order', book);
+                let res = await axios.post('/order', book)
+                    .catch(function (error) {
+                        if (error.response) {
+                            if(error.response.status == '404')
+                                return;//todo show field with this problem
+                        }
+                    });
                 if (!res) return;
                 this.message = res.data + book.name;
             },
