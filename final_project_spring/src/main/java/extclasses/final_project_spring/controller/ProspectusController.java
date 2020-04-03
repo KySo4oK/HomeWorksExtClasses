@@ -6,6 +6,7 @@ import extclasses.final_project_spring.service.AuthorService;
 import extclasses.final_project_spring.service.BookService;
 import extclasses.final_project_spring.service.OrderService;
 import extclasses.final_project_spring.service.TagService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Set;
 
+@Log4j2
 @RestController
 public class ProspectusController {
     private final BookService bookService;
@@ -34,6 +36,7 @@ public class ProspectusController {
     List<BookDTO>
     getAvailableBooks(@PathVariable("page") String page, @PathVariable("number") String number) {
         Pageable pageable = PageRequest.of(Integer.parseInt(page), Integer.parseInt(number));
+        log.info("get books by pageable {}", pageable);
         return bookService.getAvailableBooks(pageable);
     }
 
@@ -57,6 +60,8 @@ public class ProspectusController {
                                    @PathVariable("number") String number,
                                    @RequestBody FilterDTO filterDTO) {
         Pageable pageable = PageRequest.of(Integer.parseInt(page), Integer.parseInt(number));
+        log.info("get books by pageable {}", pageable);
+        log.info("get books by filter {}", filterDTO);
         return bookService
                 .getAvailableBooksByFilter(filterDTO, pageable);
     }
@@ -64,6 +69,7 @@ public class ProspectusController {
     @PostMapping("/order")
     @ResponseStatus(HttpStatus.CREATED)
     public void orderBook(@RequestBody BookDTO bookDTO, Authentication authentication) {
+        log.info("order book {}", bookDTO.getName());
         orderService.createOrder(bookDTO, authentication.getName());
     }
 }

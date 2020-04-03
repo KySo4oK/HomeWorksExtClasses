@@ -2,11 +2,13 @@ package extclasses.final_project_spring.controller;
 
 import extclasses.final_project_spring.dto.OrderDTO;
 import extclasses.final_project_spring.service.OrderService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
+@Log4j2
 @RestController
 public class OrderController {
     private final OrderService orderService;
@@ -17,6 +19,7 @@ public class OrderController {
 
     @PutMapping("/permit")
     public void permitOrder(@RequestBody OrderDTO orderDTO) {
+        log.info("permit order {}", orderDTO);
         orderService.permitOrder(orderDTO);
     }
 
@@ -46,6 +49,7 @@ public class OrderController {
 
     @PutMapping("/user/return")
     public void returnBook(@RequestBody OrderDTO orderDTO) {
+        log.info("return book {}", orderDTO.getBookName());
         orderService.returnBook(orderDTO);
     }
 }

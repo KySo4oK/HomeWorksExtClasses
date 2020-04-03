@@ -33,10 +33,16 @@ public class AuthorService {
     }
 
     public Set<Author> getAuthorsFromStringArray(String[] authors) {
-        return Arrays.stream(authors)
-                .map(x -> authorRepository
-                        .findByName(x)
-                        .orElseThrow(() -> new AuthorNotFoundException("can not found author")))
-                .collect(Collectors.toSet());
+        return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
+                Arrays.stream(authors)
+                        .map(x -> authorRepository
+                                .findByName(x)
+                                .orElseThrow(() -> new AuthorNotFoundException("can not found author")))
+                        .collect(Collectors.toSet()) :
+                Arrays.stream(authors)
+                        .map(x -> authorRepository
+                                .findByNameUa(x)
+                                .orElseThrow(() -> new AuthorNotFoundException("can not found author")))
+                        .collect(Collectors.toSet());
     }
 }
