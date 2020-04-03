@@ -4,11 +4,11 @@ import extclasses.final_project_spring.dto.UserDTO;
 import extclasses.final_project_spring.entity.User;
 import extclasses.final_project_spring.exception.UserAlreadyExistException;
 import extclasses.final_project_spring.repository.UserRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
+@Log4j2
 @Component
 public class UserService {
     private final UserRepository userRepository;
@@ -29,19 +29,9 @@ public class UserService {
 //        userRepository.save(user);
 //    }
 
-
-    public String getStringOfUsers() {
-        List<User> users = userRepository.findAll();
-        StringBuilder usersStr = new StringBuilder();
-        for (User user : users) {
-            usersStr.append(user.getUsername());
-            usersStr.append(" , ");
-        }
-        return usersStr.toString();
-    }
-
     @Transactional(rollbackFor = UserAlreadyExistException.class)
     public void setNewUser(UserDTO userDTO) {
+        log.info("save new user {}", userDTO.toString());
         if (userRepository.findByUsername(userDTO.getUsername()).isPresent()) {
             throw new UserAlreadyExistException("user - " + userDTO.getUsername() + " already exist");
         }

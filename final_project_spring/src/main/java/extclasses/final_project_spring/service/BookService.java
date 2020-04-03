@@ -9,6 +9,7 @@ import extclasses.final_project_spring.entity.Tag;
 import extclasses.final_project_spring.exception.BookNotFoundException;
 import extclasses.final_project_spring.repository.BookRepository;
 import extclasses.final_project_spring.repository.ShelfRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+@Log4j2
 @Component
 public class BookService {
     private final BookRepository bookRepository;
@@ -69,6 +71,7 @@ public class BookService {
 
     @Transactional
     public void saveBookNewBookFromClient(BookDTO bookDTO) {
+        log.info("create book {}", bookDTO);
         Shelf shelf = shelfRepository.findByBookIsNull().orElse(new Shelf());
         Book book = Book.builder()
                 .name(bookDTO.getName())
@@ -96,6 +99,7 @@ public class BookService {
 
     @Transactional
     public void editBook(BookDTO bookDTO) throws BookNotFoundException {
+        log.info("save book {}", bookDTO);
         Book book = bookRepository
                 .findById(bookDTO.getId())
                 .orElseThrow(() -> new BookNotFoundException("book not exist"));
@@ -105,6 +109,7 @@ public class BookService {
     }
 
     public void deleteBook(long id) throws BookNotFoundException {
+        log.info("delete book with id {}", id);
         bookRepository.delete(bookRepository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException("book not exist")));
     }

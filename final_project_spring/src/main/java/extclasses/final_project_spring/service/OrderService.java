@@ -12,6 +12,7 @@ import extclasses.final_project_spring.repository.BookRepository;
 import extclasses.final_project_spring.repository.OrderRepository;
 import extclasses.final_project_spring.repository.ShelfRepository;
 import extclasses.final_project_spring.repository.UserRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Log4j2
 @Component
 public class OrderService {
     private static final int PERIOD_OF_USE = 1;
@@ -57,6 +59,7 @@ public class OrderService {
 
     @Transactional(rollbackFor = OrderNotFoundException.class)
     public void permitOrder(OrderDTO orderDTO) {
+        log.info("permit order {}", orderDTO);
         Order order = orderRepository
                 .findById(orderDTO.getId())
                 .orElseThrow(() -> new OrderNotFoundException("Active order not exist"));
@@ -85,6 +88,7 @@ public class OrderService {
     }
 
     public Set<OrderDTO> getActiveOrdersByUserName(String name) {
+        log.info("active orders by username {}", name);
         return orderRepository.findAllByActiveIsTrueAndUser_Username(name)
                 .stream()
                 .map(this::buildOrderDTO)
@@ -107,6 +111,7 @@ public class OrderService {
     }
 
     public Set<OrderDTO> getPassiveOrdersByUserName(String name) {
+        log.info("passive orders by username {}", name);
         return orderRepository.findAllByActiveIsFalseAndUser_Username(name)
                 .stream()
                 .map(this::buildOrderDTO)
@@ -115,6 +120,7 @@ public class OrderService {
 
     @Transactional(rollbackFor = {BookNotFoundException.class, OrderNotFoundException.class})
     public void returnBook(OrderDTO orderDTO) {
+        log.info("return book {}", orderDTO.getBookName());
         Book book = LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ? bookRepository
                 .findByName(orderDTO.getBookName())
                 .orElseThrow(() -> new BookNotFoundException("book not exist")) :

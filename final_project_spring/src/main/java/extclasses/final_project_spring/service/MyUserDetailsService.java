@@ -4,6 +4,7 @@ package extclasses.final_project_spring.service;
 import extclasses.final_project_spring.entity.MyUserDetails;
 import extclasses.final_project_spring.entity.User;
 import extclasses.final_project_spring.repository.UserRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Log4j2
 @Component
 @Service
 public class MyUserDetailsService implements UserDetailsService {
@@ -42,7 +44,7 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByUsername(username);
-        System.out.println(user.toString());
+        log.info("{}", user.toString());
 
         user.orElseThrow(() -> new UsernameNotFoundException("Not found: " + username));
 

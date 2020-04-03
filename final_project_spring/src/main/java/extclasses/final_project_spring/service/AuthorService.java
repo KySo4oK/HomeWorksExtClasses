@@ -3,6 +3,7 @@ package extclasses.final_project_spring.service;
 import extclasses.final_project_spring.entity.Author;
 import extclasses.final_project_spring.exception.AuthorNotFoundException;
 import extclasses.final_project_spring.repository.AuthorRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Log4j2
 @Component
 public class AuthorService {
     private final AuthorRepository authorRepository;
@@ -33,6 +35,7 @@ public class AuthorService {
     }
 
     public Set<Author> getAuthorsFromStringArray(String[] authors) {
+        log.info("get authors from array {}", Arrays.toString(authors));
         return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
                 Arrays.stream(authors)
                         .map(x -> authorRepository

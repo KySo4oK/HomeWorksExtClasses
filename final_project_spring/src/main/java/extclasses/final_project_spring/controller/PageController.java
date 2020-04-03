@@ -2,12 +2,13 @@ package extclasses.final_project_spring.controller;
 
 import extclasses.final_project_spring.dto.UserDTO;
 import extclasses.final_project_spring.service.UserService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-
+@Log4j2
 @Controller
 public class PageController {
     final
@@ -63,7 +64,7 @@ public class PageController {
     public @ResponseBody
     int getAuthorities(Authentication authentication) {
         if (authentication == null) return 3;
-        System.out.println(authentication.getAuthorities());
+        log.info("{}", authentication.getAuthorities());
         String authorities = authentication.getAuthorities().toString();
         return authorities.contains("ADMIN") ? 1 : 2;
     }
