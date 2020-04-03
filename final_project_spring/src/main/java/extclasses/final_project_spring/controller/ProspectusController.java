@@ -10,13 +10,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
 
-@Controller
+@RestController
 public class ProspectusController {
     private final BookService bookService;
     private final TagService tagService;
@@ -28,11 +27,6 @@ public class ProspectusController {
         this.tagService = tagService;
         this.authorService = authorService;
         this.orderService = orderService;
-    }
-
-    @GetMapping("/prospectus")
-    public String getProspectusPage() {
-        return "prospectus.html";
     }
 
     @GetMapping(value = "/books/{page}/{number}", produces = "application/json")

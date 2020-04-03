@@ -39,6 +39,26 @@ public class PageController {
         userService.setNewUser(userDTO);
     }
 
+    @GetMapping("/prospectus")
+    public String getProspectusPage() {
+        return "prospectus.html";
+    }
+
+    @GetMapping("/orders")
+    public String getOrdersPage() {
+        return "orders.html";
+    }
+
+    @GetMapping("/user")
+    public String getUserPage() {
+        return "user.html";
+    }
+
+    @GetMapping("/book")
+    public String getAddBookPage() {
+        return "bookManagePage.html";
+    }
+
     @GetMapping("/authorities")
     public @ResponseBody
     int getAuthorities(Authentication authentication) {

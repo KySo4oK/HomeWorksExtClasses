@@ -3,20 +3,14 @@ package extclasses.final_project_spring.controller;
 import extclasses.final_project_spring.dto.BookDTO;
 import extclasses.final_project_spring.service.BookService;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 public class BookController {
     private final BookService bookService;
 
     public BookController(BookService bookService) {
         this.bookService = bookService;
-    }
-
-    @GetMapping("/book")
-    public String getAddBookPage() {
-        return "bookManagePage.html";
     }
 
     @PostMapping("/add")

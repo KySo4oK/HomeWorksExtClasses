@@ -3,25 +3,16 @@ package extclasses.final_project_spring.controller;
 import extclasses.final_project_spring.dto.OrderDTO;
 import extclasses.final_project_spring.service.OrderService;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
-@Controller
+@RestController
 public class OrderController {
     private final OrderService orderService;
 
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
-    }
-
-    @GetMapping("/orders")
-    public String getOrdersPage() {
-        return "orders.html";
     }
 
     @PutMapping("/permit")
@@ -41,11 +32,6 @@ public class OrderController {
         return orderService.getPassiveOrders();
     }
 
-    @GetMapping("/user")
-    public String getUserPage() {
-        return "user.html";
-    }
-
     @GetMapping("/user/active")
     public @ResponseBody
     Set<OrderDTO> getActiveOrdersByUser(Authentication authentication) {
@@ -59,8 +45,7 @@ public class OrderController {
     }
 
     @PutMapping("/user/return")
-    public String returnBook(@RequestBody OrderDTO orderDTO) {
+    public void returnBook(@RequestBody OrderDTO orderDTO) {
         orderService.returnBook(orderDTO);
-        return "user.html";
     }
 }
