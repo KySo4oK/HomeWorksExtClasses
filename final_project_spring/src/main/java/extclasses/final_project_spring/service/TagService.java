@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,31 +23,27 @@ public class TagService {
     }
 
     public Set<String> getAllTags() {
-        return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
-                tagRepository.findAll()
-                        .stream()
-                        .map(Tag::getName)
-                        .collect(Collectors.toSet()) :
-                tagRepository.findAll()
-                        .stream()
-                        .map(Tag::getNameUa)
-                        .collect(Collectors.toSet());
+        return tagRepository.findAll()
+                .stream()
+                .map(this::getTagsByLocale)
+                .collect(Collectors.toSet());
+    }
 
+    private String getTagsByLocale(Tag tag) {
+        return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
+                tag.getName() : tag.getNameUa();
     }
 
     public Set<Tag> getTagsByStringArray(String[] tags) {
         log.info("get tags from array {}", Arrays.toString(tags));
-        return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
-                Arrays.stream(tags)
-                        .map(x -> tagRepository
-                                .findByName(x)
-                                .orElseThrow(() -> new TagNotFoundException("can not found tag")))
-                        .collect(Collectors.toSet()) :
-                Arrays.stream(tags)
-                        .map(x -> tagRepository
-                                .findByNameUa(x)
-                                .orElseThrow(() -> new TagNotFoundException("can not found tag")))
-                        .collect(Collectors.toSet());
+        return Arrays.stream(tags)
+                .map(x -> getByNameAndLocale(x)
+                        .orElseThrow(() -> new TagNotFoundException("can not found tag")))
+                .collect(Collectors.toSet());
+    }
 
+    private Optional<Tag> getByNameAndLocale(String tag) {
+        return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
+                tagRepository.findByName(tag) : tagRepository.findByNameUa(tag);
     }
 }

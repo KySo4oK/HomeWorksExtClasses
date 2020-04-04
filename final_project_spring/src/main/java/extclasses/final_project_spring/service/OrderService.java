@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -97,17 +98,24 @@ public class OrderService {
 
     private OrderDTO buildOrderDTO(Order order) {
         return OrderDTO.builder()
-                .bookName(LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
-                        order.getBook().getName() : order.getBook().getNameUa())
+                .bookName(getBookNameByLocale(order))
                 .id(order.getOrderId())
                 .userName(order.getUser().getUsername())
                 .endDate(order.getEndDate()
-                        .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
-                                .withLocale(LocaleContextHolder.getLocale())))
+                        .format(getFormatterByLocale()))
                 .startDate(order.getStartDate()
-                        .format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
-                                .withLocale(LocaleContextHolder.getLocale())))
+                        .format(getFormatterByLocale()))
                 .build();
+    }
+
+    private String getBookNameByLocale(Order order) {
+        return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
+                order.getBook().getName() : order.getBook().getNameUa();
+    }
+
+    private DateTimeFormatter getFormatterByLocale() {
+        return DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
+                .withLocale(LocaleContextHolder.getLocale());
     }
 
     public Set<OrderDTO> getPassiveOrdersByUserName(String name) {
@@ -121,12 +129,8 @@ public class OrderService {
     @Transactional(rollbackFor = {BookNotFoundException.class, OrderNotFoundException.class})
     public void returnBook(OrderDTO orderDTO) {
         log.info("return book {}", orderDTO.getBookName());
-        Book book = LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ? bookRepository
-                .findByName(orderDTO.getBookName())
-                .orElseThrow(() -> new BookNotFoundException("book not exist")) :
-                bookRepository
-                        .findByNameUa(orderDTO.getBookName())
-                        .orElseThrow(() -> new BookNotFoundException("book not exist"));
+        Book book = getByNameAndLocale(orderDTO.getBookName())
+                .orElseThrow(() -> new BookNotFoundException("book not exist"));
         Order order = orderRepository
                 .findById(orderDTO.getId())
                 .orElseThrow(() -> new OrderNotFoundException("order not exist"));
@@ -136,5 +140,11 @@ public class OrderService {
         book.setShelf(shelfRepository.findByBookIsNull().orElse(new Shelf()));
         bookRepository.save(book);
         orderRepository.delete(order);
+    }
+
+    private Optional<Book> getByNameAndLocale(String name) {
+        return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
+                bookRepository.findByName(name) : bookRepository
+                .findByNameUa(name);
     }
 }

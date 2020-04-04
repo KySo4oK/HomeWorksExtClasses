@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,30 +23,27 @@ public class AuthorService {
     }
 
     public Set<String> getAllAuthors() {
-        return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
+        return
                 authorRepository.findAll()
                         .stream()
-                        .map(Author::getName)
-                        .collect(Collectors.toSet()) :
-                authorRepository.findAll()
-                        .stream()
-                        .map(Author::getNameUa)
+                        .map(this::getNameByLocale)
                         .collect(Collectors.toSet());
+    }
 
+    private String getNameByLocale(Author author) {
+        return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ? author.getName() : author.getNameUa();
     }
 
     public Set<Author> getAuthorsFromStringArray(String[] authors) {
         log.info("get authors from array {}", Arrays.toString(authors));
+        return Arrays.stream(authors)
+                .map(x -> getByNameWithLocale(x)
+                        .orElseThrow(() -> new AuthorNotFoundException("can not found author")))
+                .collect(Collectors.toSet());
+    }
+
+    private Optional<Author> getByNameWithLocale(String author) {
         return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
-                Arrays.stream(authors)
-                        .map(x -> authorRepository
-                                .findByName(x)
-                                .orElseThrow(() -> new AuthorNotFoundException("can not found author")))
-                        .collect(Collectors.toSet()) :
-                Arrays.stream(authors)
-                        .map(x -> authorRepository
-                                .findByNameUa(x)
-                                .orElseThrow(() -> new AuthorNotFoundException("can not found author")))
-                        .collect(Collectors.toSet());
+                authorRepository.findByName(author) : authorRepository.findByNameUa(author);
     }
 }
