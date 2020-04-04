@@ -49,7 +49,7 @@ public class ProspectusController {
 
     @GetMapping(value = "/authors", produces = "application/json")
     public @ResponseBody
-    List<String>//todo change set to list
+    List<String>
     getAllAuthors() {
         return authorService.getAllAuthors();
     }
