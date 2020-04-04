@@ -49,12 +49,12 @@ public class ProspectusController {
 
     @GetMapping(value = "/authors", produces = "application/json")
     public @ResponseBody
-    Set<String>
+    Set<String>//todo change set to list
     getAllAuthors() {
         return authorService.getAllAuthors();
     }
 
-    @PostMapping("/filter/{page}/{number}")
+    @PostMapping("/filter/{page}/{number}")//todo check data for all cont
     public @ResponseBody
     List<BookDTO> getBooksByFilter(@PathVariable("page") String page,
                                    @PathVariable("number") String number,

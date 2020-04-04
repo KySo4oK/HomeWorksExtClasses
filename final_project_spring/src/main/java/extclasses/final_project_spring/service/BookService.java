@@ -64,7 +64,7 @@ public class BookService {
     private String[] getArrayOfAuthors(Book book) {
         return book.getAuthors()
                 .stream()
-                .map(LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
+                .map(LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?//todo method
                         Author::getName : Author::getNameUa)
                 .toArray(String[]::new);
     }
@@ -73,7 +73,7 @@ public class BookService {
     public void saveBookNewBookFromClient(BookDTO bookDTO) {
         log.info("create book {}", bookDTO);
         Shelf shelf = shelfRepository.findByBookIsNull().orElse(new Shelf());
-        Book book = Book.builder()
+        Book book = Book.builder()//todo
                 .name(bookDTO.getName())
                 .nameUa(bookDTO.getNameUa())
                 .shelf(shelf)
@@ -81,7 +81,7 @@ public class BookService {
                 .tags(tagService.getTagsByStringArray(bookDTO.getTags()))
                 .available(true)
                 .build();
-        bookRepository.save(book);
+        bookRepository.save(book);//todo change logic
         shelf.setBook(book);
         shelfRepository.save(shelf);
     }
@@ -110,7 +110,7 @@ public class BookService {
 
     public void deleteBook(long id) throws BookNotFoundException {
         log.info("delete book with id {}", id);
-        bookRepository.delete(bookRepository.findById(id)
+        bookRepository.delete(bookRepository.findById(id)//todo deletebyid
                 .orElseThrow(() -> new BookNotFoundException("book not exist")));
     }
 }

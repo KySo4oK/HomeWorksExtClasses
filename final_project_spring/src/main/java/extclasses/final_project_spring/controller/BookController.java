@@ -20,7 +20,7 @@ public class BookController {
     @ResponseStatus(HttpStatus.CREATED)
     public void addBook(@RequestBody BookDTO bookDTO) {
         log.info("add book {}", bookDTO.getName());
-        bookService.saveBookNewBookFromClient(bookDTO);
+        bookService.saveBookNewBookFromClient(bookDTO);//todo
     }
 
     @PutMapping("/edit")
