@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Log4j2
@@ -49,24 +50,36 @@ public class BookService {
                 .id(book.getBookId())
                 .authors(getArrayOfAuthors(book))
                 .tags(getArrayOfTags(book))
-                .name(LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ? book.getName() : book.getNameUa())
+                .name(getBookNameByLocale(book))
                 .build();
+    }
+
+    private String getBookNameByLocale(Book book) {
+        return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ? book.getName() : book.getNameUa();
     }
 
     private String[] getArrayOfTags(Book book) {
         return book.getTags()
                 .stream()
-                .map(LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
-                        Tag::getName : Tag::getNameUa)
+                .map(this::getTagsByLocale)
                 .toArray(String[]::new);
+    }
+
+    private String getTagsByLocale(Tag tag) {
+        return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
+                tag.getName() : tag.getNameUa();
     }
 
     private String[] getArrayOfAuthors(Book book) {
         return book.getAuthors()
                 .stream()
-                .map(LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?//todo method
-                        Author::getName : Author::getNameUa)
+                .map(this::getAuthorsByLocale)
                 .toArray(String[]::new);
+    }
+
+    private String getAuthorsByLocale(Author author) {
+        return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
+                author.getName() : author.getNameUa();
     }
 
     @Transactional
