@@ -82,7 +82,7 @@ public class BookService {
     }
 
     @Transactional
-    public void saveBookNewBookFromClient(BookDTO bookDTO) {
+    public void saveNewBookFromClient(BookDTO bookDTO) {
         log.info("create book {}", bookDTO);
         Shelf shelf = shelfRepository.findByBookIsNull().orElse(new Shelf());
         Book book = Book.builder()//todo
