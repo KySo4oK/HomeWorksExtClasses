@@ -99,14 +99,23 @@ public class BookService {
     }
 
     public List<BookDTO> getAvailableBooksByFilter(FilterDTO filterDTO, Pageable pageable) {
-        return bookRepository.getBooksByFilter(
-                filterDTO.getName(),
-                filterDTO.getAuthors(),
-                filterDTO.getTags(), pageable)
+        return getBooksByFilter(filterDTO, pageable)
                 .stream()
                 .map(this::buildBookDTO)
                 .collect(Collectors.toList());
 
+    }
+
+    private List<Book> getBooksByFilter(FilterDTO filterDTO, Pageable pageable) {
+        return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
+                bookRepository.getBooksByFilter(
+                        filterDTO.getName(),
+                        filterDTO.getAuthors(),
+                        filterDTO.getTags(), pageable) :
+                bookRepository.getBooksByFilterUa(
+                        filterDTO.getName(),
+                        filterDTO.getAuthors(),
+                        filterDTO.getTags(), pageable);
     }
 
     @Transactional
