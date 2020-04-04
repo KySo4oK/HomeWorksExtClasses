@@ -8,9 +8,9 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Log4j2
@@ -22,24 +22,24 @@ public class AuthorService {
         this.authorRepository = authorRepository;
     }
 
-    public Set<String> getAllAuthors() {
+    public List<String> getAllAuthors() {
         return
                 authorRepository.findAll()
                         .stream()
                         .map(this::getNameByLocale)
-                        .collect(Collectors.toSet());
+                        .collect(Collectors.toList());
     }
 
     private String getNameByLocale(Author author) {
         return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ? author.getName() : author.getNameUa();
     }
 
-    public Set<Author> getAuthorsFromStringArray(String[] authors) {
+    public List<Author> getAuthorsFromStringArray(String[] authors) {
         log.info("get authors from array {}", Arrays.toString(authors));
         return Arrays.stream(authors)
                 .map(x -> getByNameWithLocale(x)
                         .orElseThrow(() -> new AuthorNotFoundException("can not found author")))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     private Optional<Author> getByNameWithLocale(String author) {

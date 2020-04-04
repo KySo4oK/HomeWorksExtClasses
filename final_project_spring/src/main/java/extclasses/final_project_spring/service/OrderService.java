@@ -21,9 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Log4j2
@@ -73,27 +73,27 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    public Set<OrderDTO> getActiveOrders() {
+    public List<OrderDTO> getActiveOrders() {
         return orderRepository
                 .findAllByActiveIsTrue()
                 .stream()
                 .map(this::buildOrderDTO)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
-    public Set<OrderDTO> getPassiveOrders() {
+    public List<OrderDTO> getPassiveOrders() {
         return orderRepository.findAllByActiveIsFalse()
                 .stream()
                 .map(this::buildOrderDTO)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
-    public Set<OrderDTO> getActiveOrdersByUserName(String name) {
+    public List<OrderDTO> getActiveOrdersByUserName(String name) {
         log.info("active orders by username {}", name);
         return orderRepository.findAllByActiveIsTrueAndUser_Username(name)
                 .stream()
                 .map(this::buildOrderDTO)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     private OrderDTO buildOrderDTO(Order order) {
@@ -118,12 +118,12 @@ public class OrderService {
                 .withLocale(LocaleContextHolder.getLocale());
     }
 
-    public Set<OrderDTO> getPassiveOrdersByUserName(String name) {
+    public List<OrderDTO> getPassiveOrdersByUserName(String name) {
         log.info("passive orders by username {}", name);
         return orderRepository.findAllByActiveIsFalseAndUser_Username(name)
                 .stream()
                 .map(this::buildOrderDTO)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     @Transactional(rollbackFor = {BookNotFoundException.class, OrderNotFoundException.class})

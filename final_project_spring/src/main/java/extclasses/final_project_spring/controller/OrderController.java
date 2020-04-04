@@ -6,7 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.util.List;
 
 @Log4j2
 @RestController
@@ -25,25 +25,25 @@ public class OrderController {
 
     @GetMapping("/active")
     public @ResponseBody
-    Set<OrderDTO> getActiveOrders() {
+    List<OrderDTO> getActiveOrders() {
         return orderService.getActiveOrders();
     }
 
     @GetMapping("/passive")
     public @ResponseBody
-    Set<OrderDTO> getPassiveOrders() {
+    List<OrderDTO> getPassiveOrders() {
         return orderService.getPassiveOrders();
     }
 
     @GetMapping("/user/active")
     public @ResponseBody
-    Set<OrderDTO> getActiveOrdersByUser(Authentication authentication) {
+    List<OrderDTO> getActiveOrdersByUser(Authentication authentication) {
         return orderService.getActiveOrdersByUserName(authentication.getName());
     }
 
     @GetMapping("/user/passive")
     public @ResponseBody
-    Set<OrderDTO> getPassiveOrdersByUser(Authentication authentication) {
+    List<OrderDTO> getPassiveOrdersByUser(Authentication authentication) {
         return orderService.getPassiveOrdersByUserName(authentication.getName());
     }
 

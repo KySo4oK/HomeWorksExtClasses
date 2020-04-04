@@ -42,14 +42,14 @@ public class ProspectusController {
 
     @GetMapping(value = "/tags", produces = "application/json")
     public @ResponseBody
-    Set<String>
+    List<String>
     getAllTags() {
         return tagService.getAllTags();
     }
 
     @GetMapping(value = "/authors", produces = "application/json")
     public @ResponseBody
-    Set<String>//todo change set to list
+    List<String>//todo change set to list
     getAllAuthors() {
         return authorService.getAllAuthors();
     }
