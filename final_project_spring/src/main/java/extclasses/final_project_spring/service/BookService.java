@@ -110,7 +110,6 @@ public class BookService {
 
     public void deleteBook(long id) throws BookNotFoundException {
         log.info("delete book with id {}", id);
-        bookRepository.delete(bookRepository.findById(id)//todo deletebyid
-                .orElseThrow(() -> new BookNotFoundException("book not exist")));
+        bookRepository.deleteById(id);
     }
 }
