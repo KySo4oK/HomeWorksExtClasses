@@ -85,7 +85,14 @@ public class BookService {
     public void saveNewBookFromClient(BookDTO bookDTO) {
         log.info("create book {}", bookDTO);
         Shelf shelf = shelfRepository.findByBookIsNull().orElse(new Shelf());
-        Book book = Book.builder()//todo
+        Book book = BuildBookFromClient(bookDTO, shelf);
+        bookRepository.save(book);//todo change logic
+        shelf.setBook(book);
+        shelfRepository.save(shelf);
+    }
+
+    private Book BuildBookFromClient(BookDTO bookDTO, Shelf shelf) {
+        return Book.builder()
                 .name(bookDTO.getName())
                 .nameUa(bookDTO.getNameUa())
                 .shelf(shelf)
@@ -93,9 +100,6 @@ public class BookService {
                 .tags(tagService.getTagsByStringArray(bookDTO.getTags()))
                 .available(true)
                 .build();
-        bookRepository.save(book);//todo change logic
-        shelf.setBook(book);
-        shelfRepository.save(shelf);
     }
 
     public List<BookDTO> getAvailableBooksByFilter(FilterDTO filterDTO, Pageable pageable) {
@@ -119,14 +123,18 @@ public class BookService {
     }
 
     @Transactional
-    public void editBook(BookDTO bookDTO) throws BookNotFoundException {
+    public void editBookAndSave(BookDTO bookDTO) throws BookNotFoundException {
         log.info("save book {}", bookDTO);
+        bookRepository.save(getEditedBook(bookDTO));
+    }
+
+    private Book getEditedBook(BookDTO bookDTO) {
         Book book = bookRepository
                 .findById(bookDTO.getId())
                 .orElseThrow(() -> new BookNotFoundException("book not exist"));
         book.setAuthors(authorService.getAuthorsFromStringArray(bookDTO.getAuthors()));
         book.setTags(tagService.getTagsByStringArray(bookDTO.getTags()));
-        bookRepository.save(book);
+        return book;
     }
 
     public void deleteBook(long id) throws BookNotFoundException {

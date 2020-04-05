@@ -26,7 +26,7 @@ public class BookController {
     @PutMapping("/edit")
     public void editBook(@RequestBody BookDTO bookDTO) {
         log.info("edit book {}", bookDTO.getName());
-        bookService.editBook(bookDTO);
+        bookService.editBookAndSave(bookDTO);
     }
 
     @DeleteMapping("/delete/{id}")
