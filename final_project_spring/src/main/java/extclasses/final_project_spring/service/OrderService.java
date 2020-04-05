@@ -46,8 +46,12 @@ public class OrderService {
     }
 
     @Transactional
-    public void createOrder(BookDTO bookDTO, String username) {
-        orderRepository.save(Order.builder()
+    public void createAndSaveNewOrder(BookDTO bookDTO, String username) {
+        orderRepository.save(buildNewOrder(bookDTO, username));
+    }
+
+    private Order buildNewOrder(BookDTO bookDTO, String username) {
+        return Order.builder()
                 .user(userRepository.findByUsername(username)
                         .orElseThrow(() -> new UsernameNotFoundException("User not exist")))
                 .book(bookRepository.findById(bookDTO.getId())
@@ -55,12 +59,16 @@ public class OrderService {
                 .active(false)
                 .endDate(LocalDate.now())
                 .startDate(LocalDate.now())
-                .build());
+                .build();
     }
 
     @Transactional(rollbackFor = OrderNotFoundException.class)
     public void permitOrder(OrderDTO orderDTO) {
         log.info("permit order {}", orderDTO);
+        orderRepository.save(activateAndChangeOrder(orderDTO));
+    }
+
+    private Order activateAndChangeOrder(OrderDTO orderDTO) {
         Order order = orderRepository
                 .findById(orderDTO.getId())
                 .orElseThrow(() -> new OrderNotFoundException("Active order not exist"));
@@ -70,7 +78,7 @@ public class OrderService {
         order.setEndDate(LocalDate.now().plusMonths(PERIOD_OF_USE));
         order.getBook().setUser(order.getUser());
         order.getBook().setAvailable(false);
-        orderRepository.save(order);
+        return order;
     }
 
     public List<OrderDTO> getActiveOrders() {
@@ -129,17 +137,24 @@ public class OrderService {
     @Transactional(rollbackFor = {BookNotFoundException.class, OrderNotFoundException.class})
     public void returnBook(OrderDTO orderDTO) {
         log.info("return book {}", orderDTO.getBookName());
-        Book book = getByNameAndLocale(orderDTO.getBookName())
-                .orElseThrow(() -> new BookNotFoundException("book not exist"));
+        Order order = getOrderAndPrepareBookForReturning(orderDTO);
+        bookRepository.save(order.getBook());
+        orderRepository.delete(order);
+    }
+
+    private Order getOrderAndPrepareBookForReturning(OrderDTO orderDTO) {
         Order order = orderRepository
                 .findById(orderDTO.getId())
                 .orElseThrow(() -> new OrderNotFoundException("order not exist"));
+        prepareBookForReturning(order, order.getBook());
+        return order;
+    }
+
+    private void prepareBookForReturning(Order order, Book book) {
         book.setUser(null);
         book.setAvailable(true);
         book.removeOrder(order);
         book.setShelf(shelfRepository.findByBookIsNull().orElse(new Shelf()));
-        bookRepository.save(book);
-        orderRepository.delete(order);
     }
 
     private Optional<Book> getByNameAndLocale(String name) {

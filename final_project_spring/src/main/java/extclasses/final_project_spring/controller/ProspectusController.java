@@ -14,7 +14,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Log4j2
 @RestController
@@ -70,6 +69,6 @@ public class ProspectusController {
     @ResponseStatus(HttpStatus.CREATED)
     public void orderBook(@RequestBody BookDTO bookDTO, Authentication authentication) {
         log.info("order book {}", bookDTO.getName());
-        orderService.createOrder(bookDTO, authentication.getName());
+        orderService.createAndSaveNewOrder(bookDTO, authentication.getName());
     }
 }
