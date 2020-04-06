@@ -122,10 +122,14 @@ public class BookService {
                         filterDTO.getTags(), pageable);
     }
 
-    @Transactional
     public void editBookAndSave(BookDTO bookDTO) throws BookNotFoundException {
         log.info("save book {}", bookDTO);
-        bookRepository.save(getEditedBook(bookDTO));
+        saveEditedBook(getEditedBook(bookDTO));
+    }
+
+    @Transactional
+    void saveEditedBook(Book book) {
+        bookRepository.save(book);
     }
 
     private Book getEditedBook(BookDTO bookDTO) {

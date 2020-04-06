@@ -45,9 +45,8 @@ public class OrderService {
         this.userRepository = userRepository;
     }
 
-    @Transactional
     public void createAndSaveNewOrder(BookDTO bookDTO, String username) {
-        orderRepository.save(buildNewOrder(bookDTO, username));
+        saveChangedOrder(buildNewOrder(bookDTO, username));
     }
 
     private Order buildNewOrder(BookDTO bookDTO, String username) {
@@ -62,10 +61,14 @@ public class OrderService {
                 .build();
     }
 
-    @Transactional(rollbackFor = OrderNotFoundException.class)
     public void permitOrder(OrderDTO orderDTO) {
         log.info("permit order {}", orderDTO);
-        orderRepository.save(activateAndChangeOrder(orderDTO));
+        saveChangedOrder(activateAndChangeOrder(orderDTO));
+    }
+
+    @Transactional
+    void saveChangedOrder(Order order) {
+        orderRepository.save(order);
     }
 
     private Order activateAndChangeOrder(OrderDTO orderDTO) {
@@ -134,10 +137,13 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional(rollbackFor = {BookNotFoundException.class, OrderNotFoundException.class})
     public void returnBook(OrderDTO orderDTO) {
         log.info("return book {}", orderDTO.getBookName());
-        Order order = getOrderAndPrepareBookForReturning(orderDTO);
+        saveBookAndDeleteOrder(getOrderAndPrepareBookForReturning(orderDTO));
+    }
+
+    @Transactional
+    void saveBookAndDeleteOrder(Order order) {
         bookRepository.save(order.getBook());
         orderRepository.delete(order);
     }
