@@ -74,7 +74,6 @@ public class OrderService {
         order.setActive(true);
         order.setStartDate(LocalDate.now());
         order.setEndDate(LocalDate.now().plusMonths(PERIOD_OF_USE));
-        order.getBook().setUser(order.getUser());
         order.getBook().setAvailable(false);
         return order;
     }
@@ -147,14 +146,12 @@ public class OrderService {
         Order order = orderRepository
                 .findById(orderDTO.getId())
                 .orElseThrow(() -> new OrderNotFoundException("order not exist"));
-        prepareBookForReturning(order, order.getBook());
+        prepareBookForReturning(order.getBook());
         return order;
     }
 
-    private void prepareBookForReturning(Order order, Book book) {
-        book.setUser(null);
+    private void prepareBookForReturning(Book book) {
         book.setAvailable(true);
-        book.removeOrder(order);
         book.setShelf(shelfRepository.findByBookIsNull().orElse(new Shelf()));
     }
 }

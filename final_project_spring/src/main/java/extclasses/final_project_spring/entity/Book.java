@@ -38,37 +38,4 @@ public class Book {
     @ToString.Exclude
     @JsonManagedReference
     private Shelf shelf;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "user_id", nullable = true)
-    @ToString.Exclude
-    @JsonManagedReference
-    private User user;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.ALL)
-    private Set<Order> orders = new HashSet<>();
-
-    public void addAuthor(Author author) {
-        this.authors.add(author);
-    }
-
-    public void removeAuthor(Author author) {
-        this.authors.remove(author);
-    }
-
-    public void addTag(Tag tag) {
-        this.tags.add(tag);
-    }
-
-    public void removeTag(Tag tag) {
-        this.tags.remove(tag);
-    }
-
-    public void addOrder(Order order) {
-        this.orders.add(order);
-        order.setBook(this);
-    }
-
-    public void removeOrder(Order order) {
-        this.orders.remove(order);
-        order.setBook(null);
-    }
 }
