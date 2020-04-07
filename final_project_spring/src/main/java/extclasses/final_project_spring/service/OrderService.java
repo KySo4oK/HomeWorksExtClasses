@@ -46,7 +46,7 @@ public class OrderService {
     }
 
     public void createAndSaveNewOrder(BookDTO bookDTO, String username) {
-        saveChangedOrder(buildNewOrder(bookDTO, username));
+        orderRepository.save(buildNewOrder(bookDTO, username));
     }
 
     private Order buildNewOrder(BookDTO bookDTO, String username) {
@@ -63,12 +63,7 @@ public class OrderService {
 
     public void permitOrder(OrderDTO orderDTO) {
         log.info("permit order {}", orderDTO);
-        saveChangedOrder(activateAndChangeOrder(orderDTO));
-    }
-
-    @Transactional
-    void saveChangedOrder(Order order) {
-        orderRepository.save(order);
+        orderRepository.save(activateAndChangeOrder(orderDTO));
     }
 
     private Order activateAndChangeOrder(OrderDTO orderDTO) {
@@ -161,11 +156,5 @@ public class OrderService {
         book.setAvailable(true);
         book.removeOrder(order);
         book.setShelf(shelfRepository.findByBookIsNull().orElse(new Shelf()));
-    }
-
-    private Optional<Book> getByNameAndLocale(String name) {
-        return LocaleContextHolder.getLocale().equals(Locale.ENGLISH) ?
-                bookRepository.findByName(name) : bookRepository
-                .findByNameUa(name);
     }
 }

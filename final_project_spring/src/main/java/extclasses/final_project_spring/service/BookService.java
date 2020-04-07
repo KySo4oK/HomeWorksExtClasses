@@ -86,7 +86,7 @@ public class BookService {
         log.info("create book {}", bookDTO);
         Shelf shelf = shelfRepository.findByBookIsNull().orElse(new Shelf());
         Book book = BuildBookFromClient(bookDTO, shelf);
-        bookRepository.save(book);//todo change logic
+        bookRepository.save(book);
         shelf.setBook(book);
         shelfRepository.save(shelf);
     }
@@ -124,12 +124,7 @@ public class BookService {
 
     public void editBookAndSave(BookDTO bookDTO) throws BookNotFoundException {
         log.info("save book {}", bookDTO);
-        saveEditedBook(getEditedBook(bookDTO));
-    }
-
-    @Transactional
-    void saveEditedBook(Book book) {
-        bookRepository.save(book);
+        bookRepository.save(getEditedBook(bookDTO));
     }
 
     private Book getEditedBook(BookDTO bookDTO) {
