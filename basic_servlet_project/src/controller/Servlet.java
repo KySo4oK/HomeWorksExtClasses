@@ -1,3 +1,5 @@
+package controller;
+
 import java.io.IOException;
 
 public class Servlet extends javax.servlet.http.HttpServlet {
