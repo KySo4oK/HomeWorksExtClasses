@@ -12,9 +12,9 @@ public class ConnectionPoolHolder {
             synchronized (ConnectionPoolHolder.class) {
                 if (dataSource == null) {
                     BasicDataSource ds = new BasicDataSource();
-                    ds.setUrl("jdbc:mysql://localhost:3306/mystudentdb");
-                    ds.setUsername("root");
-                    ds.setPassword("root");
+                    ds.setUrl("jdbc:postgresql://localhost:5432/basic_user");
+                    ds.setUsername("postgres");
+                    ds.setPassword("123454321");
                     ds.setMinIdle(5);
                     ds.setMaxIdle(10);
                     ds.setMaxOpenPreparedStatements(100);
@@ -23,8 +23,5 @@ public class ConnectionPoolHolder {
             }
         }
         return dataSource;
-
     }
-
-
 }
