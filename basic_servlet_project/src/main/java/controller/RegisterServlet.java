@@ -14,6 +14,8 @@ public class RegisterServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println(request.getParameter("username") +
+                request.getParameter("password"));
         userService.saveUser(new User(
                 request.getParameter("username"),
                 request.getParameter("password")));
@@ -22,6 +24,7 @@ public class RegisterServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("ss");
         request.getRequestDispatcher("reg.jsp").forward(request, response);
     }
 }

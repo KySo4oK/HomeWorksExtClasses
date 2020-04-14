@@ -11,7 +11,7 @@
     <title>$Title$</title>
   </head>
   <body>
-  <form action="register" method="post">
+  <form action="${pageContext.request.contextPath}/register" method="post">
       <table style="with: 50%">
           <tr>
               <td>UserName</td>
