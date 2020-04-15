@@ -1,4 +1,6 @@
 import model.dao.impl.ConnectionPoolHolder;
+import model.entity.User;
+import model.service.UserService;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -9,15 +11,16 @@ public class App {
     private static final org.apache.logging.log4j.Logger log
             = org.apache.logging.log4j.LogManager.getLogger(App.class);
     public static void main(String[] args) throws SQLException {
-        Connection con =
-                ConnectionPoolHolder.getDataSource().
-                        getConnection();
-
-        Statement query = con.createStatement();
-        ResultSet rs = query.executeQuery("SELECT * FROM users");
-        while (rs.next()) {
-            System.out.println(rs.getString("username"));
-        }
+        new UserService().saveUser(new User("userrfffggr","paas"));
+//        Connection con =
+//                ConnectionPoolHolder.getDataSource().
+//                        getConnection();
+//
+//        Statement query = con.createStatement();
+//        ResultSet rs = query.executeQuery("SELECT * FROM users");
+//        while (rs.next()) {
+//            System.out.println(rs.getString("username"));
+//        }
 
 
 //
