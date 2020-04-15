@@ -11,7 +11,7 @@
     <title>$Title$</title>
   </head>
   <body>
-  <form action="RegisterServlet" method="post">
+  <form action="register" method="post">
       <table style="with: 50%">
           <tr>
               <td>UserName</td>

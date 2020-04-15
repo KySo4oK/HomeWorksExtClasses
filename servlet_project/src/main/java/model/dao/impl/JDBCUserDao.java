@@ -21,7 +21,7 @@ public class JDBCUserDao implements UserDao {
 
     public void create(User entity) {
         try {
-            PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = connection.prepareStatement(SQL_INSERT);
             statement.setString(1, entity.getUsername());
             statement.setString(2, entity.getPassword());
             statement.execute();
