@@ -20,4 +20,14 @@ public class UserService {
             dao.create(user);
         }
     }
+
+    public boolean isValidUser(String username, String password) {
+        try (UserDao dao = daoFactory.createUserDao()) {
+            User user = dao.findByUsername(username);
+            if(user != null){
+                return user.getPassword().equals(password);
+            }
+        }
+        return false;
+    }
 }

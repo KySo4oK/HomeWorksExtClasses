@@ -98,4 +98,23 @@ public class JDBCUserDao implements UserDao {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public User findByUsername(String username) {
+        User user = null;
+        try {
+            PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_USERNAME);
+            statement.setString(1, username);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                user = new User();
+                user.setId(rs.getInt("user_id"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 }
