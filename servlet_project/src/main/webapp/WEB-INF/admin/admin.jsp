@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>User page</title>
-    <a href="/logout">logout</a>
+    <a href="${pageContext.request.contextPath}/logout">logout</a>
 </head>
 <body>
 <h1>Hello admin</h1>
