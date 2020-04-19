@@ -28,7 +28,7 @@ public class LoginCommand implements Command{
             return "/WEB-INF/admin/admin.jsp";
         } else if(name.equals("User")) {
             CommandUtility.setUserRole(request, User.ROLE.USER, name);
-            return "/WEB-INF/user/user.jsp";
+            return "/WEB-INF/user/admin.jsp";
         } else {
             CommandUtility.setUserRole(request, User.ROLE.UNKNOWN, name);
             return "/login.jsp";
