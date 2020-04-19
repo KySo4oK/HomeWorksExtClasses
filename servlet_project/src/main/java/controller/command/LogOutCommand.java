@@ -1,9 +1,9 @@
 package controller.command;
 
-import org.itstep.model.entity.User;
+
+import model.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 public class LogOutCommand implements Command {
     @Override

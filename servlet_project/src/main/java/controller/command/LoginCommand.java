@@ -1,6 +1,6 @@
 package controller.command;
 
-import org.itstep.model.entity.User;
+import model.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
 

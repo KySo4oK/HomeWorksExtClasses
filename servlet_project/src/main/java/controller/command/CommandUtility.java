@@ -1,6 +1,6 @@
 package controller.command;
 
-import org.itstep.model.entity.User;
+import model.entity.User;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -9,18 +9,18 @@ import java.util.HashSet;
 
 class CommandUtility {
     static void setUserRole(HttpServletRequest request,
-                     User.ROLE role, String name) {
+                            User.ROLE role, String name) {
         HttpSession session = request.getSession();
-        ServletContext context = request.getServletContext();
+        ServletContext context = request.getSession().getServletContext();
         context.setAttribute("userName", name);
         session.setAttribute("role", role);
     }
 
-    static boolean checkUserIsLogged(HttpServletRequest request, String userName){
+    static boolean checkUserIsLogged(HttpServletRequest request, String userName) {
         HashSet<String> loggedUsers = (HashSet<String>) request.getSession().getServletContext()
                 .getAttribute("loggedUsers");
 
-        if(loggedUsers.stream().anyMatch(userName::equals)){
+        if (loggedUsers.stream().anyMatch(userName::equals)) {
             return true;
         }
         loggedUsers.add(userName);
