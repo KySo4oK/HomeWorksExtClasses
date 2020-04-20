@@ -1,5 +1,6 @@
 package controller.filters;
 
+import controller.Servlet;
 import model.entity.User;
 
 import javax.servlet.*;
@@ -9,6 +10,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class ServletSecurityFilter implements Filter {
+    private static final org.apache.logging.log4j.Logger log
+            = org.apache.logging.log4j.LogManager.getLogger(ServletSecurityFilter.class);
+
     public void destroy() {
     }
 
@@ -17,6 +21,7 @@ public class ServletSecurityFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession();
+        log.info(session.getAttribute("role"));
         if (session.getAttribute("role") == null) {
             setGuestRole(session);
         }

@@ -13,6 +13,8 @@ import java.util.Map;
 
 public class Servlet extends javax.servlet.http.HttpServlet { //todo change collections for safe
     private Map<String, Command> commands = new HashMap<>();
+    private static final org.apache.logging.log4j.Logger log
+            = org.apache.logging.log4j.LogManager.getLogger(Servlet.class);
 
     public void init(ServletConfig servletConfig) {
 
@@ -40,6 +42,7 @@ public class Servlet extends javax.servlet.http.HttpServlet { //todo change coll
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
+        log.info("path " + path);
         path = path.replaceAll(".*/coffee/", "");
         Command command = commands.getOrDefault(path,
                 (r) -> "/index.jsp");

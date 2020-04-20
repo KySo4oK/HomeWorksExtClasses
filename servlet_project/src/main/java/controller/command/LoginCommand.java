@@ -1,5 +1,6 @@
 package controller.command;
 
+import controller.Servlet;
 import model.entity.User;
 import model.service.UserService;
 
@@ -7,11 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 
 public class LoginCommand implements Command {
     private UserService userService = new UserService();
+    private static final org.apache.logging.log4j.Logger log
+            = org.apache.logging.log4j.LogManager.getLogger(LoginCommand.class);
 
     @Override
     public String execute(HttpServletRequest request) {
         String name = request.getParameter("name");
         String pass = request.getParameter("password");
+        log.info(name + pass);
 
         if (name == null || name.equals("") || pass == null || pass.equals("")) {
             //System.out.println("Not");
