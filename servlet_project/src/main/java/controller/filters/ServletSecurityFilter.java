@@ -1,6 +1,5 @@
 package controller.filters;
 
-import controller.Servlet;
 import model.entity.User;
 
 import javax.servlet.*;

@@ -6,7 +6,7 @@ import model.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 
 public class RegistrationCommand implements Command {
-    private UserService userService = new UserService();// fix to using one service
+    private UserService userService = new UserService();//todo fix to using one service
     @Override
     public String execute(HttpServletRequest request) {
         userService.saveUser(new User(

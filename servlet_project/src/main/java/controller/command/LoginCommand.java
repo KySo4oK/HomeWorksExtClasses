@@ -1,6 +1,5 @@
 package controller.command;
 
-import controller.Servlet;
 import model.entity.User;
 import model.service.UserService;
 
@@ -45,6 +44,5 @@ public class LoginCommand implements Command {
             CommandUtility.setUserRole(request, User.ROLE.UNKNOWN, name);
             return "/login.jsp";
         }
-
     }
 }

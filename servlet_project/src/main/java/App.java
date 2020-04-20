@@ -1,3 +1,4 @@
+import controller.command.RegistrationCommand;
 import model.dao.impl.ConnectionPoolHolder;
 import model.entity.User;
 import model.service.UserService;
@@ -11,7 +12,9 @@ public class App {
     private static final org.apache.logging.log4j.Logger log
             = org.apache.logging.log4j.LogManager.getLogger(App.class);
     public static void main(String[] args) throws SQLException {
-        new UserService().saveUser(new User("userrfffggr","paas"));
+//        System.out.println(new UserService().getRoleByUser("user", "j"));
+//        new UserService().saveUser(new User("username","password"));
+//        System.out.println(new UserService().getRoleByUser("username", "password"));
 //        Connection con =
 //                ConnectionPoolHolder.getDataSource().
 //                        getConnection();
