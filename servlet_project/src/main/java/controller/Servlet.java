@@ -15,6 +15,7 @@ public class Servlet extends javax.servlet.http.HttpServlet { //todo change coll
     private Map<String, Command> commands = new HashMap<>();
     private static final org.apache.logging.log4j.Logger log
             = org.apache.logging.log4j.LogManager.getLogger(Servlet.class);
+    private static final String REDIRECT = "redirect:";
 
     public void init(ServletConfig servletConfig) {
 
@@ -49,6 +50,10 @@ public class Servlet extends javax.servlet.http.HttpServlet { //todo change coll
         Command command = commands.getOrDefault(path,
                 (r) -> "/index.jsp");
         String page = command.execute(request);
-        request.getRequestDispatcher(page).forward(request, response);
+        if (page.contains(REDIRECT)) {
+            response.sendRedirect(request.getContextPath() + page.replace(REDIRECT, ""));
+        } else {
+            request.getRequestDispatcher(page).forward(request, response);
+        }
     }
 }
