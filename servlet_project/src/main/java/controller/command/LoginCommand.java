@@ -29,7 +29,7 @@ public class LoginCommand implements Command {
         System.out.println(role + "rolllleee");
 
         if (role == null) {
-            return "/login.jsp";
+            return "redirect:/login";
         }
 
 //        if (CommandUtility.checkUserIsLogged(request, name)) {
@@ -38,13 +38,13 @@ public class LoginCommand implements Command {
 
         if (role.equals(User.ROLE.ADMIN)) {
             CommandUtility.setUserRole(request, User.ROLE.ADMIN, name);
-            return "/WEB-INF/admin/admin.jsp";
+            return "redirect:/admin";
         } else if (role.equals(User.ROLE.USER)) {
             CommandUtility.setUserRole(request, User.ROLE.USER, name);
-            return "/WEB-INF/user/user.jsp";
+            return "redirect:/user";
         } else {
             CommandUtility.setUserRole(request, User.ROLE.UNKNOWN, name);
-            return "/login.jsp";
+            return "redirect:/login";
         }
     }
 }

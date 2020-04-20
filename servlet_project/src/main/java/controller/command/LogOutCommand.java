@@ -11,6 +11,6 @@ public class LogOutCommand implements Command {
         // ToDo delete current user (context & session)
         System.out.println("in logout command");
         CommandUtility.setUserRole(request, User.ROLE.UNKNOWN, "Guest");
-        return "/index.jsp";
+        return "redirect:/index";
     }
 }

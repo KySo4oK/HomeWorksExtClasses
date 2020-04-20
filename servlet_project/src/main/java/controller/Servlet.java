@@ -28,6 +28,10 @@ public class Servlet extends javax.servlet.http.HttpServlet { //todo change coll
                 new LoginCommand());
         commands.put("exception", new ExceptionCommand());
         commands.put("registration", new RegistrationCommand());
+        commands.put("user", new UserCommand());
+        commands.put("error", new ErrorCommand());
+        commands.put("admin", new AdminCommand());
+        commands.put("index", new IndexCommand());
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -48,7 +52,7 @@ public class Servlet extends javax.servlet.http.HttpServlet { //todo change coll
         path = path.replaceAll("/", "");
         System.out.println(path);
         Command command = commands.getOrDefault(path,
-                (r) -> "/index.jsp");
+                (r) -> "index");
         String page = command.execute(request);
         if (page.contains(REDIRECT)) {
             response.sendRedirect(request.getContextPath() + page.replace(REDIRECT, ""));

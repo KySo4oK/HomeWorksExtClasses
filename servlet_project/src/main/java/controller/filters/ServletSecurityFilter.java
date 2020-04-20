@@ -28,7 +28,7 @@ public class ServletSecurityFilter implements Filter {
         }
         System.out.println(req.getRequestURI());
         if (!checkAccess(req, User.ROLE.valueOf(session.getAttribute("role").toString()))) {
-            request.getRequestDispatcher("/WEB-INF/error.jsp").forward(req, resp);
+            request.getRequestDispatcher("redirect:/error").forward(req, resp);
             return;
         }
         chain.doFilter(request, response);

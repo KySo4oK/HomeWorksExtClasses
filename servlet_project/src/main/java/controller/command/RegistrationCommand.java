@@ -12,6 +12,6 @@ public class RegistrationCommand implements Command {
         userService.saveUser(new User(
                 request.getParameter("username"),
                 request.getParameter("password")));
-        return "/login.jsp";
+        return "redirect:/login";
     }
 }
