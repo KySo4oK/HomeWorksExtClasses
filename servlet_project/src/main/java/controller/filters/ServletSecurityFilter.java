@@ -39,8 +39,8 @@ public class ServletSecurityFilter implements Filter {
     }
 
     private boolean checkAccess(HttpServletRequest req, User.ROLE role) {
-        if (checkForRole(req, role, User.ROLE.USER, "user") ||
-                checkForRole(req, role, User.ROLE.ADMIN, "admin")) {
+        if (checkForUserRole(req, role, User.ROLE.USER, "user") ||
+                checkForUserRole(req, role, User.ROLE.ADMIN, "admin")) {
             return true;
         }
         return checkForGuest(req, role);
@@ -51,9 +51,13 @@ public class ServletSecurityFilter implements Filter {
                 && !isLogoutCommand(req));
     }
 
-    private boolean checkForRole(HttpServletRequest req, User.ROLE role, User.ROLE user, String user2) {
+    private boolean checkForUserRole(HttpServletRequest req, User.ROLE role, User.ROLE user, String user2) {
         return role.equals(user) &&
-                (uriContains(req, user2) || isLogoutCommand(req));
+                (uriContains(req, user2) || isLogoutCommand(req)) && notLogin(req);
+    }
+
+    private boolean notLogin(HttpServletRequest req) {
+        return !uriContains(req, "login");
     }
 
     private boolean uriContains(HttpServletRequest req, String role) {
