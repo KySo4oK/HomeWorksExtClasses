@@ -17,26 +17,28 @@ public class ServletSecurityFilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain) throws IOException, ServletException {
+        System.out.println("auth filter");
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession();
+        System.out.println(session.getAttribute("role"));
         log.info(session.getAttribute("role"));
         if (session.getAttribute("role") == null) {
             setGuestRole(session);
         }
-        if (checkForDeniedAccess(req, (String) session.getAttribute("role"))) {
+        if (checkForDeniedAccess(req, User.ROLE.valueOf((String) session.getAttribute("role")))) {
             request.getRequestDispatcher("/WEB-INF/error.jsp").forward(req, resp);
         }
         chain.doFilter(request, response);
     }
 
-    private boolean checkForDeniedAccess(HttpServletRequest req, String type) {
+    private boolean checkForDeniedAccess(HttpServletRequest req, User.ROLE role) {
         return (containsRole(req, "user") &&
-                !type.equals(User.ROLE.USER.toString())) ||
+                !role.equals(User.ROLE.USER)) ||
                 (containsRole(req, "admin") &&
-                        !type.equals(User.ROLE.ADMIN.toString())) ||
+                        !role.equals(User.ROLE.ADMIN)) ||
                 ((!(containsRole(req, "admin") && !(containsRole(req, "user"))) &&
-                        !type.equals(User.ROLE.UNKNOWN.toString())));
+                        !role.equals(User.ROLE.UNKNOWN)));
     }
 
     private boolean containsRole(HttpServletRequest req, String role) {

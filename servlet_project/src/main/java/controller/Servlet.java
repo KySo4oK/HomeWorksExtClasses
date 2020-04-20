@@ -42,8 +42,10 @@ public class Servlet extends javax.servlet.http.HttpServlet { //todo change coll
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
+        System.out.println(path);
         log.info("path " + path);
-        path = path.replaceAll(".*/coffee/", "");
+        path = path.replaceAll("/", "");
+        System.out.println(path);
         Command command = commands.getOrDefault(path,
                 (r) -> "/index.jsp");
         String page = command.execute(request);

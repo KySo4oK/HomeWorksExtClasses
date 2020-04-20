@@ -11,7 +11,7 @@
     <title>Registration</title>
   </head>
   <body>
-  <form action="register" method="post">
+  <form action="registration" method="post">
       <table style="with: 50%">
           <tr>
               <td>UserName</td>
