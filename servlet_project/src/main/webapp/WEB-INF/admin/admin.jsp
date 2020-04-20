@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>User page</title>
+    <title>Admin page</title>
     <a href="${pageContext.request.contextPath}/logout">logout</a>
 </head>
 <body>
