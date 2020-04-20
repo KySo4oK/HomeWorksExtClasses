@@ -21,13 +21,13 @@ public class UserService {
         }
     }
 
-    public boolean isValidUser(String username, String password) {
+    public User.ROLE getRoleByUser(String username, String password) {
         try (UserDao dao = daoFactory.createUserDao()) {
             User user = dao.findByUsername(username);
-            if(user != null){
-                return user.getPassword().equals(password);
+            if (user != null) {
+                return user.getRole();
             }
         }
-        return false;
+        return null;
     }
 }
