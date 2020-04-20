@@ -9,7 +9,7 @@ public class LoginCommand implements Command{
     @Override
     public String execute(HttpServletRequest request) {
         String name = request.getParameter("name");
-        String pass = request.getParameter("pass");
+        String pass = request.getParameter("password");
 
         if( name == null || name.equals("") || pass == null || pass.equals("")  ){
             //System.out.println("Not");
