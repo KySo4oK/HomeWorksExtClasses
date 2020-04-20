@@ -26,22 +26,37 @@ public class ServletSecurityFilter implements Filter {
         if (session.getAttribute("role") == null) {
             setGuestRole(session);
         }
-        if (checkForDeniedAccess(req, User.ROLE.valueOf((String) session.getAttribute("role")))) {
+        System.out.println(req.getRequestURI());
+        if (!checkAccess(req, User.ROLE.valueOf(session.getAttribute("role").toString()))) {
             request.getRequestDispatcher("/WEB-INF/error.jsp").forward(req, resp);
+            return;
         }
         chain.doFilter(request, response);
     }
 
-    private boolean checkForDeniedAccess(HttpServletRequest req, User.ROLE role) {
-        return (containsRole(req, "user") &&
-                !role.equals(User.ROLE.USER)) ||
-                (containsRole(req, "admin") &&
-                        !role.equals(User.ROLE.ADMIN)) ||
-                ((!(containsRole(req, "admin") && !(containsRole(req, "user"))) &&
-                        !role.equals(User.ROLE.UNKNOWN)));
+    private boolean isLogoutCommand(HttpServletRequest req) {
+        return uriContains(req, "logout");
     }
 
-    private boolean containsRole(HttpServletRequest req, String role) {
+    private boolean checkAccess(HttpServletRequest req, User.ROLE role) {
+        if (checkForRole(req, role, User.ROLE.USER, "user") ||
+                checkForRole(req, role, User.ROLE.ADMIN, "admin")) {
+            return true;
+        }
+        return checkForGuest(req, role);
+    }
+
+    private boolean checkForGuest(HttpServletRequest req, User.ROLE role) {
+        return role.equals(User.ROLE.UNKNOWN) && (!uriContains(req, "admin") && !(uriContains(req, "user"))
+                && !isLogoutCommand(req));
+    }
+
+    private boolean checkForRole(HttpServletRequest req, User.ROLE role, User.ROLE user, String user2) {
+        return role.equals(user) &&
+                (uriContains(req, user2) || isLogoutCommand(req));
+    }
+
+    private boolean uriContains(HttpServletRequest req, String role) {
         return req.getRequestURI().contains(role);
     }
 
