@@ -29,7 +29,7 @@ public class LoginCommand implements Command {
         System.out.println(role + "rolllleee");
 
         if (role == null) {
-            return "redirect:/login";
+            return "/login.jsp";
         }
 
 //        if (CommandUtility.checkUserIsLogged(request, name)) {
@@ -44,7 +44,7 @@ public class LoginCommand implements Command {
             return "redirect:/user";
         } else {
             CommandUtility.setUserRole(request, User.ROLE.UNKNOWN, name);
-            return "redirect:/login";
+            return "/login.jsp";
         }
     }
 }

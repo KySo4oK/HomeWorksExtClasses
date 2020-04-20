@@ -10,8 +10,8 @@
 </head>
 <body>
 <br/>
-<a href="${pageContext.request.contextPath}/login.jsp">Login</a>
-<a href="${pageContext.request.contextPath}/reg.jsp">Registration</a>
+<a href="${pageContext.request.contextPath}/login">Login</a>
+<a href="${pageContext.request.contextPath}/registration">Registration</a>
 <br>
 </body>
 </html>

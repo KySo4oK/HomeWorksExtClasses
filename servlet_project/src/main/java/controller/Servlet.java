@@ -55,7 +55,7 @@ public class Servlet extends javax.servlet.http.HttpServlet { //todo change coll
                 (r) -> "index");
         String page = command.execute(request);
         if (page.contains(REDIRECT)) {
-            response.sendRedirect(request.getContextPath() + page.replace(REDIRECT, ""));
+            response.sendRedirect(/*request.getContextPath() + */page.replace(REDIRECT, ""));
         } else {
             request.getRequestDispatcher(page).forward(request, response);
         }
