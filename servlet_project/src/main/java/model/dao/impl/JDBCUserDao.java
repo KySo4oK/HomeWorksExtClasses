@@ -13,6 +13,7 @@ import java.util.Map;
 
 public class JDBCUserDao implements UserDao {
     private Connection connection;
+    private UserMapper userMapper = new UserMapper();
 
 
     public JDBCUserDao(Connection connection) {
@@ -24,6 +25,7 @@ public class JDBCUserDao implements UserDao {
             PreparedStatement statement = connection.prepareStatement(SQL_INSERT);
             statement.setString(1, entity.getUsername());
             statement.setString(2, entity.getPassword());
+            statement.setString(3, entity.getRole().toString());
             statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -37,10 +39,8 @@ public class JDBCUserDao implements UserDao {
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                user = new User();
-                user.setId(rs.getInt("user_id"));
-                user.setUsername(rs.getString("username"));
-                user.setPassword(rs.getString("password"));
+                user = userMapper
+                        .extractFromResultSet(rs);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -107,10 +107,7 @@ public class JDBCUserDao implements UserDao {
             statement.setString(1, username);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                user = new User();
-                user.setId(rs.getInt("user_id"));
-                user.setUsername(rs.getString("username"));
-                user.setPassword(rs.getString("password"));
+                user = userMapper.extractFromResultSet(rs);
             }
         } catch (SQLException e) {
             e.printStackTrace();
