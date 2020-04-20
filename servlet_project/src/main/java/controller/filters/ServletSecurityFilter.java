@@ -28,7 +28,7 @@ public class ServletSecurityFilter implements Filter {
         }
         System.out.println(req.getRequestURI());
         if (!checkAccess(req, User.ROLE.valueOf(session.getAttribute("role").toString()))) {
-            request.getRequestDispatcher("redirect:/error").forward(req, resp);
+            resp.sendRedirect("redirect:/error");
             return;
         }
         chain.doFilter(request, response);
@@ -40,7 +40,7 @@ public class ServletSecurityFilter implements Filter {
 
     private boolean checkAccess(HttpServletRequest req, User.ROLE role) {
         if (checkForUserRole(req, role, User.ROLE.USER, "user") ||
-                checkForUserRole(req, role, User.ROLE.ADMIN, "admin")) {
+                checkForUserRole(req, role, User.ROLE.ADMIN, "admin") || uriContains(req, "error")) {
             return true;
         }
         return checkForGuest(req, role);
