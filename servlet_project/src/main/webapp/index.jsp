@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.util.*, java.text.*" %>
 
 <html>
@@ -8,10 +8,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Index</title>
 </head>
-    <body>
-        <br/>
-        <a href="${pageContext.request.contextPath}/login.jsp">Login</a>
-        <a href="${pageContext.request.contextPath}/reg.jsp">Registration</a>
-              <br>
-    </body>
+<body>
+<br/>
+<a href="${pageContext.request.contextPath}/login.jsp">Login</a>
+<a href="${pageContext.request.contextPath}/reg.jsp">Registration</a>
+<br>
+</body>
 </html>
