@@ -10,9 +10,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 
-<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setLocale value="${sessionScope.language}"/>
 <fmt:setBundle basename="messages"/>
-<html lang="${sessionScope.lang}">
+<html lang="${language}">
 <head>
     <title>Registration</title>
 </head>
@@ -31,8 +31,8 @@
     <input type="submit" value="Submit"/>
 </form>
 <ul>
-    <li><a href="?lang=en"><fmt:message key="label.lang.en"/></a></li>
-    <li><a href="?lang=ua"><fmt:message key="label.lang.ua"/></a></li>
+    <li><a href="?language=en"><fmt:message key="label.lang.en"/></a></li>
+    <li><a href="?language=ua"><fmt:message key="label.lang.ua"/></a></li>
 </ul>
 </body>
 </html>
