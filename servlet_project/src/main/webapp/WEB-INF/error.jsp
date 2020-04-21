@@ -1,22 +1,26 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false" %>
 
-<%@ page language="java" isErrorPage="true"  contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*, java.text.*" %>
-
-
-
-<html>
+<fmt:setLocale value="${sessionScope.language}"/>
+<fmt:setBundle basename="messages"/>
+<html lang="${language}">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Error Page</title>
+    <title><fmt:message key="error" /></title>
 </head>
     <body>
         <h2>
-           Error Page<br/>
+           <fmt:message key="error"/><br/>
             <i>Error <%= exception %></i>
         </h2>
     <br>
-        <a href="${pageContext.request.contextPath}/index.jsp">Index</a>
+        <a href="${pageContext.request.contextPath}/index.jsp"><fmt:message key="main"/></a>
+        <ul>
+            <li><a href="?language=en"><fmt:message key="label.lang.en"/></a></li>
+            <li><a href="?language=ua"><fmt:message key="label.lang.ua"/></a></li>
+        </ul>
 
 
     </body>

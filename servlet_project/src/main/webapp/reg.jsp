@@ -14,7 +14,7 @@
 <fmt:setBundle basename="messages"/>
 <html lang="${language}">
 <head>
-    <title>Registration</title>
+    <title><fmt:message key="sign.up"/></title>
 </head>
 <body>
 <form action="registration" method="post">
