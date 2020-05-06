@@ -13,7 +13,7 @@ public class LoginCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         System.out.println("logincom");
-        String name = request.getParameter("name");
+        String name = request.getParameter("username");
         String pass = request.getParameter("password");
         log.info(name + pass);
 
@@ -32,9 +32,9 @@ public class LoginCommand implements Command {
             return "/login.jsp";
         }
 
-//        if (CommandUtility.checkUserIsLogged(request, name)) {
-//            return "/WEB-INF/error.jsp";
-//        } todo
+        if (CommandUtility.checkUserIsLogged(request, name)) {
+            return "redirect:/login";
+        }
 
         if (role.equals(User.ROLE.ADMIN)) {
             CommandUtility.setUserRole(request, User.ROLE.ADMIN, name);
